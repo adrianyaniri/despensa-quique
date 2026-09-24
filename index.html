@@ -91,13 +91,18 @@ tailwind.config = {
     </div>
     
     <div class="flex flex-col sm:flex-row items-center gap-4 mt-4 pt-3 border-t border-line">
-      <div class="p-2.5 bg-stone-50 rounded-2xl border border-line shrink-0">
+      <div class="relative p-2.5 bg-stone-50 rounded-2xl border border-line shrink-0">
         <img id="qr-img" alt="QR del catálogo" class="w-28 h-28 rounded-xl bg-white" />
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div class="w-8 h-8 rounded-lg bg-white p-0.5 border border-line shadow-xs flex items-center justify-center">
+            <img src="./logo/logo.png" alt="Logo" class="w-full h-full object-cover rounded-md" />
+          </div>
+        </div>
       </div>
       <div class="space-y-2.5 w-full sm:w-auto">
         <div class="flex flex-wrap gap-2">
           <button onclick="downloadQr()" class="inline-flex items-center gap-1.5 rounded-full bg-ink text-white px-4 py-2 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs">
-            <span>📥 Descargar QR (HD 1500px)</span>
+            <span>📥 Descargar QR con Logo (HD)</span>
           </button>
           <button onclick="window.print()" class="inline-flex items-center gap-1.5 rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 active:scale-95 px-4 py-2 text-xs font-semibold transition-all">
             <span>🖨️ Imprimir Cartel</span>
@@ -107,6 +112,13 @@ tailwind.config = {
       </div>
     </div>
   </section>
+
+  <div class="mt-8 text-center no-print">
+    <a href="./admin.html" class="inline-flex items-center gap-1 text-[11px] text-stone-400 hover:text-stone-700 transition-colors">
+      <span>🔒</span>
+      <span>Administración del local</span>
+    </a>
+  </div>
 </main>
 
 <!-- Cartel de mostrador optimizado para imprimir (solo visible al imprimir) -->
@@ -115,8 +127,13 @@ tailwind.config = {
   <h1 class="text-3xl font-black tracking-tight text-black">Despensa Quique</h1>
   <p class="text-sm text-stone-600 mt-1 font-semibold">Bebidas bien frías, picadas y almacén</p>
   
-  <div class="my-6 p-6 inline-block bg-white border-2 border-dashed border-stone-300 rounded-3xl">
+  <div class="my-6 p-6 inline-block bg-white border-2 border-dashed border-stone-300 rounded-3xl relative">
     <img id="qr-img-print" class="w-72 h-72 mx-auto" alt="Código QR del local" />
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div class="w-18 h-18 rounded-2xl bg-white p-1.5 border-2 border-stone-200 shadow-sm flex items-center justify-center">
+        <img src="./logo/logo.png" alt="Logo" class="w-full h-full object-cover rounded-xl" />
+      </div>
+    </div>
   </div>
 
   <p class="text-xl font-bold text-black">Escaneá con la cámara de tu celular</p>
@@ -263,25 +280,33 @@ function render() {
       html += '<div class="bg-white rounded-2xl border border-line divide-y divide-line overflow-hidden shadow-xs">';
       html += items.map(p => {
         const qty = cart[p.id]?.qty || 0;
+        const isAvailable = p.disponible !== false;
         return `
-        <div class="px-4 py-3 flex gap-3 items-center justify-between hover:bg-stone-50/50 transition-colors">
+        <div class="px-4 py-3 flex gap-3 items-center justify-between hover:bg-stone-50/50 transition-colors ${!isAvailable ? 'opacity-70' : ''}">
           <div class="flex-1 min-w-0 pr-2">
-            <p class="font-semibold text-sm leading-snug">${p.nombre}</p>
+            <div class="flex items-center gap-2">
+              <p class="font-semibold text-sm leading-snug">${p.nombre}</p>
+              ${!isAvailable ? '<span class="text-[10px] font-bold text-rose-600 bg-rose-50 border border-rose-200 px-1.5 py-0.5 rounded shrink-0">Agotado</span>' : ''}
+            </div>
             ${p.descripcion ? `<p class="text-xs text-muted leading-relaxed mt-0.5">${p.descripcion}</p>` : ''}
             <p class="font-bold text-sm text-ink mt-1">${fmt(p.precio)}</p>
           </div>
           <div class="flex items-center gap-1.5 shrink-0">
-            ${qty > 0 ? `
-              <button onclick="chQty('${p.id}',-1)" aria-label="quitar uno" class="w-8 h-8 rounded-full bg-stone-200 hover:bg-stone-300 active:scale-95 text-ink text-base font-black flex items-center justify-center transition-all">−</button>
-              <span class="w-6 text-center text-sm font-bold text-ink">${qty}</span>
-            ` : ''}
-            <button onclick="chQty('${p.id}',1)" aria-label="agregar" class="h-8 ${
-              qty > 0
-                ? 'w-8 rounded-full bg-ink text-white font-bold flex items-center justify-center'
-                : 'px-3.5 rounded-full bg-ink text-white text-xs font-semibold'
-            } hover:bg-stone-800 active:scale-95 transition-all">
-              ${qty > 0 ? '+' : 'Agregar'}
-            </button>
+            ${isAvailable ? `
+              ${qty > 0 ? `
+                <button onclick="chQty('${p.id}',-1)" aria-label="quitar uno" class="w-8 h-8 rounded-full bg-stone-200 hover:bg-stone-300 active:scale-95 text-ink text-base font-black flex items-center justify-center transition-all">−</button>
+                <span class="w-6 text-center text-sm font-bold text-ink">${qty}</span>
+              ` : ''}
+              <button onclick="chQty('${p.id}',1)" aria-label="agregar" class="h-8 ${
+                qty > 0
+                  ? 'w-8 rounded-full bg-ink text-white font-bold flex items-center justify-center'
+                  : 'px-3.5 rounded-full bg-ink text-white text-xs font-semibold'
+              } hover:bg-stone-800 active:scale-95 transition-all">
+                ${qty > 0 ? '+' : 'Agregar'}
+              </button>
+            ` : `
+              <button disabled class="h-8 px-3 rounded-full bg-stone-100 text-stone-400 text-xs font-semibold cursor-not-allowed">Sin stock</button>
+            `}
           </div>
         </div>`;
       }).join('');
@@ -487,9 +512,40 @@ async function loadCatalog() {
     </div>`;
 
   try {
-    const res = await fetch('./menu.json');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    MENU = await res.json();
+    let loadedFromDb = false;
+
+    if (cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY) {
+      try {
+        const res = await fetch(`${cfg.SUPABASE_URL}/rest/v1/productos?select=*&order=created_at.asc`, {
+          headers: {
+            'apikey': cfg.SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${cfg.SUPABASE_ANON_KEY}`
+          }
+        });
+        if (res.ok) {
+          const dbProducts = await res.json();
+          if (Array.isArray(dbProducts) && dbProducts.length > 0) {
+            const cats = [...new Set(dbProducts.map(p => p.categoria).filter(Boolean))];
+            MENU = {
+              negocio: cfg.NEGOCIO || 'Despensa Quique',
+              moneda: '$',
+              categorias: cats,
+              productos: dbProducts
+            };
+            loadedFromDb = true;
+          }
+        }
+      } catch (errDb) {
+        console.warn('No se pudo conectar a Supabase, recurriendo a local:', errDb);
+      }
+    }
+
+    if (!loadedFromDb) {
+      const res = await fetch('./menu.json');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      MENU = await res.json();
+    }
+
     renderFilters();
     paintWaLinks();
     render();
@@ -497,15 +553,15 @@ async function loadCatalog() {
     box.innerHTML = `
       <div class="text-center py-10 px-4 bg-white rounded-2xl border border-line mt-4">
         <p class="text-sm font-bold text-red-600">No se pudo cargar el catálogo</p>
-        <p class="text-xs text-muted mt-1">Verificá que el servidor local esté corriendo para permitir la carga de datos.</p>
+        <p class="text-xs text-muted mt-1">Verificá tu conexión o que el servidor esté activo.</p>
         <button onclick="loadCatalog()" class="mt-4 px-4 py-2 rounded-full bg-ink text-white text-xs font-semibold hover:bg-stone-800 transition-colors">Reintentar</button>
       </div>`;
   }
 }
 
-// Inicialización y descarga de QR en Alta Definición
+// Inicialización y descarga de QR en Alta Definición con Logo Central
 const currentUrl = location.href.split('#')[0];
-const qrServerUrl = (size, margin = 10) => `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&margin=${margin}&format=png&data=${encodeURIComponent(currentUrl)}`;
+const qrServerUrl = (size, margin = 10) => `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&margin=${margin}&ecc=H&format=png&data=${encodeURIComponent(currentUrl)}`;
 
 document.getElementById('qr-img').src = qrServerUrl(240, 5);
 document.getElementById('qr-url').textContent = currentUrl;
@@ -514,20 +570,57 @@ const printQrEl = document.getElementById('qr-img-print');
 if (printQrEl) printQrEl.src = qrServerUrl(600, 15);
 
 async function downloadQr() {
-  const downloadUrl = qrServerUrl(1500, 20);
-  try {
-    const res = await fetch(downloadUrl);
-    const blob = await res.blob();
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'QR-Despensa-Quique-HD.png';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(a.href);
-  } catch (e) {
-    window.open(downloadUrl, '_blank');
-  }
+  const canvas = document.createElement('canvas');
+  canvas.width = 1000;
+  canvas.height = 1000;
+  const ctx = canvas.getContext('2d');
+
+  const qrImg = new Image();
+  qrImg.crossOrigin = 'anonymous';
+  qrImg.src = qrServerUrl(1000, 20);
+
+  qrImg.onload = () => {
+    ctx.drawImage(qrImg, 0, 0, 1000, 1000);
+
+    const logoImg = new Image();
+    logoImg.src = './logo/logo.png';
+    logoImg.onload = () => {
+      const plateSize = 250;
+      const plateX = (1000 - plateSize) / 2;
+      const plateY = (1000 - plateSize) / 2;
+      const radius = 32;
+
+      ctx.beginPath();
+      ctx.roundRect(plateX, plateY, plateSize, plateSize, radius);
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fill();
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = '#EDE7DD';
+      ctx.stroke();
+
+      const logoSize = 220;
+      const logoX = (1000 - logoSize) / 2;
+      const logoY = (1000 - logoSize) / 2;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.roundRect(logoX, logoY, logoSize, logoSize, 26);
+      ctx.clip();
+      ctx.drawImage(logoImg, logoX, logoY, logoSize, logoSize);
+      ctx.restore();
+
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = 'QR-Despensa-Quique-HD.png';
+      a.click();
+    };
+    logoImg.onerror = () => {
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = 'QR-Despensa-Quique-HD.png';
+      a.click();
+    };
+  };
 }
 
 loadCatalog();

@@ -1,190 +1,190 @@
 {
   "negocio": "Despensa Quique",
   "moneda": "$",
-  "categorias": ["Bebidas", "Picadas", "Snacks", "Almacén"],
+  "categorias": ["Bebidas", "Cervezas", "Promos", "Picadas", "Snacks"],
   "productos": [
     {
-      "id": "coca-225",
+      "id": "coca-ret",
       "categoria": "Bebidas",
-      "nombre": "Coca-Cola 2.25 L",
-      "descripcion": "Botella descartable. Ideal para compartir.",
+      "nombre": "Coca Cola retornable",
+      "descripcion": "Botella retornable.",
       "precio": 3500,
       "unidad": "c/u"
     },
     {
-      "id": "sprite-225",
+      "id": "fanta-ret",
       "categoria": "Bebidas",
-      "nombre": "Sprite 2.25 L",
-      "descripcion": "Lima limón bien fría.",
-      "precio": 3400,
+      "nombre": "Fanta retornable",
+      "descripcion": "Botella retornable.",
+      "precio": 3500,
       "unidad": "c/u"
     },
     {
-      "id": "quilmes-1l",
+      "id": "sprite-ret",
       "categoria": "Bebidas",
-      "nombre": "Quilmes Clásica 1 L",
-      "descripcion": "Retornable. Precio sin envase.",
-      "precio": 2800,
+      "nombre": "Sprite retornable",
+      "descripcion": "Botella retornable.",
+      "precio": 3500,
       "unidad": "c/u"
     },
     {
-      "id": "corona-710",
+      "id": "coca-1750",
       "categoria": "Bebidas",
-      "nombre": "Cerveza Corona 710 ml",
-      "descripcion": "Bien helada. Incluye rodaja de lima si se solicita.",
+      "nombre": "Coca Cola 1.75 L",
+      "descripcion": "Botella descartable.",
       "precio": 4500,
       "unidad": "c/u"
     },
     {
-      "id": "stella-1l",
+      "id": "coca-2250",
       "categoria": "Bebidas",
+      "nombre": "Coca Cola 2.25 L",
+      "descripcion": "Botella descartable.",
+      "precio": 5500,
+      "unidad": "c/u"
+    },
+    {
+      "id": "aquarius-1500",
+      "categoria": "Bebidas",
+      "nombre": "Aquarius 1.5 L",
+      "descripcion": "Sabores variados bien fríos.",
+      "precio": 2700,
+      "unidad": "c/u"
+    },
+    {
+      "id": "aquarius-2250",
+      "categoria": "Bebidas",
+      "nombre": "Aquarius 2.25 L",
+      "descripcion": "Ideal para compartir.",
+      "precio": 3500,
+      "unidad": "c/u"
+    },
+    {
+      "id": "seven-up-ret",
+      "categoria": "Bebidas",
+      "nombre": "Seven Up retornable",
+      "descripcion": "Botella retornable.",
+      "precio": 3800,
+      "unidad": "c/u"
+    },
+    {
+      "id": "heineken-1000",
+      "categoria": "Cervezas",
+      "nombre": "Heineken 1 L",
+      "descripcion": "Cerveza rubia bien fría.",
+      "precio": 5700,
+      "unidad": "c/u"
+    },
+    {
+      "id": "heineken-710",
+      "categoria": "Cervezas",
+      "nombre": "Heineken 710 ml",
+      "descripcion": "Botella 710 ml helada.",
+      "precio": 4900,
+      "unidad": "c/u"
+    },
+    {
+      "id": "stella-1000",
+      "categoria": "Cervezas",
       "nombre": "Stella Artois 1 L",
       "descripcion": "Rubia premium bien fría.",
-      "precio": 4200,
+      "precio": 5900,
       "unidad": "c/u"
     },
     {
-      "id": "fernet-750",
-      "categoria": "Bebidas",
-      "nombre": "Fernet Branca 750 ml",
-      "descripcion": "El clásico para el fernet con coca.",
-      "precio": 12500,
+      "id": "stella-710",
+      "categoria": "Cervezas",
+      "nombre": "Stella Artois 710 ml",
+      "descripcion": "Botella 710 ml helada.",
+      "precio": 5300,
       "unidad": "c/u"
     },
     {
-      "id": "campari-750",
-      "categoria": "Bebidas",
-      "nombre": "Campari 750 ml",
-      "descripcion": "Aperitivo ideal para preparar con naranja o tónica.",
-      "precio": 8900,
-      "unidad": "c/u"
-    },
-    {
-      "id": "gancia-950",
-      "categoria": "Bebidas",
-      "nombre": "Gancia Americano 950 ml",
-      "descripcion": "El clásico aperitivo argentino con limón.",
-      "precio": 5600,
-      "unidad": "c/u"
-    },
-    {
-      "id": "vino-malbec",
-      "categoria": "Bebidas",
-      "nombre": "Vino Malbec 750 ml",
-      "descripcion": "Malbec reserva. Consultar bodegas disponibles.",
-      "precio": 6800,
-      "unidad": "c/u"
-    },
-    {
-      "id": "agua-mineral-2l",
-      "categoria": "Bebidas",
-      "nombre": "Agua Mineral sin gas 2 L",
-      "descripcion": "Agua de manantial natural.",
-      "precio": 1800,
-      "unidad": "c/u"
-    },
-    {
-      "id": "monster-473",
-      "categoria": "Bebidas",
-      "nombre": "Energizante Monster 473 ml",
-      "descripcion": "Lata verde clásica.",
-      "precio": 3200,
-      "unidad": "c/u"
-    },
-    {
-      "id": "picada-chica",
-      "categoria": "Picadas",
-      "nombre": "Picada Clásica (2 personas)",
-      "descripcion": "Queso tybo, salame de colonia, jamón cocido, aceitunas y maní.",
-      "precio": 9500,
-      "unidad": "c/u"
-    },
-    {
-      "id": "picada-quique",
-      "categoria": "Picadas",
-      "nombre": "Picada Quique (4 personas)",
-      "descripcion": "Doble queso, jamón crudo, bondiola, salame, aceitunas rellenas y snacks.",
-      "precio": 17500,
-      "unidad": "c/u"
-    },
-    {
-      "id": "tabla-quesos",
-      "categoria": "Picadas",
-      "nombre": "Tabla Selección de Quesos",
-      "descripcion": "Parmesano, azul, gouda y brie con frutos secos.",
-      "precio": 14200,
-      "unidad": "c/u"
-    },
-    {
-      "id": "papas-clasicas-120",
-      "categoria": "Snacks",
-      "nombre": "Papas Fritas Clásicas 120 g",
-      "descripcion": "Papas crocantes saladas.",
-      "precio": 2100,
-      "unidad": "c/u"
-    },
-    {
-      "id": "papas-rusticas-200",
-      "categoria": "Snacks",
-      "nombre": "Papas Rústicas Corte Grueso 200 g",
-      "descripcion": "Con sal marina y pimienta.",
-      "precio": 3600,
-      "unidad": "c/u"
-    },
-    {
-      "id": "mani-cervecero-150",
-      "categoria": "Snacks",
-      "nombre": "Maní Salado Cervecero 150 g",
-      "descripcion": "Tostado y crocante.",
-      "precio": 1400,
-      "unidad": "c/u"
-    },
-    {
-      "id": "nachos-queso-150",
-      "categoria": "Snacks",
-      "nombre": "Nachos de Maíz con Dip de Queso",
-      "descripcion": "Bolsa de nachos con pote individual de cheddar.",
+      "id": "brahma-1000",
+      "categoria": "Cervezas",
+      "nombre": "Brahma 1 L",
+      "descripcion": "Clásica rubia refrescante.",
       "precio": 3900,
       "unidad": "c/u"
     },
     {
-      "id": "chizitos-100",
+      "id": "andes-473",
+      "categoria": "Cervezas",
+      "nombre": "Andes 473 ml (Lata)",
+      "descripcion": "Consultar variedades (Rubia / Roja).",
+      "precio": 2900,
+      "unidad": "c/u"
+    },
+    {
+      "id": "andes-1000",
+      "categoria": "Cervezas",
+      "nombre": "Andes 1 L (Rubia / Roja)",
+      "descripcion": "Botella 1 L bien helada.",
+      "precio": 4900,
+      "unidad": "c/u"
+    },
+    {
+      "id": "promo-fernet-coca",
+      "categoria": "Promos",
+      "nombre": "Fernet Branca 750 ml + Coca Cola 1.75 L",
+      "descripcion": "El combo clásico listo para disfrutar.",
+      "precio": 25000,
+      "unidad": "c/u"
+    },
+    {
+      "id": "picada-4-5",
+      "categoria": "Picadas",
+      "nombre": "Picada para 4 a 5 personas",
+      "descripcion": "Variedad de fiambres, quesos y snacks.",
+      "precio": 4000,
+      "unidad": "c/u"
+    },
+    {
+      "id": "papas-55g",
       "categoria": "Snacks",
-      "nombre": "Snacks de Queso Horneados 100 g",
-      "descripcion": "Textura aireada y suave sabor a queso.",
-      "precio": 1700,
+      "nombre": "Papas Americanas tradicionales 55 g",
+      "descripcion": "Crocantes y saladas.",
+      "precio": 1800,
       "unidad": "c/u"
     },
     {
-      "id": "hielo-4kg",
-      "categoria": "Almacén",
-      "nombre": "Bolsa de Hielo Rolito 4 kg",
-      "descripcion": "Cubos macizos de agua purificada.",
-      "precio": 2500,
+      "id": "papas-420g",
+      "categoria": "Snacks",
+      "nombre": "Papas tradicionales americanas 420 g",
+      "descripcion": "Bolsa grande para compartir.",
+      "precio": 1300,
       "unidad": "c/u"
     },
     {
-      "id": "carbon-4kg",
-      "categoria": "Almacén",
-      "nombre": "Bolsa de Carbón Vegetal 4 kg",
-      "descripcion": "Quebracho blanco de alto poder calórico.",
-      "precio": 4200,
+      "id": "chizitos-60g",
+      "categoria": "Snacks",
+      "nombre": "Chizitos 60 g",
+      "descripcion": "Snack horneado con queso.",
+      "precio": 1400,
       "unidad": "c/u"
     },
     {
-      "id": "vasos-descartables-10",
-      "categoria": "Almacén",
-      "nombre": "Vasos Plásticos 500 ml (Pack x10)",
-      "descripcion": "Especiales para trago largo o cerveza.",
-      "precio": 1900,
+      "id": "bastoncitos-60g",
+      "categoria": "Snacks",
+      "nombre": "Bastoncitos 60 g",
+      "descripcion": "Snack salado crocante.",
+      "precio": 1400,
       "unidad": "c/u"
     },
     {
-      "id": "servilletas-pack",
-      "categoria": "Almacén",
-      "nombre": "Servilletas de Papel (Pack x80)",
-      "descripcion": "Doble hoja absorbente.",
-      "precio": 1200,
+      "id": "chizitos-240g",
+      "categoria": "Snacks",
+      "nombre": "Chizitos 240 g",
+      "descripcion": "Bolsa familiar para compartir.",
+      "precio": 6000,
+      "unidad": "c/u"
+    },
+    {
+      "id": "bastoncitos-240g",
+      "categoria": "Snacks",
+      "nombre": "Bastoncitos 240 g",
+      "descripcion": "Bolsa familiar para compartir.",
+      "precio": 6000,
       "unidad": "c/u"
     }
   ]
