@@ -22,7 +22,12 @@ tailwind.config = {
   body { background: #FFFEFB; -webkit-tap-highlight-color: transparent; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  @media print { .no-print { display: none !important; } }
+  @media print {
+    body { background: white !important; }
+    .no-print { display: none !important; }
+    .print-only { display: block !important; }
+  }
+  .print-only { display: none; }
 </style>
 </head>
 <body class="font-body text-ink min-h-screen antialiased flex flex-col selection:bg-ink selection:text-white">
@@ -78,19 +83,45 @@ tailwind.config = {
 <main class="max-w-xl mx-auto px-4 pt-4 pb-36 flex-1 w-full">
   <div id="lista" class="space-y-6"></div>
 
-  <!-- Sección de QR para mostrador -->
-  <section class="mt-10 rounded-2xl border border-dashed border-line p-5 bg-white no-print">
-    <h2 class="font-semibold text-sm">QR para el mostrador</h2>
-    <p class="text-xs text-muted mt-0.5">Apunta a este catálogo. Al publicar el sitio definitivo, reimprimilo.</p>
-    <div class="flex items-center gap-4 mt-3">
-      <img id="qr-img" alt="QR de la carta" class="w-24 h-24 rounded-xl bg-white border border-line shrink-0" />
-      <div class="min-w-0">
-        <button onclick="window.print()" class="rounded-full bg-ink text-white px-4 py-1.5 text-xs font-semibold hover:bg-stone-800 transition-colors">Imprimir QR</button>
-        <p id="qr-url" class="text-[11px] break-all text-muted mt-2 font-mono"></p>
+  <!-- Sección de QR para mostrador y descarga -->
+  <section class="mt-10 rounded-3xl border border-line p-5 bg-white shadow-xs no-print">
+    <div>
+      <h2 class="font-bold text-sm text-ink">Cartelería y QR para compartir</h2>
+      <p class="text-xs text-muted mt-0.5">Descargá la imagen en alta definición para mandar por WhatsApp/redes o imprimí el cartel para tu local.</p>
+    </div>
+    
+    <div class="flex flex-col sm:flex-row items-center gap-4 mt-4 pt-3 border-t border-line">
+      <div class="p-2.5 bg-stone-50 rounded-2xl border border-line shrink-0">
+        <img id="qr-img" alt="QR del catálogo" class="w-28 h-28 rounded-xl bg-white" />
+      </div>
+      <div class="space-y-2.5 w-full sm:w-auto">
+        <div class="flex flex-wrap gap-2">
+          <button onclick="downloadQr()" class="inline-flex items-center gap-1.5 rounded-full bg-ink text-white px-4 py-2 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs">
+            <span>📥 Descargar QR (HD 1500px)</span>
+          </button>
+          <button onclick="window.print()" class="inline-flex items-center gap-1.5 rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 active:scale-95 px-4 py-2 text-xs font-semibold transition-all">
+            <span>🖨️ Imprimir Cartel</span>
+          </button>
+        </div>
+        <p class="text-[11px] text-muted">URL vinculada: <span id="qr-url" class="font-mono text-ink font-medium break-all"></span></p>
       </div>
     </div>
   </section>
 </main>
+
+<!-- Cartel de mostrador optimizado para imprimir (solo visible al imprimir) -->
+<div class="print-only text-center py-12 px-6 max-w-md mx-auto">
+  <img src="./logo/logo.png" alt="Despensa Quique" class="w-24 h-24 mx-auto rounded-3xl mb-3 border border-stone-300 object-cover" />
+  <h1 class="text-3xl font-black tracking-tight text-black">Despensa Quique</h1>
+  <p class="text-sm text-stone-600 mt-1 font-semibold">Bebidas bien frías, picadas y almacén</p>
+  
+  <div class="my-6 p-6 inline-block bg-white border-2 border-dashed border-stone-300 rounded-3xl">
+    <img id="qr-img-print" class="w-72 h-72 mx-auto" alt="Código QR del local" />
+  </div>
+
+  <p class="text-xl font-bold text-black">Escaneá con la cámara de tu celular</p>
+  <p class="text-sm text-stone-600 mt-1">Elegí tus productos y hacé tu pedido directo por WhatsApp</p>
+</div>
 
 <!-- Barra Flotante Inferior del Carrito -->
 <aside id="cartbar" class="fixed bottom-0 inset-x-0 z-30 no-print transition-all duration-300 ease-out transform translate-y-full opacity-0 pointer-events-none">
@@ -472,10 +503,32 @@ async function loadCatalog() {
   }
 }
 
-// Inicialización de QR
-const url = location.href.split('#')[0];
-document.getElementById('qr-img').src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(url);
-document.getElementById('qr-url').textContent = url;
+// Inicialización y descarga de QR en Alta Definición
+const currentUrl = location.href.split('#')[0];
+const qrServerUrl = (size, margin = 10) => `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&margin=${margin}&format=png&data=${encodeURIComponent(currentUrl)}`;
+
+document.getElementById('qr-img').src = qrServerUrl(240, 5);
+document.getElementById('qr-url').textContent = currentUrl;
+
+const printQrEl = document.getElementById('qr-img-print');
+if (printQrEl) printQrEl.src = qrServerUrl(600, 15);
+
+async function downloadQr() {
+  const downloadUrl = qrServerUrl(1500, 20);
+  try {
+    const res = await fetch(downloadUrl);
+    const blob = await res.blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'QR-Despensa-Quique-HD.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  } catch (e) {
+    window.open(downloadUrl, '_blank');
+  }
+}
 
 loadCatalog();
 </script>
