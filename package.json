@@ -1,0 +1,9 @@
+{
+  "name": "despensa-quique",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Catalogo web para Despensa Quique",
+  "scripts": {
+    "start": "npx serve -l 3000 ."
+  }
+}

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Despensa Quique — Bebidas y Picadas</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: { base: '#FFFEFB', ink: '#1F1C19', muted: '#7A736C', line: '#EDE7DD', wa: '#25D366' },
+      fontFamily: { body: ['Inter', 'system-ui', 'sans-serif'] }
+    }
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="./config.js"></script>
+<style>
+  body { background: #FFFEFB; -webkit-tap-highlight-color: transparent; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  @media print { .no-print { display: none !important; } }
+</style>
+</head>
+<body class="font-body text-ink min-h-screen antialiased flex flex-col selection:bg-ink selection:text-white">
+
+<!-- Header Unificado de Alta Gama para Mobile -->
+<header class="sticky top-0 z-30 bg-base/95 backdrop-blur-md border-b border-line shadow-xs">
+  <div class="max-w-xl mx-auto px-4 pt-3 pb-2.5">
+    <!-- Fila de Identidad y Contacto -->
+    <div class="flex items-center justify-between gap-3 mb-2.5">
+      <div class="flex items-center gap-3 min-w-0">
+        <img src="./logo/logo.png" alt="Despensa Quique" class="w-12 h-12 rounded-2xl object-cover bg-white border border-line shadow-xs shrink-0" />
+        <div class="min-w-0">
+          <div class="flex items-center gap-2">
+            <h1 class="font-extrabold text-lg leading-tight truncate text-ink">Despensa Quique</h1>
+            <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200 shrink-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Abierto
+            </span>
+          </div>
+          <p class="text-xs text-muted truncate mt-0.5">Bebidas frías, picadas y almacén</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-1.5 shrink-0 no-print">
+        <a id="header-ig" href="#" target="_blank" rel="noopener"
+           class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-stone-100 hover:bg-pink-50 hover:text-pink-600 active:scale-95 text-stone-700 transition-all border border-stone-200"
+           aria-label="Instagram">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a id="header-wa" href="#" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-1.5 rounded-full bg-wa hover:bg-[#20ba59] active:scale-95 text-white px-3.5 py-1.5 text-xs font-bold shadow-xs transition-all"
+           aria-label="WhatsApp">
+          <span class="text-sm">✆</span>
+          <span class="hidden sm:inline">Consultar</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Buscador -->
+    <div class="relative no-print mb-2.5">
+      <input id="search" type="search" placeholder="Buscar bebidas, picadas, snacks..." autocomplete="off"
+        class="w-full rounded-2xl bg-stone-100/80 hover:bg-stone-100 pl-10 pr-4 py-2 text-sm outline-none placeholder:text-stone-400 focus:bg-white focus:ring-2 focus:ring-ink/10 transition-all border border-transparent focus:border-stone-200" />
+      <span class="absolute left-3.5 top-2.5 text-stone-400 text-xs select-none">🔍</span>
+    </div>
+
+    <!-- Píldoras de Categorías con Scroll Horizontal Fluido -->
+    <div class="flex gap-2 overflow-x-auto no-scrollbar no-print py-0.5" id="filters">
+      <!-- Generado dinámicamente -->
+    </div>
+  </div>
+</header>
+
+<!-- Contenido Principal -->
+<main class="max-w-xl mx-auto px-4 pt-4 pb-36 flex-1 w-full">
+  <div id="lista" class="space-y-6"></div>
+
+  <!-- Sección de QR para mostrador -->
+  <section class="mt-10 rounded-2xl border border-dashed border-line p-5 bg-white no-print">
+    <h2 class="font-semibold text-sm">QR para el mostrador</h2>
+    <p class="text-xs text-muted mt-0.5">Apunta a este catálogo. Al publicar el sitio definitivo, reimprimilo.</p>
+    <div class="flex items-center gap-4 mt-3">
+      <img id="qr-img" alt="QR de la carta" class="w-24 h-24 rounded-xl bg-white border border-line shrink-0" />
+      <div class="min-w-0">
+        <button onclick="window.print()" class="rounded-full bg-ink text-white px-4 py-1.5 text-xs font-semibold hover:bg-stone-800 transition-colors">Imprimir QR</button>
+        <p id="qr-url" class="text-[11px] break-all text-muted mt-2 font-mono"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Barra Flotante Inferior del Carrito -->
+<aside id="cartbar" class="fixed bottom-0 inset-x-0 z-30 no-print transition-all duration-300 ease-out transform translate-y-full opacity-0 pointer-events-none">
+  <div class="max-w-xl mx-auto px-4 pb-4">
+    <div id="cartbar-box" class="rounded-2xl bg-ink text-white shadow-2xl p-3 flex items-center justify-between gap-3 transition-transform duration-150">
+      <div class="pl-2">
+        <p class="text-[11px] text-stone-300 uppercase tracking-wide font-medium"><span id="cart-count">0</span> ítems en el carrito</p>
+        <p class="font-extrabold text-lg leading-tight"><span id="cart-total">$0</span></p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="clear-btn" class="text-xs text-stone-400 hover:text-white px-2 py-1 transition-colors">Vaciar</button>
+        <button id="open-cart" class="rounded-full bg-white text-ink px-4 py-2 text-xs font-bold hover:bg-stone-100 active:scale-95 transition-all">Ver pedido</button>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- Bottom Sheet Nativo para Móviles -->
+<div id="cart-sheet" class="fixed inset-0 z-40 hidden no-print" role="dialog" aria-modal="true">
+  <!-- Fondo desenfocado -->
+  <div id="sheet-backdrop" class="fixed inset-0 bg-ink/50 backdrop-blur-xs transition-opacity duration-300 opacity-0"></div>
+
+  <!-- Panel Deslizable desde Abajo -->
+  <div id="sheet-panel" class="fixed inset-x-0 bottom-0 z-50 max-w-xl mx-auto bg-base rounded-t-[28px] border-t border-line shadow-2xl transition-transform duration-300 transform translate-y-full flex flex-col max-h-[92vh]">
+    <!-- Barra táctil de arrastre -->
+    <div class="w-full pt-3 pb-1 flex justify-center cursor-pointer" onclick="closeSheet()">
+      <div class="w-12 h-1.5 rounded-full bg-stone-300"></div>
+    </div>
+
+    <!-- Encabezado del Sheet -->
+    <div class="px-5 py-3 flex items-center justify-between border-b border-line">
+      <div>
+        <h2 class="font-bold text-lg leading-tight text-ink">Tu pedido</h2>
+        <p class="text-xs text-muted">Ajustá cantidades antes de enviar</p>
+      </div>
+      <button id="close-sheet-btn" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 active:scale-95 text-stone-600 flex items-center justify-center font-bold text-sm transition-all" aria-label="Cerrar">✕</button>
+    </div>
+
+    <!-- Lista de Productos en el Carrito (Scrollable) -->
+    <div id="cart-items" class="px-5 divide-y divide-line overflow-y-auto flex-1 min-h-[120px] max-h-[38vh]">
+      <!-- Dinámico -->
+    </div>
+
+    <!-- Datos del cliente -->
+    <div class="px-5 pt-3 pb-2 border-t border-line bg-stone-50/60 space-y-2.5">
+      <label class="block text-xs font-semibold text-stone-700">Tu nombre
+        <input id="cust-name" class="mt-1 w-full rounded-xl bg-white border border-line px-3.5 py-2 text-sm font-normal outline-none focus:border-stone-400 focus:ring-1 focus:ring-ink/10 transition-all" placeholder="Ej: Mati" />
+      </label>
+      <label class="block text-xs font-semibold text-stone-700">Notas adicionales
+        <input id="cust-notes" class="mt-1 w-full rounded-xl bg-white border border-line px-3.5 py-2 text-sm font-normal outline-none focus:border-stone-400 focus:ring-1 focus:ring-ink/10 transition-all" placeholder="Aclaraciones (hielo, horario, etc.)..." />
+      </label>
+    </div>
+
+    <!-- Footer y Checkout -->
+    <div class="p-5 border-t border-line bg-base">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-sm font-medium text-muted">Total a abonar:</span>
+        <span id="modal-total" class="font-extrabold text-2xl text-ink">$0</span>
+      </div>
+      <div class="flex gap-2">
+        <button id="close-sheet-cancel" class="rounded-2xl bg-stone-100 hover:bg-stone-200 active:scale-95 px-4 py-3 text-xs font-bold text-stone-700 transition-all">Seguir viendo</button>
+        <button id="send-wa" class="flex-1 rounded-2xl bg-wa hover:bg-[#20ba59] active:scale-95 py-3 text-sm font-bold text-white transition-all shadow-md shadow-wa/20 flex items-center justify-center gap-2">
+          <span class="text-base">✆</span>
+          <span>Enviar por WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const fmt = n => '$' + n.toLocaleString('es-AR');
+let MENU = { categorias: [], productos: [] };
+let cart = JSON.parse(localStorage.getItem('quique-cart') || '{}');
+let activeCat = 'Todos';
+let query = '';
+const PAGE_SIZE = 20;
+let displayedLimit = PAGE_SIZE;
+const cfg = window.QUIQUE_CONFIG || { WHATSAPP_NUMBER: '5491166168970', NEGOCIO: 'Despensa Quique' };
+
+window.loadMore = () => {
+  displayedLimit += PAGE_SIZE;
+  render();
+};
+
+const save = () => localStorage.setItem('quique-cart', JSON.stringify(cart));
+const countItems = () => Object.values(cart).reduce((a, b) => a + (b.qty || 0), 0);
+const cartTotal = () => Object.entries(cart).reduce((acc, [id, e]) => {
+  const p = MENU.productos.find(x => x.id === id);
+  return acc + (p ? p.precio * (e.qty || 0) : 0);
+}, 0);
+
+function renderFilters() {
+  const filtersBox = document.getElementById('filters');
+  const cats = ['Todos', ...(MENU.categorias || [])];
+  filtersBox.innerHTML = cats.map(cat => {
+    const active = cat === activeCat;
+    return `<button data-cat="${cat}" class="filter-btn shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all ${
+      active ? 'bg-ink text-white shadow-xs' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+    }">${cat}</button>`;
+  }).join('');
+
+  filtersBox.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeCat = btn.dataset.cat;
+      displayedLimit = PAGE_SIZE;
+      renderFilters();
+      render();
+    });
+  });
+}
+
+function render() {
+  const box = document.getElementById('lista');
+  const cats = (MENU.categorias && MENU.categorias.length ? MENU.categorias : ['Bebidas', 'Picadas']);
+  const groups = cats.filter(c => activeCat === 'Todos' || activeCat === c);
+  
+  const matching = MENU.productos.filter(p =>
+    groups.includes(p.categoria) && (p.nombre + ' ' + (p.descripcion || '')).toLowerCase().includes(query)
+  );
+
+  if (!matching.length) {
+    box.innerHTML = `
+      <div class="text-center py-12 px-4">
+        <p class="text-sm font-semibold text-stone-700">Sin resultados para "${query}"</p>
+        <p class="text-xs text-muted mt-1">Probá buscando con otro nombre o seleccioná otra categoría.</p>
+        ${query ? `<button onclick="document.getElementById('search').value=''; query=''; displayedLimit=PAGE_SIZE; render();" class="mt-3 px-4 py-1.5 rounded-full bg-stone-100 text-xs font-bold text-ink hover:bg-stone-200 transition-colors">Limpiar búsqueda</button>` : ''}
+      </div>`;
+  } else {
+    const visibleProducts = matching.slice(0, displayedLimit);
+    let html = '';
+
+    groups.forEach(cat => {
+      const items = visibleProducts.filter(p => p.categoria === cat);
+      if (!items.length) return;
+
+      html += `<div class="mt-4 first:mt-0">`;
+      html += `<h2 class="text-xs font-bold uppercase tracking-wider text-muted mb-2 px-1">${cat}</h2>`;
+      html += '<div class="bg-white rounded-2xl border border-line divide-y divide-line overflow-hidden shadow-xs">';
+      html += items.map(p => {
+        const qty = cart[p.id]?.qty || 0;
+        return `
+        <div class="px-4 py-3 flex gap-3 items-center justify-between hover:bg-stone-50/50 transition-colors">
+          <div class="flex-1 min-w-0 pr-2">
+            <p class="font-semibold text-sm leading-snug">${p.nombre}</p>
+            ${p.descripcion ? `<p class="text-xs text-muted leading-relaxed mt-0.5">${p.descripcion}</p>` : ''}
+            <p class="font-bold text-sm text-ink mt-1">${fmt(p.precio)}</p>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            ${qty > 0 ? `
+              <button onclick="chQty('${p.id}',-1)" aria-label="quitar uno" class="w-8 h-8 rounded-full bg-stone-200 hover:bg-stone-300 active:scale-95 text-ink text-base font-black flex items-center justify-center transition-all">−</button>
+              <span class="w-6 text-center text-sm font-bold text-ink">${qty}</span>
+            ` : ''}
+            <button onclick="chQty('${p.id}',1)" aria-label="agregar" class="h-8 ${
+              qty > 0
+                ? 'w-8 rounded-full bg-ink text-white font-bold flex items-center justify-center'
+                : 'px-3.5 rounded-full bg-ink text-white text-xs font-semibold'
+            } hover:bg-stone-800 active:scale-95 transition-all">
+              ${qty > 0 ? '+' : 'Agregar'}
+            </button>
+          </div>
+        </div>`;
+      }).join('');
+      html += '</div></div>';
+    });
+
+    if (displayedLimit < matching.length) {
+      html += `
+        <div class="text-center pt-5 pb-2">
+          <button onclick="loadMore()" class="inline-flex items-center gap-2 rounded-full border border-line bg-white hover:bg-stone-50 active:scale-95 px-5 py-2.5 text-xs font-bold text-ink shadow-xs transition-all">
+            <span>Ver más productos</span>
+            <span class="text-muted font-normal text-[11px]">(${visibleProducts.length} de ${matching.length})</span>
+          </button>
+        </div>`;
+    }
+
+    box.innerHTML = html;
+  }
+
+  const totalCount = countItems();
+  const totalAmt = cartTotal();
+  document.getElementById('cart-count').textContent = totalCount;
+  document.getElementById('cart-total').textContent = fmt(totalAmt);
+  document.getElementById('modal-total').textContent = fmt(totalAmt);
+
+  const cartbar = document.getElementById('cartbar');
+  if (totalCount > 0) {
+    cartbar.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+    cartbar.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+  } else {
+    cartbar.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
+    cartbar.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+  }
+
+  renderModalItems();
+}
+
+function renderModalItems() {
+  const box = document.getElementById('cart-items');
+  const sendBtn = document.getElementById('send-wa');
+  const ids = Object.keys(cart).filter(id => cart[id]?.qty > 0);
+
+  if (!ids.length) {
+    box.innerHTML = '<p class="text-xs text-muted py-8 text-center">Tu pedido está vacío.</p>';
+    if (sendBtn) {
+      sendBtn.disabled = true;
+      sendBtn.classList.add('opacity-50', 'pointer-events-none');
+    }
+    return;
+  }
+
+  if (sendBtn) {
+    sendBtn.disabled = false;
+    sendBtn.classList.remove('opacity-50', 'pointer-events-none');
+  }
+
+  box.innerHTML = ids.map(id => {
+    const p = MENU.productos.find(x => x.id === id);
+    if (!p) return '';
+    const q = cart[id].qty;
+    return `
+    <div class="flex items-center justify-between py-2.5 gap-2">
+      <div class="flex-1 min-w-0 pr-1">
+        <p class="font-semibold text-xs leading-snug truncate">${p.nombre}</p>
+        <p class="text-[11px] text-muted">${fmt(p.precio)} c/u</p>
+      </div>
+      <div class="flex items-center gap-1 shrink-0">
+        <button onclick="chQty('${p.id}',-1)" aria-label="Disminuir" class="w-7 h-7 rounded-full bg-stone-200 hover:bg-stone-300 active:scale-95 text-ink font-black text-xs flex items-center justify-center transition-all">
+          ${q === 1 ? '🗑' : '−'}
+        </button>
+        <span class="w-6 text-center text-xs font-bold">${q}</span>
+        <button onclick="chQty('${p.id}',1)" aria-label="Aumentar" class="w-7 h-7 rounded-full bg-ink hover:bg-stone-800 active:scale-95 text-white font-bold text-xs flex items-center justify-center transition-all">+</button>
+      </div>
+      <div class="w-16 text-right font-bold text-xs shrink-0">
+        ${fmt(p.precio * q)}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.chQty = (id, d) => {
+  const current = cart[id]?.qty || 0;
+  const q = current + d;
+  if (q <= 0) delete cart[id];
+  else cart[id] = { qty: q };
+  save();
+  render();
+
+  // Micro-interacción: ligero rebote en la barra del carrito
+  const box = document.getElementById('cartbar-box');
+  if (box && countItems() > 0) {
+    box.classList.add('scale-[1.02]');
+    setTimeout(() => box.classList.remove('scale-[1.02]'), 120);
+  }
+};
+
+function waBase(msg) {
+  return `https://wa.me/${cfg.WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
+
+function buildWaLink() {
+  const ids = Object.keys(cart).filter(id => cart[id]?.qty > 0);
+  const name = document.getElementById('cust-name').value.trim();
+  const notes = document.getElementById('cust-notes').value.trim();
+  
+  const saludoTemplate = cfg.MENSAJE_PEDIDO?.saludo || '¡Hola {negocio}! ¿Cómo están? Les comparto mi pedido:';
+  const pieTemplate = cfg.MENSAJE_PEDIDO?.pie || '¡Muchas gracias y que tengan un excelente día!';
+
+  const lines = [saludoTemplate.replace('{negocio}', cfg.NEGOCIO), ''];
+  ids.forEach(id => {
+    const p = MENU.productos.find(x => x.id === id);
+    if (p) lines.push(`• ${cart[id].qty}x ${p.nombre} (${fmt(p.precio * cart[id].qty)})`);
+  });
+  lines.push('');
+  lines.push(`*Total: ${fmt(cartTotal())}*`);
+  if (name) lines.push(`*Nombre:* ${name}`);
+  if (notes) lines.push(`*Notas:* ${notes}`);
+  lines.push('');
+  lines.push(pieTemplate.replace('{negocio}', cfg.NEGOCIO));
+
+  return waBase(lines.join('\n'));
+}
+
+function paintWaLinks() {
+  const msgTemplate = cfg.MENSAJE_CONSULTA || '¡Hola! ¿Cómo están? Quería hacerles una consulta sobre los productos de {negocio}. ¡Muchas gracias!';
+  const hello = waBase(msgTemplate.replace('{negocio}', cfg.NEGOCIO));
+  const waBtn = document.getElementById('header-wa');
+  if (waBtn) waBtn.href = hello;
+
+  const igBtn = document.getElementById('header-ig');
+  if (igBtn) {
+    if (cfg.INSTAGRAM_URL) igBtn.href = cfg.INSTAGRAM_URL;
+    else igBtn.style.display = 'none';
+  }
+}
+
+// Event Listeners
+document.getElementById('search').addEventListener('input', e => {
+  query = e.target.value.toLowerCase().trim();
+  displayedLimit = PAGE_SIZE;
+  render();
+});
+
+document.getElementById('clear-btn').onclick = () => {
+  cart = {};
+  save();
+  render();
+};
+
+// Bottom Sheet Controls
+const sheet = document.getElementById('cart-sheet');
+const backdrop = document.getElementById('sheet-backdrop');
+const panel = document.getElementById('sheet-panel');
+
+function openSheet() {
+  sheet.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    backdrop.classList.remove('opacity-0');
+    backdrop.classList.add('opacity-100');
+    panel.classList.remove('translate-y-full');
+    panel.classList.add('translate-y-0');
+  });
+  document.body.classList.add('overflow-hidden');
+}
+
+function closeSheet() {
+  backdrop.classList.remove('opacity-100');
+  backdrop.classList.add('opacity-0');
+  panel.classList.remove('translate-y-0');
+  panel.classList.add('translate-y-full');
+  setTimeout(() => {
+    sheet.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+  }, 280);
+}
+
+window.closeSheet = closeSheet;
+document.getElementById('open-cart').onclick = openSheet;
+document.getElementById('close-sheet-btn').onclick = closeSheet;
+document.getElementById('close-sheet-cancel').onclick = closeSheet;
+backdrop.onclick = closeSheet;
+
+// Cierre con Escape
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !sheet.classList.contains('hidden')) closeSheet();
+});
+
+document.getElementById('send-wa').onclick = () => {
+  if (!countItems()) return;
+  window.open(buildWaLink(), '_blank', 'noopener,noreferrer');
+};
+
+// Carga asíncrona del catálogo con Skeleton y manejo de errores
+async function loadCatalog() {
+  const box = document.getElementById('lista');
+  box.innerHTML = `
+    <div class="space-y-4 animate-pulse mt-4">
+      <div class="h-4 bg-stone-200 rounded w-28"></div>
+      <div class="bg-white rounded-2xl border border-line divide-y divide-line p-4 space-y-4">
+        <div class="h-5 bg-stone-100 rounded w-3/4"></div>
+        <div class="h-5 bg-stone-100 rounded w-1/2"></div>
+      </div>
+    </div>`;
+
+  try {
+    const res = await fetch('./menu.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    MENU = await res.json();
+    renderFilters();
+    paintWaLinks();
+    render();
+  } catch (err) {
+    box.innerHTML = `
+      <div class="text-center py-10 px-4 bg-white rounded-2xl border border-line mt-4">
+        <p class="text-sm font-bold text-red-600">No se pudo cargar el catálogo</p>
+        <p class="text-xs text-muted mt-1">Verificá que el servidor local esté corriendo para permitir la carga de datos.</p>
+        <button onclick="loadCatalog()" class="mt-4 px-4 py-2 rounded-full bg-ink text-white text-xs font-semibold hover:bg-stone-800 transition-colors">Reintentar</button>
+      </div>`;
+  }
+}
+
+// Inicialización de QR
+const url = location.href.split('#')[0];
+document.getElementById('qr-img').src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(url);
+document.getElementById('qr-url').textContent = url;
+
+loadCatalog();
+</script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+{
+  "negocio": "Despensa Quique",
+  "moneda": "$",
+  "categorias": ["Bebidas", "Picadas", "Snacks", "Almacén"],
+  "productos": [
+    {
+      "id": "coca-225",
+      "categoria": "Bebidas",
+      "nombre": "Coca-Cola 2.25 L",
+      "descripcion": "Botella descartable. Ideal para compartir.",
+      "precio": 3500,
+      "unidad": "c/u"
+    },
+    {
+      "id": "sprite-225",
+      "categoria": "Bebidas",
+      "nombre": "Sprite 2.25 L",
+      "descripcion": "Lima limón bien fría.",
+      "precio": 3400,
+      "unidad": "c/u"
+    },
+    {
+      "id": "quilmes-1l",
+      "categoria": "Bebidas",
+      "nombre": "Quilmes Clásica 1 L",
+      "descripcion": "Retornable. Precio sin envase.",
+      "precio": 2800,
+      "unidad": "c/u"
+    },
+    {
+      "id": "corona-710",
+      "categoria": "Bebidas",
+      "nombre": "Cerveza Corona 710 ml",
+      "descripcion": "Bien helada. Incluye rodaja de lima si se solicita.",
+      "precio": 4500,
+      "unidad": "c/u"
+    },
+    {
+      "id": "stella-1l",
+      "categoria": "Bebidas",
+      "nombre": "Stella Artois 1 L",
+      "descripcion": "Rubia premium bien fría.",
+      "precio": 4200,
+      "unidad": "c/u"
+    },
+    {
+      "id": "fernet-750",
+      "categoria": "Bebidas",
+      "nombre": "Fernet Branca 750 ml",
+      "descripcion": "El clásico para el fernet con coca.",
+      "precio": 12500,
+      "unidad": "c/u"
+    },
+    {
+      "id": "campari-750",
+      "categoria": "Bebidas",
+      "nombre": "Campari 750 ml",
+      "descripcion": "Aperitivo ideal para preparar con naranja o tónica.",
+      "precio": 8900,
+      "unidad": "c/u"
+    },
+    {
+      "id": "gancia-950",
+      "categoria": "Bebidas",
+      "nombre": "Gancia Americano 950 ml",
+      "descripcion": "El clásico aperitivo argentino con limón.",
+      "precio": 5600,
+      "unidad": "c/u"
+    },
+    {
+      "id": "vino-malbec",
+      "categoria": "Bebidas",
+      "nombre": "Vino Malbec 750 ml",
+      "descripcion": "Malbec reserva. Consultar bodegas disponibles.",
+      "precio": 6800,
+      "unidad": "c/u"
+    },
+    {
+      "id": "agua-mineral-2l",
+      "categoria": "Bebidas",
+      "nombre": "Agua Mineral sin gas 2 L",
+      "descripcion": "Agua de manantial natural.",
+      "precio": 1800,
+      "unidad": "c/u"
+    },
+    {
+      "id": "monster-473",
+      "categoria": "Bebidas",
+      "nombre": "Energizante Monster 473 ml",
+      "descripcion": "Lata verde clásica.",
+      "precio": 3200,
+      "unidad": "c/u"
+    },
+    {
+      "id": "picada-chica",
+      "categoria": "Picadas",
+      "nombre": "Picada Clásica (2 personas)",
+      "descripcion": "Queso tybo, salame de colonia, jamón cocido, aceitunas y maní.",
+      "precio": 9500,
+      "unidad": "c/u"
+    },
+    {
+      "id": "picada-quique",
+      "categoria": "Picadas",
+      "nombre": "Picada Quique (4 personas)",
+      "descripcion": "Doble queso, jamón crudo, bondiola, salame, aceitunas rellenas y snacks.",
+      "precio": 17500,
+      "unidad": "c/u"
+    },
+    {
+      "id": "tabla-quesos",
+      "categoria": "Picadas",
+      "nombre": "Tabla Selección de Quesos",
+      "descripcion": "Parmesano, azul, gouda y brie con frutos secos.",
+      "precio": 14200,
+      "unidad": "c/u"
+    },
+    {
+      "id": "papas-clasicas-120",
+      "categoria": "Snacks",
+      "nombre": "Papas Fritas Clásicas 120 g",
+      "descripcion": "Papas crocantes saladas.",
+      "precio": 2100,
+      "unidad": "c/u"
+    },
+    {
+      "id": "papas-rusticas-200",
+      "categoria": "Snacks",
+      "nombre": "Papas Rústicas Corte Grueso 200 g",
+      "descripcion": "Con sal marina y pimienta.",
+      "precio": 3600,
+      "unidad": "c/u"
+    },
+    {
+      "id": "mani-cervecero-150",
+      "categoria": "Snacks",
+      "nombre": "Maní Salado Cervecero 150 g",
+      "descripcion": "Tostado y crocante.",
+      "precio": 1400,
+      "unidad": "c/u"
+    },
+    {
+      "id": "nachos-queso-150",
+      "categoria": "Snacks",
+      "nombre": "Nachos de Maíz con Dip de Queso",
+      "descripcion": "Bolsa de nachos con pote individual de cheddar.",
+      "precio": 3900,
+      "unidad": "c/u"
+    },
+    {
+      "id": "chizitos-100",
+      "categoria": "Snacks",
+      "nombre": "Snacks de Queso Horneados 100 g",
+      "descripcion": "Textura aireada y suave sabor a queso.",
+      "precio": 1700,
+      "unidad": "c/u"
+    },
+    {
+      "id": "hielo-4kg",
+      "categoria": "Almacén",
+      "nombre": "Bolsa de Hielo Rolito 4 kg",
+      "descripcion": "Cubos macizos de agua purificada.",
+      "precio": 2500,
+      "unidad": "c/u"
+    },
+    {
+      "id": "carbon-4kg",
+      "categoria": "Almacén",
+      "nombre": "Bolsa de Carbón Vegetal 4 kg",
+      "descripcion": "Quebracho blanco de alto poder calórico.",
+      "precio": 4200,
+      "unidad": "c/u"
+    },
+    {
+      "id": "vasos-descartables-10",
+      "categoria": "Almacén",
+      "nombre": "Vasos Plásticos 500 ml (Pack x10)",
+      "descripcion": "Especiales para trago largo o cerveza.",
+      "precio": 1900,
+      "unidad": "c/u"
+    },
+    {
+      "id": "servilletas-pack",
+      "categoria": "Almacén",
+      "nombre": "Servilletas de Papel (Pack x80)",
+      "descripcion": "Doble hoja absorbente.",
+      "precio": 1200,
+      "unidad": "c/u"
+    }
+  ]
+}
