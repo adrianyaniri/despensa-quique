@@ -2,8 +2,8 @@
 export const CONFIG = {
   WHATSAPP_NUMBER: import.meta.env?.VITE_WHATSAPP_NUMBER || "",
   NEGOCIO: import.meta.env?.VITE_NEGOCIO || "Almacén Quique",
-  INSTAGRAM_URL: import.meta.env?.VITE_INSTAGRAM_URL || "",
-  INSTAGRAM_HANDLE: import.meta.env?.VITE_INSTAGRAM_HANDLE || "",
+  INSTAGRAM_URL: import.meta.env?.VITE_INSTAGRAM_URL || "https://instagram.com/almacen.quique",
+  INSTAGRAM_HANDLE: import.meta.env?.VITE_INSTAGRAM_HANDLE || "@almacen.quique",
   CATALOGO_URL: import.meta.env?.VITE_CATALOGO_URL || "",
   SUPABASE_URL: import.meta.env?.VITE_SUPABASE_URL || "",
   SUPABASE_ANON_KEY: import.meta.env?.VITE_SUPABASE_ANON_KEY || "",

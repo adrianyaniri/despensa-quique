@@ -756,7 +756,7 @@ async function updatePrintPoster() {
   }
 
   if (printIg) {
-    const handle = CONFIG.INSTAGRAM_HANDLE || '@almacenquique';
+    const handle = CONFIG.INSTAGRAM_HANDLE || '@almacen.quique';
     printIg.textContent = `📷 Instagram: ${handle}`;
   }
 }
