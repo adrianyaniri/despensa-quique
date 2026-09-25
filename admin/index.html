@@ -17,15 +17,16 @@
     <span id="toast-msg">Acción completada</span>
   </div>
 
-  <!-- ================== VISTA DE LOGIN ================== -->
+  <!-- ================== VISTA DE LOGIN Y RECUPERACIÓN ================== -->
   <div id="login-view" class="flex-1 flex items-center justify-center p-4">
     <div class="w-full max-w-sm bg-white rounded-3xl border border-line p-6 sm:p-7 shadow-xl">
       <div class="text-center mb-6">
         <img src="/logo/logo.png" alt="Almacén Quique" class="w-16 h-16 rounded-2xl mx-auto border border-line shadow-xs object-cover" />
-        <h1 class="text-xl font-extrabold text-ink mt-3">Panel de Control</h1>
-        <p class="text-xs text-muted mt-0.5">Almacén Quique — Iniciar Sesión</p>
+        <h1 id="auth-title" class="text-xl font-extrabold text-ink mt-3">Panel de Control</h1>
+        <p id="auth-subtitle" class="text-xs text-muted mt-0.5">Almacén Quique — Iniciar Sesión</p>
       </div>
 
+      <!-- Formulario de Inicio de Sesión Normal -->
       <form id="login-form" class="space-y-3.5">
         <div>
           <label class="block text-xs font-semibold text-stone-700 mb-1">Correo electrónico</label>
@@ -34,7 +35,12 @@
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-stone-700 mb-1">Contraseña</label>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-semibold text-stone-700">Contraseña</label>
+            <button type="button" id="btn-show-forgot" class="text-[11px] text-stone-500 hover:text-ink underline cursor-pointer">
+              ¿Olvidaste tu contraseña?
+            </button>
+          </div>
           <input id="login-password" type="password" required placeholder="••••••••" autocomplete="current-password"
             class="w-full rounded-xl bg-stone-50 border border-line px-3.5 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-ink/10 focus:border-stone-400 transition-all" />
         </div>
@@ -45,6 +51,32 @@
           class="w-full rounded-xl bg-ink text-white py-3 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs cursor-pointer">
           Iniciar Sesión
         </button>
+      </form>
+
+      <!-- Formulario de Recuperación de Contraseña -->
+      <form id="forgot-form" class="hidden space-y-3.5">
+        <p class="text-xs text-stone-600 leading-relaxed">
+          Ingresá tu correo electrónico registrado y te enviaremos un enlace seguro para restablecer tu contraseña.
+        </p>
+
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Correo electrónico</label>
+          <input id="forgot-email" type="email" required placeholder="admin@almacen.com"
+            class="w-full rounded-xl bg-stone-50 border border-line px-3.5 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-ink/10 focus:border-stone-400 transition-all" />
+        </div>
+
+        <div id="forgot-msg" class="hidden text-xs p-2.5 rounded-xl"></div>
+
+        <button id="forgot-btn" type="submit"
+          class="w-full rounded-xl bg-ink text-white py-3 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs cursor-pointer">
+          Enviar enlace de recuperación
+        </button>
+
+        <div class="text-center pt-2">
+          <button type="button" id="btn-back-login" class="text-xs text-stone-600 hover:text-ink font-semibold underline cursor-pointer">
+            &larr; Volver al inicio de sesión
+          </button>
+        </div>
       </form>
 
       <div class="mt-5 pt-4 border-t border-line text-center">
@@ -69,9 +101,17 @@
         </div>
 
         <div class="flex items-center gap-2 shrink-0">
+          <!-- Botón Cambiar Contraseña -->
+          <button id="btn-change-pwd" type="button" title="Cambiar contraseña de acceso"
+            class="rounded-xl border border-line px-2.5 py-1.5 text-xs font-semibold text-stone-700 hover:bg-stone-50 active:scale-95 transition-all inline-flex items-center gap-1 cursor-pointer">
+            <span>🔑</span>
+            <span class="hidden sm:inline">Cambiar clave</span>
+          </button>
+
           <a href="/" target="_blank" class="rounded-xl border border-line px-3 py-1.5 text-xs font-semibold text-stone-700 hover:bg-stone-50 transition-colors inline-flex items-center gap-1">
             <span>Ver web</span> ↗
           </a>
+
           <button id="logout-btn" class="rounded-xl bg-stone-100 hover:bg-stone-200 active:scale-95 px-3 py-1.5 text-xs font-bold text-stone-700 transition-colors cursor-pointer">
             Salir
           </button>
@@ -197,7 +237,7 @@
     </main>
   </div>
 
-  <!-- ================== MODAL DE PRODUCTO ================== -->
+  <!-- ================== MODAL DE PRODUCTO (CON CATEGORÍAS INTELIGENTES) ================== -->
   <dialog id="product-modal" class="rounded-3xl border border-line p-0 backdrop:bg-ink/40 shadow-2xl max-w-sm w-[90vw] mx-auto">
     <div class="p-5 sm:p-6">
       <div class="flex items-center justify-between mb-4">
@@ -214,12 +254,25 @@
             class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
         </div>
 
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-xs font-semibold text-stone-700 mb-1">Categoría</label>
-            <input id="prod-category" type="text" required placeholder="Bebidas"
-              class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-semibold text-stone-700">Categoría</label>
+            <span class="text-[10px] text-muted">Elegí o escribí una nueva</span>
           </div>
+          <input id="prod-category" list="category-datalist" type="text" required placeholder="Ej: Bebidas, Picadas..."
+            class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
+          
+          <datalist id="category-datalist">
+            <!-- Rellenado dinámicamente con categorías existentes -->
+          </datalist>
+
+          <!-- Píldoras de selección rápida de categorías existentes -->
+          <div id="quick-category-pills" class="flex flex-wrap gap-1 pt-1">
+            <!-- Dinámico -->
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-2">
           <div>
             <label class="block text-xs font-semibold text-stone-700 mb-1">Precio ($)</label>
             <input id="prod-price" type="number" step="50" min="0" required placeholder="2500"
@@ -245,6 +298,65 @@
             Guardar
           </button>
         </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- ================== MODAL PARA CAMBIAR CONTRASEÑA (DESDE EL PANEL) ================== -->
+  <dialog id="change-pwd-modal" class="rounded-3xl border border-line p-0 backdrop:bg-ink/40 shadow-2xl max-w-sm w-[90vw] mx-auto">
+    <div class="p-5 sm:p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="font-extrabold text-base text-ink">Cambiar Contraseña</h3>
+          <p class="text-xs text-muted">Actualizá tu clave de acceso al panel</p>
+        </div>
+        <button id="cancel-change-pwd-btn" type="button" class="text-stone-400 hover:text-ink text-lg leading-none font-bold p-1 cursor-pointer">✕</button>
+      </div>
+
+      <form id="change-pwd-form" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Nueva Contraseña</label>
+          <input id="new-password-input" type="password" required minlength="6" placeholder="Mínimo 6 caracteres"
+            class="w-full rounded-xl bg-stone-50 border border-line px-3.5 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-ink/10 focus:border-stone-400" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Confirmar Nueva Contraseña</label>
+          <input id="confirm-password-input" type="password" required minlength="6" placeholder="Repetí la contraseña"
+            class="w-full rounded-xl bg-stone-50 border border-line px-3.5 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-ink/10 focus:border-stone-400" />
+        </div>
+
+        <div id="change-pwd-error" class="hidden text-xs text-red-600 bg-red-50 p-2.5 rounded-xl border border-red-200"></div>
+
+        <button id="save-pwd-btn" type="submit"
+          class="w-full rounded-xl bg-ink text-white py-3 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs cursor-pointer">
+          Actualizar Contraseña
+        </button>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- ================== MODAL PARA REESTABLECER CONTRASEÑA (DESDE ENLACE DE RECUPERACIÓN) ================== -->
+  <dialog id="recovery-pwd-modal" class="rounded-3xl border border-line p-0 backdrop:bg-ink/40 shadow-2xl max-w-sm w-[90vw] mx-auto">
+    <div class="p-5 sm:p-6">
+      <div class="text-center mb-4">
+        <h3 class="font-extrabold text-base text-ink">Crear Nueva Contraseña</h3>
+        <p class="text-xs text-muted mt-0.5">Ingresá tu nueva clave para acceder</p>
+      </div>
+
+      <form id="recovery-pwd-form" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Nueva Contraseña</label>
+          <input id="recovery-password-input" type="password" required minlength="6" placeholder="Mínimo 6 caracteres"
+            class="w-full rounded-xl bg-stone-50 border border-line px-3.5 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-ink/10 focus:border-stone-400" />
+        </div>
+
+        <div id="recovery-pwd-error" class="hidden text-xs text-red-600 bg-red-50 p-2.5 rounded-xl border border-red-200"></div>
+
+        <button id="save-recovery-pwd-btn" type="submit"
+          class="w-full rounded-xl bg-ink text-white py-3 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs cursor-pointer">
+          Guardar y Entrar
+        </button>
       </form>
     </div>
   </dialog>

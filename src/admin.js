@@ -14,17 +14,24 @@ export function showToast(msg, isError = false) {
   if (msgEl) msgEl.textContent = msg;
   if (iconEl) iconEl.textContent = isError ? '⚠' : '✓';
   
-  toast.className = `fixed top-4 right-4 z-50 transition-all duration-300 ${isError ? 'bg-red-600' : 'bg-ink'} text-white px-4 py-2.5 rounded-2xl shadow-xl text-xs font-semibold flex items-center gap-2 transform translate-y-0 opacity-100 pointer-events-auto`;
+  toast.className = `fixed top-4 right-4 left-4 sm:left-auto sm:max-w-xs z-50 transition-all duration-300 ${isError ? 'bg-red-600' : 'bg-ink'} text-white px-4 py-3 rounded-2xl shadow-xl text-xs font-semibold flex items-center gap-2 transform translate-y-0 opacity-100 pointer-events-auto`;
   setTimeout(() => {
-    toast.className = 'fixed top-4 right-4 z-50 transition-all duration-300 bg-ink text-white px-4 py-2.5 rounded-2xl shadow-xl text-xs font-semibold flex items-center gap-2 transform -translate-y-12 opacity-0 pointer-events-none';
+    toast.className = 'fixed top-4 right-4 left-4 sm:left-auto sm:max-w-xs z-50 transition-all duration-300 bg-ink text-white px-4 py-3 rounded-2xl shadow-xl text-xs font-semibold flex items-center gap-2 transform -translate-y-12 opacity-0 pointer-events-none';
   }, 2500);
 }
 
 // Auth State Listener
-sbClient.auth.onAuthStateChange((event, session) => {
+sbClient.auth.onAuthStateChange(async (event, session) => {
   const loginView = document.getElementById('login-view');
   const dashboardView = document.getElementById('dashboard-view');
   const userEmail = document.getElementById('user-email');
+
+  if (event === 'PASSWORD_RECOVERY') {
+    // El usuario vino desde el enlace de recuperación de contraseña en su correo
+    const recoveryModal = document.getElementById('recovery-pwd-modal');
+    if (recoveryModal) recoveryModal.showModal();
+    return;
+  }
 
   if (session) {
     if (loginView) loginView.classList.add('hidden');
@@ -55,7 +62,7 @@ async function initSession() {
   }
 }
 
-// Login Form
+// Login Form Submit
 const loginForm = document.getElementById('login-form');
 if (loginForm) {
   loginForm.addEventListener('submit', async (e) => {
@@ -78,6 +85,155 @@ if (loginForm) {
       errorBox.classList.remove('hidden');
     } else {
       showToast('Bienvenido al panel');
+    }
+  });
+}
+
+// Toggle between Login Form and Forgot Password Form
+const btnShowForgot = document.getElementById('btn-show-forgot');
+const btnBackLogin = document.getElementById('btn-back-login');
+const forgotForm = document.getElementById('forgot-form');
+const authTitle = document.getElementById('auth-title');
+const authSubtitle = document.getElementById('auth-subtitle');
+
+if (btnShowForgot && forgotForm && loginForm) {
+  btnShowForgot.addEventListener('click', () => {
+    loginForm.classList.add('hidden');
+    forgotForm.classList.remove('hidden');
+    if (authTitle) authTitle.textContent = 'Recuperar Acceso';
+    if (authSubtitle) authSubtitle.textContent = 'Restablecé tu contraseña de administrador';
+  });
+}
+
+if (btnBackLogin && forgotForm && loginForm) {
+  btnBackLogin.addEventListener('click', () => {
+    forgotForm.classList.add('hidden');
+    loginForm.classList.remove('hidden');
+    if (authTitle) authTitle.textContent = 'Panel de Control';
+    if (authSubtitle) authSubtitle.textContent = 'Almacén Quique — Iniciar Sesión';
+  });
+}
+
+// Forgot Password Form Submit
+if (forgotForm) {
+  forgotForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('forgot-email').value.trim();
+    const msgBox = document.getElementById('forgot-msg');
+    const btn = document.getElementById('forgot-btn');
+
+    msgBox.className = 'hidden';
+    btn.disabled = true;
+    btn.textContent = 'Enviando enlace...';
+
+    const { error } = await sbClient.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/admin'
+    });
+
+    btn.disabled = false;
+    btn.textContent = 'Enviar enlace de recuperación';
+
+    if (error) {
+      msgBox.textContent = 'Error: ' + error.message;
+      msgBox.className = 'text-xs text-red-600 bg-red-50 p-2.5 rounded-xl border border-red-200 block';
+    } else {
+      msgBox.textContent = '✓ ¡Listo! Te enviamos un correo con el enlace seguro para crear una nueva clave.';
+      msgBox.className = 'text-xs text-emerald-800 bg-emerald-50 p-2.5 rounded-xl border border-emerald-200 block font-semibold';
+      document.getElementById('forgot-email').value = '';
+    }
+  });
+}
+
+// Modal Recovery Password (al volver del correo)
+const recoveryModal = document.getElementById('recovery-pwd-modal');
+const recoveryForm = document.getElementById('recovery-pwd-form');
+if (recoveryForm && recoveryModal) {
+  recoveryForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const password = document.getElementById('recovery-password-input').value;
+    const errorBox = document.getElementById('recovery-pwd-error');
+    const btn = document.getElementById('save-recovery-pwd-btn');
+
+    if (password.length < 6) {
+      errorBox.textContent = 'La contraseña debe tener al menos 6 caracteres.';
+      errorBox.classList.remove('hidden');
+      return;
+    }
+
+    errorBox.classList.add('hidden');
+    btn.disabled = true;
+    btn.textContent = 'Guardando...';
+
+    const { error } = await sbClient.auth.updateUser({ password });
+    btn.disabled = false;
+    btn.textContent = 'Guardar y Entrar';
+
+    if (error) {
+      errorBox.textContent = 'Error al actualizar contraseña: ' + error.message;
+      errorBox.classList.remove('hidden');
+    } else {
+      recoveryModal.close();
+      showToast('¡Contraseña reestablecida con éxito!');
+      initSession();
+    }
+  });
+}
+
+// Modal Cambiar Contraseña (desde el dashboard)
+const changePwdBtn = document.getElementById('btn-change-pwd');
+const changePwdModal = document.getElementById('change-pwd-modal');
+const cancelChangePwdBtn = document.getElementById('cancel-change-pwd-btn');
+const changePwdForm = document.getElementById('change-pwd-form');
+
+if (changePwdBtn && changePwdModal) {
+  changePwdBtn.addEventListener('click', () => {
+    document.getElementById('new-password-input').value = '';
+    document.getElementById('confirm-password-input').value = '';
+    document.getElementById('change-pwd-error').classList.add('hidden');
+    changePwdModal.showModal();
+  });
+}
+
+if (cancelChangePwdBtn && changePwdModal) {
+  cancelChangePwdBtn.addEventListener('click', () => {
+    changePwdModal.close();
+  });
+}
+
+if (changePwdForm && changePwdModal) {
+  changePwdForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const newPwd = document.getElementById('new-password-input').value;
+    const confirmPwd = document.getElementById('confirm-password-input').value;
+    const errorBox = document.getElementById('change-pwd-error');
+    const btn = document.getElementById('save-pwd-btn');
+
+    if (newPwd.length < 6) {
+      errorBox.textContent = 'La nueva contraseña debe tener al menos 6 caracteres.';
+      errorBox.classList.remove('hidden');
+      return;
+    }
+
+    if (newPwd !== confirmPwd) {
+      errorBox.textContent = 'Las contraseñas no coinciden.';
+      errorBox.classList.remove('hidden');
+      return;
+    }
+
+    errorBox.classList.add('hidden');
+    btn.disabled = true;
+    btn.textContent = 'Actualizando...';
+
+    const { error } = await sbClient.auth.updateUser({ password: newPwd });
+    btn.disabled = false;
+    btn.textContent = 'Actualizar Contraseña';
+
+    if (error) {
+      errorBox.textContent = 'Error al actualizar: ' + error.message;
+      errorBox.classList.remove('hidden');
+    } else {
+      changePwdModal.close();
+      showToast('Contraseña modificada correctamente');
     }
   });
 }
@@ -125,21 +281,55 @@ function renderStats() {
   if (elInactive) elInactive.textContent = inactive;
 }
 
+// Categorías y Auto-relleno inteligente
 function renderCategories() {
   const catBox = document.getElementById('admin-categories');
-  if (!catBox) return;
-  const cats = ['Todos', ...new Set(products.map(p => p.categoria).filter(Boolean))];
-  catBox.innerHTML = cats.map(c => `
-    <button type="button" data-cat="${c}" class="admin-cat-btn shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all ${
-      c === activeAdminCat ? 'bg-ink text-white shadow-xs' : 'bg-white border border-line text-stone-600 hover:bg-stone-100'
-    }">${c}</button>
+  const datalist = document.getElementById('category-datalist');
+  const uniqueCats = [...new Set(products.map(p => p.categoria).filter(Boolean))];
+
+  // 1. Píldoras del filtro superior
+  if (catBox) {
+    const filterCats = ['Todos', ...uniqueCats];
+    catBox.innerHTML = filterCats.map(c => `
+      <button type="button" data-cat="${c}" class="admin-cat-btn shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all ${
+        c === activeAdminCat ? 'bg-ink text-white shadow-xs' : 'bg-white border border-line text-stone-600 hover:bg-stone-100'
+      }">${c}</button>
+    `).join('');
+
+    catBox.querySelectorAll('.admin-cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeAdminCat = btn.getAttribute('data-cat');
+        renderCategories();
+        renderProducts();
+      });
+    });
+  }
+
+  // 2. Opciones del Datalist para auto-completar
+  if (datalist) {
+    datalist.innerHTML = uniqueCats.map(c => `<option value="${c}"></option>`).join('');
+  }
+
+  // 3. Píldoras de selección rápida en el modal de producto
+  renderQuickCategoryPills(uniqueCats);
+}
+
+function renderQuickCategoryPills(categories) {
+  const pillsBox = document.getElementById('quick-category-pills');
+  if (!pillsBox) return;
+
+  pillsBox.innerHTML = categories.map(c => `
+    <button type="button" data-choose-cat="${c}"
+      class="quick-cat-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-stone-100 hover:bg-stone-200 active:scale-95 text-stone-700 transition-colors cursor-pointer border border-stone-200">
+      ${c}
+    </button>
   `).join('');
 
-  catBox.querySelectorAll('.admin-cat-btn').forEach(btn => {
+  pillsBox.querySelectorAll('.quick-cat-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      activeAdminCat = btn.getAttribute('data-cat');
-      renderCategories();
-      renderProducts();
+      const cat = btn.getAttribute('data-choose-cat');
+      const input = document.getElementById('prod-category');
+      if (input) input.value = cat;
     });
   });
 }
@@ -170,9 +360,9 @@ function renderProducts() {
   table.innerHTML = filtered.map(p => {
     const isAvailable = p.disponible !== false;
     return `
-    <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-stone-50/70 transition-colors border-b border-line/60 last:border-0">
+    <div class="p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-stone-50/70 transition-colors border-b border-line/60 last:border-0">
       <div class="flex-1 min-w-0">
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
           <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-bold uppercase ${
             p.categoria === 'Bebidas' ? 'bg-blue-50 text-blue-700' :
             p.categoria === 'Cervezas' ? 'bg-amber-50 text-amber-700' :
@@ -184,7 +374,7 @@ function renderProducts() {
         ${p.descripcion ? `<p class="text-xs text-muted truncate mt-0.5">${p.descripcion}</p>` : ''}
       </div>
 
-      <div class="flex items-center justify-between sm:justify-end gap-3 shrink-0 pt-2 sm:pt-0 border-t sm:border-0 border-stone-100">
+      <div class="flex items-center justify-between sm:justify-end gap-3 shrink-0 pt-2.5 sm:pt-0 border-t sm:border-0 border-stone-100">
         <!-- Input de Precio Rápido -->
         <div class="flex items-center gap-1">
           <span class="text-xs font-bold text-stone-400">$</span>
@@ -211,7 +401,7 @@ function renderProducts() {
     </div>`;
   }).join('');
 
-  // Attach event listeners
+  // Eventos de precio rápido
   table.querySelectorAll('.price-input').forEach(input => {
     input.addEventListener('change', async (e) => {
       const id = e.target.getAttribute('data-id');
@@ -235,6 +425,7 @@ function renderProducts() {
     });
   });
 
+  // Eventos de stock
   table.querySelectorAll('.stock-toggle').forEach(chk => {
     chk.addEventListener('change', async (e) => {
       const id = e.target.getAttribute('data-id');
@@ -292,7 +483,7 @@ async function deleteProduct(id, name) {
   }
 }
 
-// Modal Agregar / Editar
+// Modal Agregar / Editar Producto
 const modal = document.getElementById('product-modal');
 const addProdBtn = document.getElementById('add-product-btn');
 const cancelModalBtn = document.getElementById('cancel-modal-btn');
@@ -394,7 +585,7 @@ if (prodForm) {
   });
 }
 
-// Print Poster Trigger
+// Imprimir Cartel
 const printPosterBtn = document.getElementById('print-poster-btn');
 if (printPosterBtn) {
   printPosterBtn.addEventListener('click', () => {
@@ -402,5 +593,5 @@ if (printPosterBtn) {
   });
 }
 
-// Initialize on DOM load
+// Inicializar
 initSession();
