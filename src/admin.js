@@ -380,6 +380,7 @@ if (settingsForm && settingsModal) {
     saveBtn.textContent = 'Guardar Configuración';
     settingsModal.close();
     showToast('¡Ajustes de WhatsApp guardados!');
+    updatePrintPoster();
   });
 }
 
@@ -730,13 +731,47 @@ if (prodForm) {
   });
 }
 
+// ================== ACTUALIZACIÓN DINÁMICA DEL CARTEL IMPRESO A4 ==================
+async function updatePrintPoster() {
+  const s = await getStoredSettings();
+  const printNegocio = document.getElementById('print-negocio');
+  const printUrl = document.getElementById('print-url');
+  const printWa = document.getElementById('print-wa');
+  const printIg = document.getElementById('print-ig');
+
+  if (printNegocio) printNegocio.textContent = CONFIG.NEGOCIO || 'Almacén Quique';
+  if (printUrl) printUrl.textContent = CONFIG.CATALOGO_URL || (window.location.origin + '/precios');
+
+  if (printWa) {
+    const rawNumber = String(s.whatsapp_number || CONFIG.WHATSAPP_NUMBER || '').trim();
+    let formattedNumber = rawNumber;
+    // Si viene en formato internacional ej 5491166168970 -> 11 6616-8970
+    if (rawNumber.startsWith('549') && rawNumber.length === 13) {
+      const area = rawNumber.slice(3, 5); // 11
+      const p1 = rawNumber.slice(5, 9);   // 6616
+      const p2 = rawNumber.slice(9);      // 8970
+      formattedNumber = `${area} ${p1}-${p2}`;
+    }
+    printWa.textContent = `✆ WhatsApp: ${formattedNumber}`;
+  }
+
+  if (printIg) {
+    const handle = CONFIG.INSTAGRAM_HANDLE || '@almacenquique';
+    printIg.textContent = `📷 Instagram: ${handle}`;
+  }
+}
+
 // Imprimir Cartel
 const printPosterBtn = document.getElementById('print-poster-btn');
 if (printPosterBtn) {
-  printPosterBtn.addEventListener('click', () => {
+  printPosterBtn.addEventListener('click', async () => {
+    await updatePrintPoster();
     window.print();
   });
 }
 
+window.addEventListener('beforeprint', updatePrintPoster);
+
 // Inicializar
 initSession();
+updatePrintPoster();
