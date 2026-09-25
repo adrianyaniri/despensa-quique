@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --color-base: #FFFEFB;
+  --color-ink: #1F1C19;
+  --color-muted: #7A736C;
+  --color-line: #EDE7DD;
+  --color-wa: #25D366;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* Custom scrollbar and utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media print {
+  body {
+    background: white !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}
+.print-only {
+  display: none;
+}

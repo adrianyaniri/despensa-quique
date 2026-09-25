@@ -1,629 +1,286 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Despensa Quique — Bebidas y Picadas</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: { base: '#FFFEFB', ink: '#1F1C19', muted: '#7A736C', line: '#EDE7DD', wa: '#25D366' },
-      fontFamily: { body: ['Inter', 'system-ui', 'sans-serif'] }
-    }
-  }
-}
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="./config.js"></script>
-<style>
-  body { background: #FFFEFB; -webkit-tap-highlight-color: transparent; }
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  @media print {
-    body { background: white !important; }
-    .no-print { display: none !important; }
-    .print-only { display: block !important; }
-  }
-  .print-only { display: none; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Despensa Quique</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css">
+  <link rel="icon" type="image/png" href="/logo/logo.png">
 </head>
-<body class="font-body text-ink min-h-screen antialiased flex flex-col selection:bg-ink selection:text-white">
+<body class="font-body text-ink min-h-screen antialiased flex flex-col bg-[#F8F6F0]">
 
-<!-- Header Unificado de Alta Gama para Mobile -->
-<header class="sticky top-0 z-30 bg-base/95 backdrop-blur-md border-b border-line shadow-xs">
-  <div class="max-w-xl mx-auto px-4 pt-3 pb-2.5">
-    <!-- Fila de Identidad y Contacto -->
-    <div class="flex items-center justify-between gap-3 mb-2.5">
-      <div class="flex items-center gap-3 min-w-0">
-        <img src="./logo/logo.png" alt="Despensa Quique" class="w-12 h-12 rounded-2xl object-cover bg-white border border-line shadow-xs shrink-0" />
-        <div class="min-w-0">
-          <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-lg leading-tight truncate text-ink">Despensa Quique</h1>
-            <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200 shrink-0">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Abierto
-            </span>
-          </div>
-          <p class="text-xs text-muted truncate mt-0.5">Bebidas frías, picadas y almacén</p>
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed top-4 right-4 z-50 transform -translate-y-12 opacity-0 pointer-events-none transition-all duration-300 bg-ink text-white px-4 py-2.5 rounded-2xl shadow-xl text-xs font-semibold flex items-center gap-2">
+    <span id="toast-icon">✓</span>
+    <span id="toast-msg">Acción completada</span>
+  </div>
+
+  <!-- ================== VISTA DE LOGIN ================== -->
+  <div id="login-view" class="flex-1 flex items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-white rounded-3xl border border-line p-7 shadow-xl">
+      <div class="text-center mb-6">
+        <img src="/logo/logo.png" alt="Despensa Quique" class="w-16 h-16 rounded-2xl mx-auto border border-line shadow-xs object-cover" />
+        <h1 class="text-xl font-extrabold text-ink mt-3">Panel de Control</h1>
+        <p class="text-xs text-muted mt-0.5">Despensa Quique — Iniciar Sesión</p>
+      </div>
+
+      <form id="login-form" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Correo electrónico</label>
+          <input id="login-email" type="email" required placeholder="admin@despensa.com"
+            class="w-full rounded-xl bg-stone-50 border border-line px-3.5 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-ink/10 focus:border-stone-400 transition-all" />
         </div>
-      </div>
-      
-      <div class="flex items-center gap-1.5 shrink-0 no-print">
-        <a id="header-ig" href="#" target="_blank" rel="noopener"
-           class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-stone-100 hover:bg-pink-50 hover:text-pink-600 active:scale-95 text-stone-700 transition-all border border-stone-200"
-           aria-label="Instagram">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        </a>
-        <a id="header-wa" href="#" target="_blank" rel="noopener"
-           class="inline-flex items-center gap-1.5 rounded-full bg-wa hover:bg-[#20ba59] active:scale-95 text-white px-3.5 py-1.5 text-xs font-bold shadow-xs transition-all"
-           aria-label="WhatsApp">
-          <span class="text-sm">✆</span>
-          <span class="hidden sm:inline">Consultar</span>
-        </a>
-      </div>
-    </div>
 
-    <!-- Buscador -->
-    <div class="relative no-print mb-2.5">
-      <input id="search" type="search" placeholder="Buscar bebidas, picadas, snacks..." autocomplete="off"
-        class="w-full rounded-2xl bg-stone-100/80 hover:bg-stone-100 pl-10 pr-4 py-2 text-sm outline-none placeholder:text-stone-400 focus:bg-white focus:ring-2 focus:ring-ink/10 transition-all border border-transparent focus:border-stone-200" />
-      <span class="absolute left-3.5 top-2.5 text-stone-400 text-xs select-none">🔍</span>
-    </div>
-
-    <!-- Píldoras de Categorías con Scroll Horizontal Fluido -->
-    <div class="flex gap-2 overflow-x-auto no-scrollbar no-print py-0.5" id="filters">
-      <!-- Generado dinámicamente -->
-    </div>
-  </div>
-</header>
-
-<!-- Contenido Principal -->
-<main class="max-w-xl mx-auto px-4 pt-4 pb-36 flex-1 w-full">
-  <div id="lista" class="space-y-6"></div>
-
-  <!-- Sección de QR para mostrador y descarga -->
-  <section class="mt-10 rounded-3xl border border-line p-5 bg-white shadow-xs no-print">
-    <div>
-      <h2 class="font-bold text-sm text-ink">Cartelería y QR para compartir</h2>
-      <p class="text-xs text-muted mt-0.5">Descargá la imagen en alta definición para mandar por WhatsApp/redes o imprimí el cartel para tu local.</p>
-    </div>
-    
-    <div class="flex flex-col sm:flex-row items-center gap-4 mt-4 pt-3 border-t border-line">
-      <div class="relative p-2.5 bg-stone-50 rounded-2xl border border-line shrink-0">
-        <img id="qr-img" alt="QR del catálogo" class="w-28 h-28 rounded-xl bg-white" />
-        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div class="w-8 h-8 rounded-lg bg-white p-0.5 border border-line shadow-xs flex items-center justify-center">
-            <img src="./logo/logo.png" alt="Logo" class="w-full h-full object-cover rounded-md" />
-          </div>
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Contraseña</label>
+          <input id="login-password" type="password" required placeholder="••••••••"
+            class="w-full rounded-xl bg-stone-50 border border-line px-3.5 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-ink/10 focus:border-stone-400 transition-all" />
         </div>
-      </div>
-      <div class="space-y-2.5 w-full sm:w-auto">
-        <div class="flex flex-wrap gap-2">
-          <button onclick="downloadQr()" class="inline-flex items-center gap-1.5 rounded-full bg-ink text-white px-4 py-2 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs">
-            <span>📥 Descargar QR con Logo (HD)</span>
-          </button>
-          <button onclick="window.print()" class="inline-flex items-center gap-1.5 rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 active:scale-95 px-4 py-2 text-xs font-semibold transition-all">
-            <span>🖨️ Imprimir Cartel</span>
-          </button>
-        </div>
-        <p class="text-[11px] text-muted">URL vinculada: <span id="qr-url" class="font-mono text-ink font-medium break-all"></span></p>
-      </div>
-    </div>
-  </section>
 
-  <div class="mt-8 text-center no-print">
-    <a href="./admin.html" class="inline-flex items-center gap-1 text-[11px] text-stone-400 hover:text-stone-700 transition-colors">
-      <span>🔒</span>
-      <span>Administración del local</span>
-    </a>
-  </div>
-</main>
+        <div id="login-error" class="hidden text-xs text-red-600 bg-red-50 p-2.5 rounded-xl border border-red-200"></div>
 
-<!-- Cartel de mostrador optimizado para imprimir (solo visible al imprimir) -->
-<div class="print-only text-center py-12 px-6 max-w-md mx-auto">
-  <img src="./logo/logo.png" alt="Despensa Quique" class="w-24 h-24 mx-auto rounded-3xl mb-3 border border-stone-300 object-cover" />
-  <h1 class="text-3xl font-black tracking-tight text-black">Despensa Quique</h1>
-  <p class="text-sm text-stone-600 mt-1 font-semibold">Bebidas bien frías, picadas y almacén</p>
-  
-  <div class="my-6 p-6 inline-block bg-white border-2 border-dashed border-stone-300 rounded-3xl relative">
-    <img id="qr-img-print" class="w-72 h-72 mx-auto" alt="Código QR del local" />
-    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-      <div class="w-18 h-18 rounded-2xl bg-white p-1.5 border-2 border-stone-200 shadow-sm flex items-center justify-center">
-        <img src="./logo/logo.png" alt="Logo" class="w-full h-full object-cover rounded-xl" />
-      </div>
-    </div>
-  </div>
-
-  <p class="text-xl font-bold text-black">Escaneá con la cámara de tu celular</p>
-  <p class="text-sm text-stone-600 mt-1">Elegí tus productos y hacé tu pedido directo por WhatsApp</p>
-</div>
-
-<!-- Barra Flotante Inferior del Carrito -->
-<aside id="cartbar" class="fixed bottom-0 inset-x-0 z-30 no-print transition-all duration-300 ease-out transform translate-y-full opacity-0 pointer-events-none">
-  <div class="max-w-xl mx-auto px-4 pb-4">
-    <div id="cartbar-box" class="rounded-2xl bg-ink text-white shadow-2xl p-3 flex items-center justify-between gap-3 transition-transform duration-150">
-      <div class="pl-2">
-        <p class="text-[11px] text-stone-300 uppercase tracking-wide font-medium"><span id="cart-count">0</span> ítems en el carrito</p>
-        <p class="font-extrabold text-lg leading-tight"><span id="cart-total">$0</span></p>
-      </div>
-      <div class="flex items-center gap-2">
-        <button id="clear-btn" class="text-xs text-stone-400 hover:text-white px-2 py-1 transition-colors">Vaciar</button>
-        <button id="open-cart" class="rounded-full bg-white text-ink px-4 py-2 text-xs font-bold hover:bg-stone-100 active:scale-95 transition-all">Ver pedido</button>
-      </div>
-    </div>
-  </div>
-</aside>
-
-<!-- Bottom Sheet Nativo para Móviles -->
-<div id="cart-sheet" class="fixed inset-0 z-40 hidden no-print" role="dialog" aria-modal="true">
-  <!-- Fondo desenfocado -->
-  <div id="sheet-backdrop" class="fixed inset-0 bg-ink/50 backdrop-blur-xs transition-opacity duration-300 opacity-0"></div>
-
-  <!-- Panel Deslizable desde Abajo -->
-  <div id="sheet-panel" class="fixed inset-x-0 bottom-0 z-50 max-w-xl mx-auto bg-base rounded-t-[28px] border-t border-line shadow-2xl transition-transform duration-300 transform translate-y-full flex flex-col max-h-[92vh]">
-    <!-- Barra táctil de arrastre -->
-    <div class="w-full pt-3 pb-1 flex justify-center cursor-pointer" onclick="closeSheet()">
-      <div class="w-12 h-1.5 rounded-full bg-stone-300"></div>
-    </div>
-
-    <!-- Encabezado del Sheet -->
-    <div class="px-5 py-3 flex items-center justify-between border-b border-line">
-      <div>
-        <h2 class="font-bold text-lg leading-tight text-ink">Tu pedido</h2>
-        <p class="text-xs text-muted">Ajustá cantidades antes de enviar</p>
-      </div>
-      <button id="close-sheet-btn" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 active:scale-95 text-stone-600 flex items-center justify-center font-bold text-sm transition-all" aria-label="Cerrar">✕</button>
-    </div>
-
-    <!-- Lista de Productos en el Carrito (Scrollable) -->
-    <div id="cart-items" class="px-5 divide-y divide-line overflow-y-auto flex-1 min-h-[120px] max-h-[38vh]">
-      <!-- Dinámico -->
-    </div>
-
-    <!-- Datos del cliente -->
-    <div class="px-5 pt-3 pb-2 border-t border-line bg-stone-50/60 space-y-2.5">
-      <label class="block text-xs font-semibold text-stone-700">Tu nombre
-        <input id="cust-name" class="mt-1 w-full rounded-xl bg-white border border-line px-3.5 py-2 text-sm font-normal outline-none focus:border-stone-400 focus:ring-1 focus:ring-ink/10 transition-all" placeholder="Ej: Mati" />
-      </label>
-      <label class="block text-xs font-semibold text-stone-700">Notas adicionales
-        <input id="cust-notes" class="mt-1 w-full rounded-xl bg-white border border-line px-3.5 py-2 text-sm font-normal outline-none focus:border-stone-400 focus:ring-1 focus:ring-ink/10 transition-all" placeholder="Aclaraciones (hielo, horario, etc.)..." />
-      </label>
-    </div>
-
-    <!-- Footer y Checkout -->
-    <div class="p-5 border-t border-line bg-base">
-      <div class="flex items-center justify-between mb-3">
-        <span class="text-sm font-medium text-muted">Total a abonar:</span>
-        <span id="modal-total" class="font-extrabold text-2xl text-ink">$0</span>
-      </div>
-      <div class="flex gap-2">
-        <button id="close-sheet-cancel" class="rounded-2xl bg-stone-100 hover:bg-stone-200 active:scale-95 px-4 py-3 text-xs font-bold text-stone-700 transition-all">Seguir viendo</button>
-        <button id="send-wa" class="flex-1 rounded-2xl bg-wa hover:bg-[#20ba59] active:scale-95 py-3 text-sm font-bold text-white transition-all shadow-md shadow-wa/20 flex items-center justify-center gap-2">
-          <span class="text-base">✆</span>
-          <span>Enviar por WhatsApp</span>
+        <button id="login-btn" type="submit"
+          class="w-full rounded-xl bg-ink text-white py-3 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs cursor-pointer">
+          Iniciar Sesión
         </button>
+      </form>
+
+      <div class="mt-5 pt-4 border-t border-line text-center">
+        <a href="/precios" class="text-xs text-muted hover:text-ink font-medium transition-colors">
+          Ir al catálogo público (/precios) &rarr;
+        </a>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-const fmt = n => '$' + n.toLocaleString('es-AR');
-let MENU = { categorias: [], productos: [] };
-let cart = JSON.parse(localStorage.getItem('quique-cart') || '{}');
-let activeCat = 'Todos';
-let query = '';
-const PAGE_SIZE = 20;
-let displayedLimit = PAGE_SIZE;
-const cfg = window.QUIQUE_CONFIG || { WHATSAPP_NUMBER: '5491166168970', NEGOCIO: 'Despensa Quique' };
+  <!-- ================== VISTA DE DASHBOARD ================== -->
+  <div id="dashboard-view" class="hidden flex-1 flex flex-col no-print">
+    <!-- Header Admin -->
+    <header class="sticky top-0 z-30 bg-white border-b border-line shadow-xs">
+      <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <img src="/logo/logo.png" alt="Despensa Quique" class="w-9 h-9 rounded-xl border border-line object-cover shrink-0" />
+          <div class="min-w-0">
+            <h1 class="font-extrabold text-sm leading-tight truncate">Administración</h1>
+            <p id="user-email" class="text-[11px] text-muted truncate">admin</p>
+          </div>
+        </div>
 
-window.loadMore = () => {
-  displayedLimit += PAGE_SIZE;
-  render();
-};
+        <div class="flex items-center gap-2">
+          <a href="/precios" target="_blank" class="rounded-xl border border-line px-3 py-1.5 text-xs font-semibold text-stone-700 hover:bg-stone-50 transition-colors inline-flex items-center gap-1">
+            <span>Ver web pública</span> ↗
+          </a>
+          <button id="logout-btn" class="rounded-xl bg-stone-100 hover:bg-stone-200 px-3 py-1.5 text-xs font-bold text-stone-700 transition-colors cursor-pointer">
+            Salir
+          </button>
+        </div>
+      </div>
+    </header>
 
-const save = () => localStorage.setItem('quique-cart', JSON.stringify(cart));
-const countItems = () => Object.values(cart).reduce((a, b) => a + (b.qty || 0), 0);
-const cartTotal = () => Object.entries(cart).reduce((acc, [id, e]) => {
-  const p = MENU.productos.find(x => x.id === id);
-  return acc + (p ? p.precio * (e.qty || 0) : 0);
-}, 0);
+    <!-- Contenido Admin -->
+    <main class="max-w-4xl mx-auto px-4 py-6 flex-1 w-full space-y-6">
+      <!-- Métricas Rápidas -->
+      <div class="grid grid-cols-3 gap-3">
+        <div class="bg-white p-4 rounded-2xl border border-line shadow-xs">
+          <p class="text-[11px] font-semibold text-muted">Total Productos</p>
+          <p id="stat-total" class="text-2xl font-black text-ink mt-0.5">-</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-line shadow-xs">
+          <p class="text-[11px] font-semibold text-emerald-600">En Stock</p>
+          <p id="stat-active" class="text-2xl font-black text-emerald-600 mt-0.5">-</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-line shadow-xs">
+          <p class="text-[11px] font-semibold text-stone-400">Agotados</p>
+          <p id="stat-inactive" class="text-2xl font-black text-stone-400 mt-0.5">-</p>
+        </div>
+      </div>
 
-function renderFilters() {
-  const filtersBox = document.getElementById('filters');
-  const cats = ['Todos', ...(MENU.categorias || [])];
-  filtersBox.innerHTML = cats.map(cat => {
-    const active = cat === activeCat;
-    return `<button data-cat="${cat}" class="filter-btn shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all ${
-      active ? 'bg-ink text-white shadow-xs' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-    }">${cat}</button>`;
-  }).join('');
+      <!-- Barra de Acciones y Filtros -->
+      <div class="bg-white p-4 rounded-2xl border border-line shadow-xs space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="relative flex-1">
+            <input id="admin-search" type="search" placeholder="Buscar por nombre o descripción..."
+              class="w-full rounded-xl bg-stone-50 border border-line pl-9 pr-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400 transition-all" />
+            <span class="absolute left-3 top-2 text-stone-400 text-xs">🔍</span>
+          </div>
+          <button id="add-product-btn"
+            class="rounded-xl bg-ink text-white px-4 py-2 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs flex items-center justify-center gap-1.5 shrink-0 cursor-pointer">
+            <span>+</span>
+            <span>Nuevo Producto</span>
+          </button>
+        </div>
 
-  filtersBox.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      activeCat = btn.dataset.cat;
-      displayedLimit = PAGE_SIZE;
-      renderFilters();
-      render();
-    });
-  });
-}
+        <!-- Categorías -->
+        <div id="admin-categories" class="flex gap-1.5 overflow-x-auto no-scrollbar pt-1">
+          <!-- Dinámico -->
+        </div>
+      </div>
 
-function render() {
-  const box = document.getElementById('lista');
-  const cats = (MENU.categorias && MENU.categorias.length ? MENU.categorias : ['Bebidas', 'Picadas']);
-  const groups = cats.filter(c => activeCat === 'Todos' || activeCat === c);
-  
-  const matching = MENU.productos.filter(p =>
-    groups.includes(p.categoria) && (p.nombre + ' ' + (p.descripcion || '')).toLowerCase().includes(query)
-  );
+      <!-- Tabla de Productos -->
+      <div class="bg-white rounded-2xl border border-line shadow-xs overflow-hidden">
+        <div class="px-4 py-3 border-b border-line bg-stone-50 flex items-center justify-between">
+          <h2 class="text-xs font-bold text-stone-700 uppercase tracking-wider">Listado de Precios y Stock</h2>
+          <span class="text-[11px] text-muted">Edición en tiempo real</span>
+        </div>
+        <div id="products-table" class="divide-y divide-line">
+          <!-- Dinámico -->
+        </div>
+      </div>
 
-  if (!matching.length) {
-    box.innerHTML = `
-      <div class="text-center py-12 px-4">
-        <p class="text-sm font-semibold text-stone-700">Sin resultados para "${query}"</p>
-        <p class="text-xs text-muted mt-1">Probá buscando con otro nombre o seleccioná otra categoría.</p>
-        ${query ? `<button onclick="document.getElementById('search').value=''; query=''; displayedLimit=PAGE_SIZE; render();" class="mt-3 px-4 py-1.5 rounded-full bg-stone-100 text-xs font-bold text-ink hover:bg-stone-200 transition-colors">Limpiar búsqueda</button>` : ''}
-      </div>`;
-  } else {
-    const visibleProducts = matching.slice(0, displayedLimit);
-    let html = '';
+      <!-- ================== SECCIÓN CARTELERÍA Y CÓDIGOS QR ================== -->
+      <section class="bg-white rounded-3xl border border-line p-6 shadow-xs space-y-4">
+        <div>
+          <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200 uppercase mb-1">
+            Material para el local
+          </span>
+          <h2 class="font-extrabold text-base text-ink">Cartelería y Códigos QR para el Mostrador</h2>
+          <p class="text-xs text-muted mt-0.5">
+            Generados con el logo oficial y apuntando directamente a <strong class="text-ink">https://despensa-quique.vercel.app/precios</strong>.
+          </p>
+        </div>
 
-    groups.forEach(cat => {
-      const items = visibleProducts.filter(p => p.categoria === cat);
-      if (!items.length) return;
-
-      html += `<div class="mt-4 first:mt-0">`;
-      html += `<h2 class="text-xs font-bold uppercase tracking-wider text-muted mb-2 px-1">${cat}</h2>`;
-      html += '<div class="bg-white rounded-2xl border border-line divide-y divide-line overflow-hidden shadow-xs">';
-      html += items.map(p => {
-        const qty = cart[p.id]?.qty || 0;
-        const isAvailable = p.disponible !== false;
-        return `
-        <div class="px-4 py-3 flex gap-3 items-center justify-between hover:bg-stone-50/50 transition-colors ${!isAvailable ? 'opacity-70' : ''}">
-          <div class="flex-1 min-w-0 pr-2">
-            <div class="flex items-center gap-2">
-              <p class="font-semibold text-sm leading-snug">${p.nombre}</p>
-              ${!isAvailable ? '<span class="text-[10px] font-bold text-rose-600 bg-rose-50 border border-rose-200 px-1.5 py-0.5 rounded shrink-0">Agotado</span>' : ''}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-line">
+          <!-- QR Precios y Catálogo -->
+          <div class="p-4 rounded-2xl bg-stone-50 border border-line flex flex-col sm:flex-row items-center gap-4">
+            <div class="w-32 h-32 p-2 bg-white rounded-xl border border-line shadow-xs shrink-0 flex items-center justify-center">
+              <img src="/qr/qr-precios-1000px.png" alt="QR Catálogo Precios" class="w-full h-full object-contain" />
             </div>
-            ${p.descripcion ? `<p class="text-xs text-muted leading-relaxed mt-0.5">${p.descripcion}</p>` : ''}
-            <p class="font-bold text-sm text-ink mt-1">${fmt(p.precio)}</p>
+            <div class="space-y-2 text-center sm:text-left flex-1 min-w-0">
+              <h3 class="font-bold text-xs text-ink">QR Catálogo de Precios</h3>
+              <p class="text-[11px] text-muted">Apuntá la cámara para ver precios actualizados al momento.</p>
+              <div class="flex flex-wrap gap-2 pt-1 justify-center sm:justify-start">
+                <a href="/qr/qr-precios-1000px.png" download="qr-precios-quique.png"
+                  class="rounded-lg bg-white border border-line hover:bg-stone-100 px-2.5 py-1 text-[11px] font-semibold text-stone-700 transition-colors shadow-2xs">
+                  Descargar PNG HD
+                </a>
+                <a href="/qr/qr-precios-vector.svg" download="qr-precios-quique.svg"
+                  class="rounded-lg bg-white border border-line hover:bg-stone-100 px-2.5 py-1 text-[11px] font-semibold text-stone-700 transition-colors shadow-2xs">
+                  Vector SVG
+                </a>
+              </div>
+            </div>
           </div>
-          <div class="flex items-center gap-1.5 shrink-0">
-            ${isAvailable ? `
-              ${qty > 0 ? `
-                <button onclick="chQty('${p.id}',-1)" aria-label="quitar uno" class="w-8 h-8 rounded-full bg-stone-200 hover:bg-stone-300 active:scale-95 text-ink text-base font-black flex items-center justify-center transition-all">−</button>
-                <span class="w-6 text-center text-sm font-bold text-ink">${qty}</span>
-              ` : ''}
-              <button onclick="chQty('${p.id}',1)" aria-label="agregar" class="h-8 ${
-                qty > 0
-                  ? 'w-8 rounded-full bg-ink text-white font-bold flex items-center justify-center'
-                  : 'px-3.5 rounded-full bg-ink text-white text-xs font-semibold'
-              } hover:bg-stone-800 active:scale-95 transition-all">
-                ${qty > 0 ? '+' : 'Agregar'}
-              </button>
-            ` : `
-              <button disabled class="h-8 px-3 rounded-full bg-stone-100 text-stone-400 text-xs font-semibold cursor-not-allowed">Sin stock</button>
-            `}
-          </div>
-        </div>`;
-      }).join('');
-      html += '</div></div>';
-    });
 
-    if (displayedLimit < matching.length) {
-      html += `
-        <div class="text-center pt-5 pb-2">
-          <button onclick="loadMore()" class="inline-flex items-center gap-2 rounded-full border border-line bg-white hover:bg-stone-50 active:scale-95 px-5 py-2.5 text-xs font-bold text-ink shadow-xs transition-all">
-            <span>Ver más productos</span>
-            <span class="text-muted font-normal text-[11px]">(${visibleProducts.length} de ${matching.length})</span>
+          <!-- QR Instagram -->
+          <div class="p-4 rounded-2xl bg-stone-50 border border-line flex flex-col sm:flex-row items-center gap-4">
+            <div class="w-32 h-32 p-2 bg-white rounded-xl border border-line shadow-xs shrink-0 flex items-center justify-center">
+              <img src="/qr/qr-instagram-1000px.png" alt="QR Instagram" class="w-full h-full object-contain" />
+            </div>
+            <div class="space-y-2 text-center sm:text-left flex-1 min-w-0">
+              <h3 class="font-bold text-xs text-ink">QR Instagram (@despensaquique)</h3>
+              <p class="text-[11px] text-muted">Para que los clientes te sigan en redes desde el mostrador.</p>
+              <div class="flex flex-wrap gap-2 pt-1 justify-center sm:justify-start">
+                <a href="/qr/qr-instagram-1000px.png" download="qr-instagram-quique.png"
+                  class="rounded-lg bg-white border border-line hover:bg-stone-100 px-2.5 py-1 text-[11px] font-semibold text-stone-700 transition-colors shadow-2xs">
+                  Descargar PNG HD
+                </a>
+                <a href="https://instagram.com/despensaquique" target="_blank"
+                  class="rounded-lg bg-white border border-line hover:bg-stone-100 px-2.5 py-1 text-[11px] font-semibold text-stone-700 transition-colors shadow-2xs">
+                  Ver Perfil ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p class="text-xs text-stone-500">¿Querés colocar un cartel en la puerta o el mostrador?</p>
+          <button id="print-poster-btn" type="button"
+            class="rounded-xl bg-ink text-white px-5 py-2.5 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs inline-flex items-center gap-2 cursor-pointer">
+            <span>🖨</span>
+            <span>Imprimir Cartel A4 para Mostrador</span>
           </button>
-        </div>`;
-    }
+        </div>
+      </section>
+    </main>
+  </div>
 
-    box.innerHTML = html;
-  }
-
-  const totalCount = countItems();
-  const totalAmt = cartTotal();
-  document.getElementById('cart-count').textContent = totalCount;
-  document.getElementById('cart-total').textContent = fmt(totalAmt);
-  document.getElementById('modal-total').textContent = fmt(totalAmt);
-
-  const cartbar = document.getElementById('cartbar');
-  if (totalCount > 0) {
-    cartbar.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
-    cartbar.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
-  } else {
-    cartbar.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
-    cartbar.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
-  }
-
-  renderModalItems();
-}
-
-function renderModalItems() {
-  const box = document.getElementById('cart-items');
-  const sendBtn = document.getElementById('send-wa');
-  const ids = Object.keys(cart).filter(id => cart[id]?.qty > 0);
-
-  if (!ids.length) {
-    box.innerHTML = '<p class="text-xs text-muted py-8 text-center">Tu pedido está vacío.</p>';
-    if (sendBtn) {
-      sendBtn.disabled = true;
-      sendBtn.classList.add('opacity-50', 'pointer-events-none');
-    }
-    return;
-  }
-
-  if (sendBtn) {
-    sendBtn.disabled = false;
-    sendBtn.classList.remove('opacity-50', 'pointer-events-none');
-  }
-
-  box.innerHTML = ids.map(id => {
-    const p = MENU.productos.find(x => x.id === id);
-    if (!p) return '';
-    const q = cart[id].qty;
-    return `
-    <div class="flex items-center justify-between py-2.5 gap-2">
-      <div class="flex-1 min-w-0 pr-1">
-        <p class="font-semibold text-xs leading-snug truncate">${p.nombre}</p>
-        <p class="text-[11px] text-muted">${fmt(p.precio)} c/u</p>
+  <!-- ================== MODAL DE PRODUCTO ================== -->
+  <dialog id="product-modal" class="rounded-3xl border border-line p-0 backdrop:bg-ink/40 shadow-2xl max-w-sm w-full mx-auto">
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 id="modal-title" class="font-extrabold text-base text-ink">Producto</h3>
+        <button id="cancel-modal-btn" type="button" class="text-stone-400 hover:text-ink text-lg leading-none font-bold cursor-pointer">✕</button>
       </div>
-      <div class="flex items-center gap-1 shrink-0">
-        <button onclick="chQty('${p.id}',-1)" aria-label="Disminuir" class="w-7 h-7 rounded-full bg-stone-200 hover:bg-stone-300 active:scale-95 text-ink font-black text-xs flex items-center justify-center transition-all">
-          ${q === 1 ? '🗑' : '−'}
-        </button>
-        <span class="w-6 text-center text-xs font-bold">${q}</span>
-        <button onclick="chQty('${p.id}',1)" aria-label="Aumentar" class="w-7 h-7 rounded-full bg-ink hover:bg-stone-800 active:scale-95 text-white font-bold text-xs flex items-center justify-center transition-all">+</button>
+
+      <form id="product-form" class="space-y-3.5">
+        <input type="hidden" id="prod-id" />
+
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Nombre</label>
+          <input id="prod-name" type="text" required placeholder="Ej: Quilmes 1L"
+            class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">Categoría</label>
+            <input id="prod-category" type="text" required placeholder="Bebidas"
+              class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">Precio ($)</label>
+            <input id="prod-price" type="number" step="50" min="0" required placeholder="2500"
+              class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Descripción / Tamaño (opcional)</label>
+          <input id="prod-desc" type="text" placeholder="Ej: Retornable bien fría"
+            class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
+        </div>
+
+        <div class="pt-1">
+          <label class="flex items-center gap-2 cursor-pointer select-none">
+            <input id="prod-available" type="checkbox" checked class="w-4 h-4 rounded text-ink focus:ring-ink" />
+            <span class="text-xs font-semibold text-stone-700">Disponible para la venta (En stock)</span>
+          </label>
+        </div>
+
+        <div class="pt-3 flex gap-2">
+          <button id="save-prod-btn" type="submit" class="flex-1 rounded-xl bg-ink text-white py-2.5 text-xs font-bold hover:bg-stone-800 transition-colors shadow-xs cursor-pointer">
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- ================== PLANTILLA IMPRIMIBLE (SOLO IMPRESIÓN A4) ================== -->
+  <div class="print-only max-w-lg mx-auto p-12 text-center bg-white">
+    <div class="border-4 border-stone-900 p-8 rounded-3xl">
+      <img src="/logo/logo.png" alt="Despensa Quique" class="w-24 h-24 mx-auto rounded-3xl object-cover mb-4" />
+      <h1 class="text-3xl font-black text-stone-900 tracking-tight uppercase">Despensa Quique</h1>
+      <p class="text-sm font-bold text-stone-600 uppercase tracking-widest mt-1">Bebidas Frías • Picadas • Almacén</p>
+      
+      <div class="my-8 flex justify-center">
+        <div class="p-4 border-2 border-stone-900 rounded-3xl">
+          <img src="/qr/qr-precios-1000px.png" alt="QR Catálogo" class="w-64 h-64 object-contain" />
+        </div>
       </div>
-      <div class="w-16 text-right font-bold text-xs shrink-0">
-        ${fmt(p.precio * q)}
+
+      <div class="space-y-2">
+        <p class="text-lg font-black text-stone-900 uppercase">
+          ¡Escaneá el código QR con tu celular!
+        </p>
+        <p class="text-xs font-semibold text-stone-600">
+          Mirá todos los precios actualizados y armá tu pedido al instante
+        </p>
+        <p class="text-xs font-mono text-stone-500 pt-2">
+          https://despensa-quique.vercel.app/precios
+        </p>
       </div>
-    </div>`;
-  }).join('');
-}
 
-window.chQty = (id, d) => {
-  const current = cart[id]?.qty || 0;
-  const q = current + d;
-  if (q <= 0) delete cart[id];
-  else cart[id] = { qty: q };
-  save();
-  render();
-
-  // Micro-interacción: ligero rebote en la barra del carrito
-  const box = document.getElementById('cartbar-box');
-  if (box && countItems() > 0) {
-    box.classList.add('scale-[1.02]');
-    setTimeout(() => box.classList.remove('scale-[1.02]'), 120);
-  }
-};
-
-function waBase(msg) {
-  return `https://wa.me/${cfg.WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-}
-
-function buildWaLink() {
-  const ids = Object.keys(cart).filter(id => cart[id]?.qty > 0);
-  const name = document.getElementById('cust-name').value.trim();
-  const notes = document.getElementById('cust-notes').value.trim();
-  
-  const saludoTemplate = cfg.MENSAJE_PEDIDO?.saludo || '¡Hola {negocio}! ¿Cómo están? Les comparto mi pedido:';
-  const pieTemplate = cfg.MENSAJE_PEDIDO?.pie || '¡Muchas gracias y que tengan un excelente día!';
-
-  const lines = [saludoTemplate.replace('{negocio}', cfg.NEGOCIO), ''];
-  ids.forEach(id => {
-    const p = MENU.productos.find(x => x.id === id);
-    if (p) lines.push(`• ${cart[id].qty}x ${p.nombre} (${fmt(p.precio * cart[id].qty)})`);
-  });
-  lines.push('');
-  lines.push(`*Total: ${fmt(cartTotal())}*`);
-  if (name) lines.push(`*Nombre:* ${name}`);
-  if (notes) lines.push(`*Notas:* ${notes}`);
-  lines.push('');
-  lines.push(pieTemplate.replace('{negocio}', cfg.NEGOCIO));
-
-  return waBase(lines.join('\n'));
-}
-
-function paintWaLinks() {
-  const msgTemplate = cfg.MENSAJE_CONSULTA || '¡Hola! ¿Cómo están? Quería hacerles una consulta sobre los productos de {negocio}. ¡Muchas gracias!';
-  const hello = waBase(msgTemplate.replace('{negocio}', cfg.NEGOCIO));
-  const waBtn = document.getElementById('header-wa');
-  if (waBtn) waBtn.href = hello;
-
-  const igBtn = document.getElementById('header-ig');
-  if (igBtn) {
-    if (cfg.INSTAGRAM_URL) igBtn.href = cfg.INSTAGRAM_URL;
-    else igBtn.style.display = 'none';
-  }
-}
-
-// Event Listeners
-document.getElementById('search').addEventListener('input', e => {
-  query = e.target.value.toLowerCase().trim();
-  displayedLimit = PAGE_SIZE;
-  render();
-});
-
-document.getElementById('clear-btn').onclick = () => {
-  cart = {};
-  save();
-  render();
-};
-
-// Bottom Sheet Controls
-const sheet = document.getElementById('cart-sheet');
-const backdrop = document.getElementById('sheet-backdrop');
-const panel = document.getElementById('sheet-panel');
-
-function openSheet() {
-  sheet.classList.remove('hidden');
-  requestAnimationFrame(() => {
-    backdrop.classList.remove('opacity-0');
-    backdrop.classList.add('opacity-100');
-    panel.classList.remove('translate-y-full');
-    panel.classList.add('translate-y-0');
-  });
-  document.body.classList.add('overflow-hidden');
-}
-
-function closeSheet() {
-  backdrop.classList.remove('opacity-100');
-  backdrop.classList.add('opacity-0');
-  panel.classList.remove('translate-y-0');
-  panel.classList.add('translate-y-full');
-  setTimeout(() => {
-    sheet.classList.add('hidden');
-    document.body.classList.remove('overflow-hidden');
-  }, 280);
-}
-
-window.closeSheet = closeSheet;
-document.getElementById('open-cart').onclick = openSheet;
-document.getElementById('close-sheet-btn').onclick = closeSheet;
-document.getElementById('close-sheet-cancel').onclick = closeSheet;
-backdrop.onclick = closeSheet;
-
-// Cierre con Escape
-window.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && !sheet.classList.contains('hidden')) closeSheet();
-});
-
-document.getElementById('send-wa').onclick = () => {
-  if (!countItems()) return;
-  window.open(buildWaLink(), '_blank', 'noopener,noreferrer');
-};
-
-// Carga asíncrona del catálogo con Skeleton y manejo de errores
-async function loadCatalog() {
-  const box = document.getElementById('lista');
-  box.innerHTML = `
-    <div class="space-y-4 animate-pulse mt-4">
-      <div class="h-4 bg-stone-200 rounded w-28"></div>
-      <div class="bg-white rounded-2xl border border-line divide-y divide-line p-4 space-y-4">
-        <div class="h-5 bg-stone-100 rounded w-3/4"></div>
-        <div class="h-5 bg-stone-100 rounded w-1/2"></div>
+      <div class="mt-8 pt-6 border-t-2 border-stone-200 flex justify-around text-xs font-bold text-stone-800">
+        <div>✆ WhatsApp: 11 6616-8970</div>
+        <div>📷 Instagram: @despensaquique</div>
       </div>
-    </div>`;
+    </div>
+  </div>
 
-  try {
-    let loadedFromDb = false;
-
-    if (cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY) {
-      try {
-        const res = await fetch(`${cfg.SUPABASE_URL}/rest/v1/productos?select=*&order=created_at.asc`, {
-          headers: {
-            'apikey': cfg.SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${cfg.SUPABASE_ANON_KEY}`
-          }
-        });
-        if (res.ok) {
-          const dbProducts = await res.json();
-          if (Array.isArray(dbProducts) && dbProducts.length > 0) {
-            const cats = [...new Set(dbProducts.map(p => p.categoria).filter(Boolean))];
-            MENU = {
-              negocio: cfg.NEGOCIO || 'Despensa Quique',
-              moneda: '$',
-              categorias: cats,
-              productos: dbProducts
-            };
-            loadedFromDb = true;
-          }
-        }
-      } catch (errDb) {
-        console.warn('No se pudo conectar a Supabase, recurriendo a local:', errDb);
-      }
-    }
-
-    if (!loadedFromDb) {
-      const res = await fetch('./menu.json');
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      MENU = await res.json();
-    }
-
-    renderFilters();
-    paintWaLinks();
-    render();
-  } catch (err) {
-    box.innerHTML = `
-      <div class="text-center py-10 px-4 bg-white rounded-2xl border border-line mt-4">
-        <p class="text-sm font-bold text-red-600">No se pudo cargar el catálogo</p>
-        <p class="text-xs text-muted mt-1">Verificá tu conexión o que el servidor esté activo.</p>
-        <button onclick="loadCatalog()" class="mt-4 px-4 py-2 rounded-full bg-ink text-white text-xs font-semibold hover:bg-stone-800 transition-colors">Reintentar</button>
-      </div>`;
-  }
-}
-
-// Inicialización y descarga de QR en Alta Definición con Logo Central
-const currentUrl = location.href.split('#')[0];
-const qrServerUrl = (size, margin = 10) => `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&margin=${margin}&ecc=H&format=png&data=${encodeURIComponent(currentUrl)}`;
-
-document.getElementById('qr-img').src = qrServerUrl(240, 5);
-document.getElementById('qr-url').textContent = currentUrl;
-
-const printQrEl = document.getElementById('qr-img-print');
-if (printQrEl) printQrEl.src = qrServerUrl(600, 15);
-
-async function downloadQr() {
-  const canvas = document.createElement('canvas');
-  canvas.width = 1000;
-  canvas.height = 1000;
-  const ctx = canvas.getContext('2d');
-
-  const qrImg = new Image();
-  qrImg.crossOrigin = 'anonymous';
-  qrImg.src = qrServerUrl(1000, 20);
-
-  qrImg.onload = () => {
-    ctx.drawImage(qrImg, 0, 0, 1000, 1000);
-
-    const logoImg = new Image();
-    logoImg.src = './logo/logo.png';
-    logoImg.onload = () => {
-      const plateSize = 250;
-      const plateX = (1000 - plateSize) / 2;
-      const plateY = (1000 - plateSize) / 2;
-      const radius = 32;
-
-      ctx.beginPath();
-      ctx.roundRect(plateX, plateY, plateSize, plateSize, radius);
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fill();
-      ctx.lineWidth = 4;
-      ctx.strokeStyle = '#EDE7DD';
-      ctx.stroke();
-
-      const logoSize = 220;
-      const logoX = (1000 - logoSize) / 2;
-      const logoY = (1000 - logoSize) / 2;
-
-      ctx.save();
-      ctx.beginPath();
-      ctx.roundRect(logoX, logoY, logoSize, logoSize, 26);
-      ctx.clip();
-      ctx.drawImage(logoImg, logoX, logoY, logoSize, logoSize);
-      ctx.restore();
-
-      const a = document.createElement('a');
-      a.href = canvas.toDataURL('image/png');
-      a.download = 'QR-Despensa-Quique-HD.png';
-      a.click();
-    };
-    logoImg.onerror = () => {
-      const a = document.createElement('a');
-      a.href = canvas.toDataURL('image/png');
-      a.download = 'QR-Despensa-Quique-HD.png';
-      a.click();
-    };
-  };
-}
-
-loadCatalog();
-</script>
+  <script type="module" src="/src/admin.js"></script>
 </body>
 </html>
