@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Admin — Almacén Quique</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css">
+  <link rel="icon" type="image/png" href="/logo/logo.png">
+</head>
+<body class="font-body text-ink min-h-screen antialiased flex flex-col bg-[#F8F6F0]">
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed top-4 right-4 left-4 sm:left-auto sm:max-w-xs z-50 transform -translate-y-12 opacity-0 pointer-events-none transition-all duration-300 bg-ink text-white px-4 py-3 rounded-2xl shadow-xl text-xs font-semibold flex items-center gap-2">
+    <span id="toast-icon">✓</span>
+    <span id="toast-msg">Acción completada</span>
+  </div>
+
+  <!-- ================== VISTA DE LOGIN ================== -->
+  <div id="login-view" class="flex-1 flex items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-white rounded-3xl border border-line p-6 sm:p-7 shadow-xl">
+      <div class="text-center mb-6">
+        <img src="/logo/logo.png" alt="Almacén Quique" class="w-16 h-16 rounded-2xl mx-auto border border-line shadow-xs object-cover" />
+        <h1 class="text-xl font-extrabold text-ink mt-3">Panel de Control</h1>
+        <p class="text-xs text-muted mt-0.5">Almacén Quique — Iniciar Sesión</p>
+      </div>
+
+      <form id="login-form" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Correo electrónico</label>
+          <input id="login-email" type="email" required placeholder="admin@almacen.com" autocomplete="email"
+            class="w-full rounded-xl bg-stone-50 border border-line px-3.5 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-ink/10 focus:border-stone-400 transition-all" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Contraseña</label>
+          <input id="login-password" type="password" required placeholder="••••••••" autocomplete="current-password"
+            class="w-full rounded-xl bg-stone-50 border border-line px-3.5 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-ink/10 focus:border-stone-400 transition-all" />
+        </div>
+
+        <div id="login-error" class="hidden text-xs text-red-600 bg-red-50 p-2.5 rounded-xl border border-red-200"></div>
+
+        <button id="login-btn" type="submit"
+          class="w-full rounded-xl bg-ink text-white py-3 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs cursor-pointer">
+          Iniciar Sesión
+        </button>
+      </form>
+
+      <div class="mt-5 pt-4 border-t border-line text-center">
+        <a href="/" class="text-xs text-muted hover:text-ink font-medium transition-colors">
+          &larr; Volver al catálogo público
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================== VISTA DE DASHBOARD ================== -->
+  <div id="dashboard-view" class="hidden flex-1 flex flex-col no-print">
+    <!-- Header Admin Responsivo -->
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-line shadow-xs">
+      <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-2.5">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <img src="/logo/logo.png" alt="Almacén Quique" class="w-9 h-9 rounded-xl border border-line object-cover shrink-0" />
+          <div class="min-w-0">
+            <h1 class="font-extrabold text-sm leading-tight truncate">Administración</h1>
+            <p id="user-email" class="text-[11px] text-muted truncate">admin</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="/" target="_blank" class="rounded-xl border border-line px-3 py-1.5 text-xs font-semibold text-stone-700 hover:bg-stone-50 transition-colors inline-flex items-center gap-1">
+            <span>Ver web</span> ↗
+          </a>
+          <button id="logout-btn" class="rounded-xl bg-stone-100 hover:bg-stone-200 active:scale-95 px-3 py-1.5 text-xs font-bold text-stone-700 transition-colors cursor-pointer">
+            Salir
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Contenido Admin -->
+    <main class="max-w-4xl mx-auto px-4 py-5 flex-1 w-full space-y-5">
+      <!-- Métricas Rápidas Responsivas -->
+      <div class="grid grid-cols-3 gap-2.5 sm:gap-4">
+        <div class="bg-white p-3.5 sm:p-4 rounded-2xl border border-line shadow-xs">
+          <p class="text-[10px] sm:text-[11px] font-semibold text-muted uppercase tracking-wider">Total</p>
+          <p id="stat-total" class="text-xl sm:text-2xl font-black text-ink mt-0.5">-</p>
+        </div>
+        <div class="bg-white p-3.5 sm:p-4 rounded-2xl border border-line shadow-xs">
+          <p class="text-[10px] sm:text-[11px] font-semibold text-emerald-600 uppercase tracking-wider">En Stock</p>
+          <p id="stat-active" class="text-xl sm:text-2xl font-black text-emerald-600 mt-0.5">-</p>
+        </div>
+        <div class="bg-white p-3.5 sm:p-4 rounded-2xl border border-line shadow-xs">
+          <p class="text-[10px] sm:text-[11px] font-semibold text-stone-400 uppercase tracking-wider">Agotados</p>
+          <p id="stat-inactive" class="text-xl sm:text-2xl font-black text-stone-400 mt-0.5">-</p>
+        </div>
+      </div>
+
+      <!-- Barra de Acciones y Filtros -->
+      <div class="bg-white p-3.5 sm:p-4 rounded-2xl border border-line shadow-xs space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+          <div class="relative flex-1">
+            <input id="admin-search" type="search" placeholder="Buscar por nombre o categoría..."
+              class="w-full rounded-xl bg-stone-50 border border-line pl-9 pr-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400 transition-all" />
+            <span class="absolute left-3 top-2 text-stone-400 text-xs">🔍</span>
+          </div>
+          <button id="add-product-btn"
+            class="w-full sm:w-auto rounded-xl bg-ink text-white px-4 py-2.5 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs flex items-center justify-center gap-1.5 shrink-0 cursor-pointer">
+            <span class="text-sm font-bold leading-none">+</span>
+            <span>Nuevo Producto</span>
+          </button>
+        </div>
+
+        <!-- Categorías con Scroll Horizontal en Móviles -->
+        <div id="admin-categories" class="flex gap-1.5 overflow-x-auto no-scrollbar py-1 -mx-1 px-1">
+          <!-- Dinámico -->
+        </div>
+      </div>
+
+      <!-- Tabla de Productos con Adaptación Móvil -->
+      <div class="bg-white rounded-2xl border border-line shadow-xs overflow-hidden">
+        <div class="px-4 py-3 border-b border-line bg-stone-50 flex items-center justify-between">
+          <h2 class="text-xs font-bold text-stone-700 uppercase tracking-wider">Listado de Precios y Stock</h2>
+          <span class="text-[10px] sm:text-[11px] text-muted">Edición en tiempo real</span>
+        </div>
+        <div id="products-table" class="divide-y divide-line">
+          <!-- Dinámico -->
+        </div>
+      </div>
+
+      <!-- ================== SECCIÓN CARTELERÍA Y CÓDIGOS QR ================== -->
+      <section class="bg-white rounded-3xl border border-line p-5 sm:p-6 shadow-xs space-y-4">
+        <div>
+          <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200 uppercase mb-1">
+            Material para el local
+          </span>
+          <h2 class="font-extrabold text-base text-ink">Cartelería y Códigos QR para el Mostrador</h2>
+          <p class="text-xs text-muted mt-0.5 leading-relaxed">
+            Descargá los códigos QR o imprimí el cartel A4 listo para colocar en la pared o mostrador del negocio.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-2 border-t border-line">
+          <!-- QR Catálogo -->
+          <div class="p-3.5 rounded-2xl bg-stone-50 border border-line flex flex-col sm:flex-row items-center gap-3.5 text-center sm:text-left">
+            <div class="w-28 h-28 p-2 bg-white rounded-xl border border-line shadow-xs shrink-0 flex items-center justify-center">
+              <img src="/qr/qr-precios-1000px.png" alt="QR Catálogo Precios" class="w-full h-full object-contain" />
+            </div>
+            <div class="space-y-1.5 flex-1 min-w-0">
+              <h3 class="font-bold text-xs text-ink">QR Catálogo de Precios</h3>
+              <p class="text-[11px] text-muted">Apunta a la web pública de clientes.</p>
+              <div class="flex flex-wrap gap-1.5 pt-1 justify-center sm:justify-start">
+                <a href="/qr/qr-precios-1000px.png" download="qr-almacen-quique.png"
+                  class="rounded-lg bg-white border border-line hover:bg-stone-100 px-2.5 py-1 text-[11px] font-semibold text-stone-700 transition-colors shadow-2xs">
+                  Descargar PNG HD
+                </a>
+                <a href="/qr/qr-precios-vector.svg" download="qr-almacen-quique.svg"
+                  class="rounded-lg bg-white border border-line hover:bg-stone-100 px-2.5 py-1 text-[11px] font-semibold text-stone-700 transition-colors shadow-2xs">
+                  Vector SVG
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- QR Instagram -->
+          <div class="p-3.5 rounded-2xl bg-stone-50 border border-line flex flex-col sm:flex-row items-center gap-3.5 text-center sm:text-left">
+            <div class="w-28 h-28 p-2 bg-white rounded-xl border border-line shadow-xs shrink-0 flex items-center justify-center">
+              <img src="/qr/qr-instagram-1000px.png" alt="QR Instagram" class="w-full h-full object-contain" />
+            </div>
+            <div class="space-y-1.5 flex-1 min-w-0">
+              <h3 class="font-bold text-xs text-ink">QR Instagram Dinámico</h3>
+              <p class="text-[11px] text-muted">Apunta a /ig y redirige a tus redes.</p>
+              <div class="flex flex-wrap gap-1.5 pt-1 justify-center sm:justify-start">
+                <a href="/qr/qr-instagram-1000px.png" download="qr-instagram-quique.png"
+                  class="rounded-lg bg-white border border-line hover:bg-stone-100 px-2.5 py-1 text-[11px] font-semibold text-stone-700 transition-colors shadow-2xs">
+                  Descargar PNG HD
+                </a>
+                <a href="/ig" target="_blank"
+                  class="rounded-lg bg-white border border-line hover:bg-stone-100 px-2.5 py-1 text-[11px] font-semibold text-stone-700 transition-colors shadow-2xs">
+                  Probar Link ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p class="text-xs text-stone-500 text-center sm:text-left">¿Querés colocar un cartel impreso en el mostrador?</p>
+          <button id="print-poster-btn" type="button"
+            class="w-full sm:w-auto rounded-xl bg-ink text-white px-5 py-2.5 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs inline-flex items-center justify-center gap-2 cursor-pointer">
+            <span>🖨</span>
+            <span>Imprimir Cartel A4 para Mostrador</span>
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ================== MODAL DE PRODUCTO ================== -->
+  <dialog id="product-modal" class="rounded-3xl border border-line p-0 backdrop:bg-ink/40 shadow-2xl max-w-sm w-[90vw] mx-auto">
+    <div class="p-5 sm:p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 id="modal-title" class="font-extrabold text-base text-ink">Producto</h3>
+        <button id="cancel-modal-btn" type="button" class="text-stone-400 hover:text-ink text-lg leading-none font-bold p-1 cursor-pointer">✕</button>
+      </div>
+
+      <form id="product-form" class="space-y-3.5">
+        <input type="hidden" id="prod-id" />
+
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Nombre</label>
+          <input id="prod-name" type="text" required placeholder="Ej: Quilmes 1L"
+            class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">Categoría</label>
+            <input id="prod-category" type="text" required placeholder="Bebidas"
+              class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">Precio ($)</label>
+            <input id="prod-price" type="number" step="50" min="0" required placeholder="2500"
+              class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Descripción / Tamaño (opcional)</label>
+          <input id="prod-desc" type="text" placeholder="Ej: Retornable bien fría"
+            class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
+        </div>
+
+        <div class="pt-1">
+          <label class="flex items-center gap-2 cursor-pointer select-none">
+            <input id="prod-available" type="checkbox" checked class="w-4 h-4 rounded text-ink focus:ring-ink" />
+            <span class="text-xs font-semibold text-stone-700">Disponible para la venta (En stock)</span>
+          </label>
+        </div>
+
+        <div class="pt-3 flex gap-2">
+          <button id="save-prod-btn" type="submit" class="flex-1 rounded-xl bg-ink text-white py-2.5 text-xs font-bold hover:bg-stone-800 transition-colors shadow-xs cursor-pointer">
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- ================== PLANTILLA IMPRIMIBLE (SOLO IMPRESIÓN A4) ================== -->
+  <div class="print-only max-w-lg mx-auto p-12 text-center bg-white">
+    <div class="border-4 border-stone-900 p-8 rounded-3xl">
+      <img src="/logo/logo.png" alt="Almacén Quique" class="w-24 h-24 mx-auto rounded-3xl object-cover mb-4" />
+      <h1 class="text-3xl font-black text-stone-900 tracking-tight uppercase">Almacén Quique</h1>
+      <p class="text-sm font-bold text-stone-600 uppercase tracking-widest mt-1">Bebidas Frías • Picadas • Almacén</p>
+      
+      <div class="my-8 flex justify-center">
+        <div class="p-4 border-2 border-stone-900 rounded-3xl">
+          <img src="/qr/qr-precios-1000px.png" alt="QR Catálogo" class="w-64 h-64 object-contain" />
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <p class="text-lg font-black text-stone-900 uppercase">
+          ¡Escaneá el código QR con tu celular!
+        </p>
+        <p class="text-xs font-semibold text-stone-600">
+          Mirá todos los precios actualizados y armá tu pedido al instante
+        </p>
+        <p class="text-xs font-mono text-stone-500 pt-2">
+          https://despensa-quique.vercel.app/precios
+        </p>
+      </div>
+
+      <div class="mt-8 pt-6 border-t-2 border-stone-200 flex justify-around text-xs font-bold text-stone-800">
+        <div>✆ WhatsApp: 11 6616-8970</div>
+        <div>📷 Instagram: @despensaquique</div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/admin.js"></script>
+</body>
+</html>

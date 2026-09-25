@@ -2,285 +2,193 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin — Almacén Quique</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Almacén Quique — Catálogo de Precios</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/src/style.css">
   <link rel="icon" type="image/png" href="/logo/logo.png">
 </head>
-<body class="font-body text-ink min-h-screen antialiased flex flex-col bg-[#F8F6F0]">
+<body class="font-body text-ink min-h-screen antialiased flex flex-col bg-base selection:bg-ink selection:text-white">
 
   <!-- Toast Notification -->
-  <div id="toast" class="fixed top-4 right-4 z-50 transform -translate-y-12 opacity-0 pointer-events-none transition-all duration-300 bg-ink text-white px-4 py-2.5 rounded-2xl shadow-xl text-xs font-semibold flex items-center gap-2">
+  <div id="toast" class="fixed top-4 right-4 left-4 sm:left-auto sm:max-w-xs z-50 transform -translate-y-12 opacity-0 pointer-events-none transition-all duration-300 bg-ink text-white px-4 py-3 rounded-2xl shadow-xl text-xs font-semibold flex items-center gap-2">
     <span id="toast-icon">✓</span>
     <span id="toast-msg">Acción completada</span>
   </div>
 
-  <!-- ================== VISTA DE LOGIN ================== -->
-  <div id="login-view" class="flex-1 flex items-center justify-center p-4">
-    <div class="w-full max-w-sm bg-white rounded-3xl border border-line p-7 shadow-xl">
-      <div class="text-center mb-6">
-        <img src="/logo/logo.png" alt="Almacén Quique" class="w-16 h-16 rounded-2xl mx-auto border border-line shadow-xs object-cover" />
-        <h1 class="text-xl font-extrabold text-ink mt-3">Panel de Control</h1>
-        <p class="text-xs text-muted mt-0.5">Almacén Quique — Iniciar Sesión</p>
+  <!-- Header Unificado y Ultra Responsivo -->
+  <header class="sticky top-0 z-30 bg-base/95 backdrop-blur-md border-b border-line shadow-xs">
+    <div class="max-w-xl mx-auto px-4 pt-3 pb-2.5">
+      <!-- Fila de Identidad y Contacto -->
+      <div class="flex items-center justify-between gap-2 mb-2.5">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <img src="/logo/logo.png" alt="Almacén Quique" class="w-11 h-11 rounded-2xl object-cover bg-white border border-line shadow-xs shrink-0" />
+          <div class="min-w-0">
+            <div class="flex items-center gap-1.5">
+              <h1 class="font-extrabold text-base leading-tight truncate text-ink">Almacén Quique</h1>
+              <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200 shrink-0">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Abierto
+              </span>
+            </div>
+            <p class="text-[11px] text-muted truncate mt-0.5">Bebidas frías, picadas y almacén</p>
+          </div>
+        </div>
+        
+        <!-- Acciones Principales del Header -->
+        <div class="flex items-center gap-1.5 shrink-0">
+          <!-- Botón Instagram Destacado -->
+          <a href="https://instagram.com/despensaquique" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 hover:opacity-90 active:scale-95 text-white px-3 py-1.5 text-xs font-bold shadow-xs transition-all"
+             aria-label="Instagram de Almacén Quique">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <span class="hidden sm:inline">Instagram</span>
+          </a>
+
+          <!-- Botón Compartir Catálogo -->
+          <button type="button" class="btn-share-trigger inline-flex items-center gap-1 rounded-full bg-stone-100 hover:bg-stone-200 active:scale-95 text-stone-700 px-3 py-1.5 text-xs font-bold transition-all border border-stone-200 cursor-pointer"
+                  title="Compartir catálogo">
+            <svg class="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
+            <span class="hidden sm:inline">Compartir</span>
+          </button>
+
+          <!-- Botón WhatsApp Consulta Directa -->
+          <button type="button" class="btn-wa-inquiry inline-flex items-center gap-1.5 rounded-full bg-wa hover:bg-[#20ba59] active:scale-95 text-white px-3.5 py-1.5 text-xs font-bold shadow-xs transition-all cursor-pointer"
+                  aria-label="WhatsApp">
+            <span>✆</span>
+            <span class="hidden sm:inline">Consultar</span>
+          </button>
+        </div>
       </div>
 
-      <form id="login-form" class="space-y-3.5">
-        <div>
-          <label class="block text-xs font-semibold text-stone-700 mb-1">Correo electrónico</label>
-          <input id="login-email" type="email" required placeholder="admin@despensa.com"
-            class="w-full rounded-xl bg-stone-50 border border-line px-3.5 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-ink/10 focus:border-stone-400 transition-all" />
+      <!-- Buscador -->
+      <div class="relative mb-2.5">
+        <input id="search" type="search" placeholder="Buscar bebidas, cervezas, picadas..." autocomplete="off"
+          class="w-full rounded-2xl bg-stone-100/90 hover:bg-stone-100 pl-10 pr-4 py-2.5 text-xs sm:text-sm outline-none placeholder:text-stone-400 focus:bg-white focus:ring-2 focus:ring-ink/10 transition-all border border-transparent focus:border-stone-300" />
+        <span class="absolute left-3.5 top-3 text-stone-400 text-xs select-none">🔍</span>
+      </div>
+
+      <!-- Píldoras de Categorías con Scroll Horizontal Fluido -->
+      <div class="flex gap-2 overflow-x-auto no-scrollbar py-0.5 -mx-1 px-1" id="filters">
+        <!-- Generado dinámicamente -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido Principal -->
+  <main class="max-w-xl mx-auto px-4 pt-4 pb-36 flex-1 w-full space-y-6">
+    <!-- Listado de Productos -->
+    <div id="lista" class="space-y-6"></div>
+
+    <!-- Banner Promocional para Compartir -->
+    <div class="p-4 rounded-3xl bg-amber-50/80 border border-amber-200/80 flex items-center justify-between gap-3 shadow-2xs">
+      <div>
+        <p class="font-extrabold text-xs text-amber-950">¿Te gustó el catálogo?</p>
+        <p class="text-[11px] text-amber-800">Compartilo con tus amigos o familia para armar la previa.</p>
+      </div>
+      <button type="button" class="btn-share-trigger shrink-0 rounded-xl bg-amber-900 hover:bg-amber-950 text-white px-3.5 py-2 text-xs font-bold shadow-xs active:scale-95 transition-all cursor-pointer">
+        Compartir enlace
+      </button>
+    </div>
+  </main>
+
+  <!-- ================== FOOTER MEJORADO (SIN ENLACES ADMIN) ================== -->
+  <footer class="bg-white border-t border-line mt-auto">
+    <div class="max-w-xl mx-auto px-4 py-8 space-y-6">
+      <!-- Tarjeta Destacada de Instagram con QR -->
+      <div class="p-5 rounded-3xl bg-gradient-to-br from-purple-50 via-pink-50 to-amber-50 border border-pink-200/60 shadow-xs">
+        <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+          <div class="w-28 h-28 p-2 bg-white rounded-2xl border border-pink-200 shadow-xs shrink-0 flex items-center justify-center">
+            <img src="/qr/qr-instagram-1000px.png" alt="QR Instagram Almacén Quique" class="w-full h-full object-contain" />
+          </div>
+          <div class="space-y-2 flex-1 min-w-0">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-pink-100 text-pink-700 text-[10px] font-bold">
+              <span>📷</span>
+              <span>¡Seguinos en redes!</span>
+            </div>
+            <h3 class="font-extrabold text-sm text-ink">Instagram @despensaquique</h3>
+            <p class="text-xs text-muted leading-relaxed">Escaneá el código con tu celular o entrá directamente para ver promociones del día y novedades.</p>
+            <div>
+              <a href="https://instagram.com/despensaquique" target="_blank" rel="noopener"
+                 class="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 text-xs font-bold shadow-xs hover:opacity-95 active:scale-95 transition-all">
+                Abrir Instagram ↗
+              </a>
+            </div>
+          </div>
         </div>
+      </div>
 
+      <!-- Tarjeta WhatsApp y Consultas -->
+      <div class="p-5 rounded-3xl bg-stone-50 border border-line flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
         <div>
-          <label class="block text-xs font-semibold text-stone-700 mb-1">Contraseña</label>
-          <input id="login-password" type="password" required placeholder="••••••••"
-            class="w-full rounded-xl bg-stone-50 border border-line px-3.5 py-2.5 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-ink/10 focus:border-stone-400 transition-all" />
+          <h4 class="font-bold text-xs text-ink">¿Tenés alguna consulta o pedido especial?</h4>
+          <p class="text-[11px] text-muted mt-0.5">Escribinos directo por WhatsApp y te respondemos a la brevedad.</p>
         </div>
-
-        <div id="login-error" class="hidden text-xs text-red-600 bg-red-50 p-2.5 rounded-xl border border-red-200"></div>
-
-        <button id="login-btn" type="submit"
-          class="w-full rounded-xl bg-ink text-white py-3 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs cursor-pointer">
-          Iniciar Sesión
+        <button type="button" class="btn-wa-inquiry rounded-xl bg-wa hover:bg-[#20ba59] active:scale-95 text-white px-4 py-2 text-xs font-bold shadow-xs transition-all inline-flex items-center gap-1.5 shrink-0 cursor-pointer">
+          <span>✆</span>
+          <span>Escribir por WhatsApp</span>
         </button>
-      </form>
-
-      <div class="mt-5 pt-4 border-t border-line text-center">
-        <a href="/precios" class="text-xs text-muted hover:text-ink font-medium transition-colors">
-          Ir al catálogo público (/precios) &rarr;
-        </a>
       </div>
+
+      <!-- Derechos Reservados (Cero rastro de administración) -->
+      <div class="pt-4 border-t border-line text-center text-[11px] text-muted">
+        <p>© Almacén Quique — Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================== BARRA FLOTANTE DEL CARRITO RESPONSIVA ================== -->
+  <div id="cart-bar" class="fixed bottom-4 left-4 right-4 z-40 max-w-xl mx-auto bg-ink text-white rounded-2xl p-3.5 shadow-2xl flex items-center justify-between cursor-pointer transform translate-y-28 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-sm">🛒</span>
+      <div>
+        <p id="cart-badge" class="text-xs font-bold leading-tight">0 productos</p>
+        <p class="text-[10px] text-stone-300">Tocá para revisar tu pedido</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <span id="cart-total" class="font-black text-sm">$0</span>
+      <span class="rounded-xl bg-white text-ink px-3 py-1.5 text-xs font-extrabold shadow-xs">Ver Carrito</span>
     </div>
   </div>
 
-  <!-- ================== VISTA DE DASHBOARD ================== -->
-  <div id="dashboard-view" class="hidden flex-1 flex flex-col no-print">
-    <!-- Header Admin -->
-    <header class="sticky top-0 z-30 bg-white border-b border-line shadow-xs">
-      <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-        <div class="flex items-center gap-2.5 min-w-0">
-          <img src="/logo/logo.png" alt="Almacén Quique" class="w-9 h-9 rounded-xl border border-line object-cover shrink-0" />
-          <div class="min-w-0">
-            <h1 class="font-extrabold text-sm leading-tight truncate">Administración</h1>
-            <p id="user-email" class="text-[11px] text-muted truncate">admin</p>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <a href="/precios" target="_blank" class="rounded-xl border border-line px-3 py-1.5 text-xs font-semibold text-stone-700 hover:bg-stone-50 transition-colors inline-flex items-center gap-1">
-            <span>Ver web pública</span> ↗
-          </a>
-          <button id="logout-btn" class="rounded-xl bg-stone-100 hover:bg-stone-200 px-3 py-1.5 text-xs font-bold text-stone-700 transition-colors cursor-pointer">
-            Salir
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <!-- Contenido Admin -->
-    <main class="max-w-4xl mx-auto px-4 py-6 flex-1 w-full space-y-6">
-      <!-- Métricas Rápidas -->
-      <div class="grid grid-cols-3 gap-3">
-        <div class="bg-white p-4 rounded-2xl border border-line shadow-xs">
-          <p class="text-[11px] font-semibold text-muted">Total Productos</p>
-          <p id="stat-total" class="text-2xl font-black text-ink mt-0.5">-</p>
-        </div>
-        <div class="bg-white p-4 rounded-2xl border border-line shadow-xs">
-          <p class="text-[11px] font-semibold text-emerald-600">En Stock</p>
-          <p id="stat-active" class="text-2xl font-black text-emerald-600 mt-0.5">-</p>
-        </div>
-        <div class="bg-white p-4 rounded-2xl border border-line shadow-xs">
-          <p class="text-[11px] font-semibold text-stone-400">Agotados</p>
-          <p id="stat-inactive" class="text-2xl font-black text-stone-400 mt-0.5">-</p>
-        </div>
-      </div>
-
-      <!-- Barra de Acciones y Filtros -->
-      <div class="bg-white p-4 rounded-2xl border border-line shadow-xs space-y-3">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div class="relative flex-1">
-            <input id="admin-search" type="search" placeholder="Buscar por nombre o descripción..."
-              class="w-full rounded-xl bg-stone-50 border border-line pl-9 pr-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400 transition-all" />
-            <span class="absolute left-3 top-2 text-stone-400 text-xs">🔍</span>
-          </div>
-          <button id="add-product-btn"
-            class="rounded-xl bg-ink text-white px-4 py-2 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs flex items-center justify-center gap-1.5 shrink-0 cursor-pointer">
-            <span>+</span>
-            <span>Nuevo Producto</span>
-          </button>
-        </div>
-
-        <!-- Categorías -->
-        <div id="admin-categories" class="flex gap-1.5 overflow-x-auto no-scrollbar pt-1">
-          <!-- Dinámico -->
-        </div>
-      </div>
-
-      <!-- Tabla de Productos -->
-      <div class="bg-white rounded-2xl border border-line shadow-xs overflow-hidden">
-        <div class="px-4 py-3 border-b border-line bg-stone-50 flex items-center justify-between">
-          <h2 class="text-xs font-bold text-stone-700 uppercase tracking-wider">Listado de Precios y Stock</h2>
-          <span class="text-[11px] text-muted">Edición en tiempo real</span>
-        </div>
-        <div id="products-table" class="divide-y divide-line">
-          <!-- Dinámico -->
-        </div>
-      </div>
-
-      <!-- ================== SECCIÓN CARTELERÍA Y CÓDIGOS QR ================== -->
-      <section class="bg-white rounded-3xl border border-line p-6 shadow-xs space-y-4">
+  <!-- ================== MODAL / DRAWER DEL CARRITO ================== -->
+  <dialog id="cart-modal" class="rounded-3xl border border-line p-0 backdrop:bg-ink/40 shadow-2xl max-w-md w-[92vw] mx-auto">
+    <div class="p-5 sm:p-6">
+      <div class="flex items-center justify-between pb-3 border-b border-line mb-3">
         <div>
-          <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200 uppercase mb-1">
-            Material para el local
-          </span>
-          <h2 class="font-extrabold text-base text-ink">Cartelería y Códigos QR para el Mostrador</h2>
-          <p class="text-xs text-muted mt-0.5">
-            Generados con el logo oficial y apuntando directamente a <strong class="text-ink">https://despensa-quique.vercel.app/precios</strong>.
-          </p>
+          <h3 class="font-extrabold text-base text-ink">Tu Pedido</h3>
+          <p class="text-xs text-muted">Revisá los productos antes de enviar</p>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-line">
-          <!-- QR Precios y Catálogo -->
-          <div class="p-4 rounded-2xl bg-stone-50 border border-line flex flex-col sm:flex-row items-center gap-4">
-            <div class="w-32 h-32 p-2 bg-white rounded-xl border border-line shadow-xs shrink-0 flex items-center justify-center">
-              <img src="/qr/qr-precios-1000px.png" alt="QR Catálogo Precios" class="w-full h-full object-contain" />
-            </div>
-            <div class="space-y-2 text-center sm:text-left flex-1 min-w-0">
-              <h3 class="font-bold text-xs text-ink">QR Catálogo de Precios</h3>
-              <p class="text-[11px] text-muted">Apuntá la cámara para ver precios actualizados al momento.</p>
-              <div class="flex flex-wrap gap-2 pt-1 justify-center sm:justify-start">
-                <a href="/qr/qr-precios-1000px.png" download="qr-precios-quique.png"
-                  class="rounded-lg bg-white border border-line hover:bg-stone-100 px-2.5 py-1 text-[11px] font-semibold text-stone-700 transition-colors shadow-2xs">
-                  Descargar PNG HD
-                </a>
-                <a href="/qr/qr-precios-vector.svg" download="qr-precios-quique.svg"
-                  class="rounded-lg bg-white border border-line hover:bg-stone-100 px-2.5 py-1 text-[11px] font-semibold text-stone-700 transition-colors shadow-2xs">
-                  Vector SVG
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- QR Instagram -->
-          <div class="p-4 rounded-2xl bg-stone-50 border border-line flex flex-col sm:flex-row items-center gap-4">
-            <div class="w-32 h-32 p-2 bg-white rounded-xl border border-line shadow-xs shrink-0 flex items-center justify-center">
-              <img src="/qr/qr-instagram-1000px.png" alt="QR Instagram" class="w-full h-full object-contain" />
-            </div>
-            <div class="space-y-2 text-center sm:text-left flex-1 min-w-0">
-              <h3 class="font-bold text-xs text-ink">QR Instagram (@despensaquique)</h3>
-              <p class="text-[11px] text-muted">Para que los clientes te sigan en redes desde el mostrador.</p>
-              <div class="flex flex-wrap gap-2 pt-1 justify-center sm:justify-start">
-                <a href="/qr/qr-instagram-1000px.png" download="qr-instagram-quique.png"
-                  class="rounded-lg bg-white border border-line hover:bg-stone-100 px-2.5 py-1 text-[11px] font-semibold text-stone-700 transition-colors shadow-2xs">
-                  Descargar PNG HD
-                </a>
-                <a href="https://instagram.com/despensaquique" target="_blank"
-                  class="rounded-lg bg-white border border-line hover:bg-stone-100 px-2.5 py-1 text-[11px] font-semibold text-stone-700 transition-colors shadow-2xs">
-                  Ver Perfil ↗
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="pt-3 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p class="text-xs text-stone-500">¿Querés colocar un cartel en la puerta o el mostrador?</p>
-          <button id="print-poster-btn" type="button"
-            class="rounded-xl bg-ink text-white px-5 py-2.5 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs inline-flex items-center gap-2 cursor-pointer">
-            <span>🖨</span>
-            <span>Imprimir Cartel A4 para Mostrador</span>
-          </button>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <!-- ================== MODAL DE PRODUCTO ================== -->
-  <dialog id="product-modal" class="rounded-3xl border border-line p-0 backdrop:bg-ink/40 shadow-2xl max-w-sm w-full mx-auto">
-    <div class="p-6">
-      <div class="flex items-center justify-between mb-4">
-        <h3 id="modal-title" class="font-extrabold text-base text-ink">Producto</h3>
-        <button id="cancel-modal-btn" type="button" class="text-stone-400 hover:text-ink text-lg leading-none font-bold cursor-pointer">✕</button>
+        <button id="close-cart-btn" type="button" class="text-stone-400 hover:text-ink text-lg leading-none font-bold p-1 cursor-pointer">✕</button>
       </div>
 
-      <form id="product-form" class="space-y-3.5">
-        <input type="hidden" id="prod-id" />
+      <!-- Lista de Productos en el Carrito -->
+      <div id="cart-modal-items" class="max-h-60 overflow-y-auto no-scrollbar space-y-1 py-1">
+        <!-- Dinámico -->
+      </div>
 
-        <div>
-          <label class="block text-xs font-semibold text-stone-700 mb-1">Nombre</label>
-          <input id="prod-name" type="text" required placeholder="Ej: Quilmes 1L"
-            class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
-        </div>
+      <!-- Total -->
+      <div class="pt-3 mt-3 border-t border-line flex items-center justify-between">
+        <span class="text-xs font-bold text-stone-600">Total estimado:</span>
+        <span id="cart-modal-total" class="font-black text-lg text-ink">$0</span>
+      </div>
 
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-xs font-semibold text-stone-700 mb-1">Categoría</label>
-            <input id="prod-category" type="text" required placeholder="Bebidas"
-              class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-stone-700 mb-1">Precio ($)</label>
-            <input id="prod-price" type="number" step="50" min="0" required placeholder="2500"
-              class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-stone-700 mb-1">Descripción / Tamaño (opcional)</label>
-          <input id="prod-desc" type="text" placeholder="Ej: Retornable bien fría"
-            class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
-        </div>
-
-        <div class="pt-1">
-          <label class="flex items-center gap-2 cursor-pointer select-none">
-            <input id="prod-available" type="checkbox" checked class="w-4 h-4 rounded text-ink focus:ring-ink" />
-            <span class="text-xs font-semibold text-stone-700">Disponible para la venta (En stock)</span>
-          </label>
-        </div>
-
-        <div class="pt-3 flex gap-2">
-          <button id="save-prod-btn" type="submit" class="flex-1 rounded-xl bg-ink text-white py-2.5 text-xs font-bold hover:bg-stone-800 transition-colors shadow-xs cursor-pointer">
-            Guardar
-          </button>
-        </div>
-      </form>
+      <!-- Botón Pedir por WhatsApp -->
+      <div class="mt-4 space-y-2">
+        <button id="checkout-btn" type="button"
+          class="w-full rounded-2xl bg-wa hover:bg-[#20ba59] active:scale-95 text-white py-3.5 text-xs font-extrabold flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer">
+          <span class="text-base">✆</span>
+          <span>Enviar pedido por WhatsApp</span>
+        </button>
+        <p class="text-[10px] text-center text-muted">
+          Al tocar el botón, se abrirá WhatsApp con el pedido listo para enviar.
+        </p>
+      </div>
     </div>
   </dialog>
 
-  <!-- ================== PLANTILLA IMPRIMIBLE (SOLO IMPRESIÓN A4) ================== -->
-  <div class="print-only max-w-lg mx-auto p-12 text-center bg-white">
-    <div class="border-4 border-stone-900 p-8 rounded-3xl">
-      <img src="/logo/logo.png" alt="Almacén Quique" class="w-24 h-24 mx-auto rounded-3xl object-cover mb-4" />
-      <h1 class="text-3xl font-black text-stone-900 tracking-tight uppercase">Almacén Quique</h1>
-      <p class="text-sm font-bold text-stone-600 uppercase tracking-widest mt-1">Bebidas Frías • Picadas • Almacén</p>
-      
-      <div class="my-8 flex justify-center">
-        <div class="p-4 border-2 border-stone-900 rounded-3xl">
-          <img src="/qr/qr-precios-1000px.png" alt="QR Catálogo" class="w-64 h-64 object-contain" />
-        </div>
-      </div>
-
-      <div class="space-y-2">
-        <p class="text-lg font-black text-stone-900 uppercase">
-          ¡Escaneá el código QR con tu celular!
-        </p>
-        <p class="text-xs font-semibold text-stone-600">
-          Mirá todos los precios actualizados y armá tu pedido al instante
-        </p>
-        <p class="text-xs font-mono text-stone-500 pt-2">
-          https://despensa-quique.vercel.app/precios
-        </p>
-      </div>
-
-      <div class="mt-8 pt-6 border-t-2 border-stone-200 flex justify-around text-xs font-bold text-stone-800">
-        <div>✆ WhatsApp: 11 6616-8970</div>
-        <div>📷 Instagram: @despensaquique</div>
-      </div>
-    </div>
-  </div>
-
-  <script type="module" src="/src/admin.js"></script>
+  <script type="module" src="/src/catalog.js"></script>
 </body>
 </html>

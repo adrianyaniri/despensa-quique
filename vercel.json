@@ -2,7 +2,7 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/precios", "destination": "/precios/index.html" },
-    { "source": "/ig", "destination": "/ig/index.html" },
-    { "source": "/admin", "destination": "/index.html" }
+    { "source": "/admin", "destination": "/admin/index.html" },
+    { "source": "/ig", "destination": "/ig/index.html" }
   ]
 }
