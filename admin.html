@@ -205,7 +205,7 @@ tailwind.config = {
 
 <script>
 const cfg = window.QUIQUE_CONFIG || {};
-const supabase = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+const sbClient = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
 
 let products = [];
 let activeAdminCat = 'Todos';
@@ -223,7 +223,7 @@ function showToast(msg, isError = false) {
 }
 
 // Auth State Listener
-supabase.auth.onAuthStateChange((event, session) => {
+sbClient.auth.onAuthStateChange((event, session) => {
   if (session) {
     document.getElementById('login-view').classList.add('hidden');
     document.getElementById('dashboard-view').classList.remove('hidden');
@@ -247,7 +247,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
   btn.disabled = true;
   btn.textContent = 'Verificando...';
 
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await sbClient.auth.signInWithPassword({ email, password });
   btn.disabled = false;
   btn.textContent = 'Iniciar Sesión';
 
@@ -261,7 +261,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
 // Logout
 document.getElementById('logout-btn').addEventListener('click', async () => {
-  await supabase.auth.signOut();
+  await sbClient.auth.signOut();
   showToast('Sesión cerrada');
 });
 
@@ -270,7 +270,7 @@ async function loadProducts() {
   const table = document.getElementById('products-table');
   table.innerHTML = '<div class="p-8 text-center text-xs text-muted">Cargando catálogo desde la base de datos...</div>';
 
-  const { data, error } = await supabase
+  const { data, error } = await sbClient
     .from('productos')
     .select('*')
     .order('created_at', { ascending: true });
@@ -382,7 +382,7 @@ window.updatePrice = async (id, newPrice) => {
     return;
   }
 
-  const { error } = await supabase
+  const { error } = await sbClient
     .from('productos')
     .update({ precio: priceNum })
     .eq('id', id);
@@ -398,7 +398,7 @@ window.updatePrice = async (id, newPrice) => {
 
 // Alternar Stock en Tiempo Real
 window.toggleStock = async (id, isAvailable) => {
-  const { error } = await supabase
+  const { error } = await sbClient
     .from('productos')
     .update({ disponible: isAvailable })
     .eq('id', id);
@@ -419,7 +419,7 @@ window.toggleStock = async (id, isAvailable) => {
 window.deleteProduct = async (id, nombre) => {
   if (!confirm(`¿Estás seguro de que querés eliminar "${nombre}" del catálogo?`)) return;
 
-  const { error } = await supabase
+  const { error } = await sbClient
     .from('productos')
     .delete()
     .eq('id', id);
@@ -479,7 +479,7 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
 
   if (idInput) {
     // Edición
-    const { error } = await supabase
+    const { error } = await sbClient
       .from('productos')
       .update({
         nombre: name,
@@ -503,7 +503,7 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
   } else {
     // Creación
     const newId = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now().toString().slice(-4);
-    const { error } = await supabase
+    const { error } = await sbClient
       .from('productos')
       .insert({
         id: newId,
