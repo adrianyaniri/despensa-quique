@@ -1,7 +1,7 @@
 // Configuración cargada 100% desde variables de entorno (.env)
 export const CONFIG = {
   WHATSAPP_NUMBER: import.meta.env.VITE_WHATSAPP_NUMBER || "",
-  NEGOCIO: import.meta.env.VITE_NEGOCIO || "Despensa Quique",
+  NEGOCIO: import.meta.env.VITE_NEGOCIO || "Almacén Quique",
   INSTAGRAM_URL: import.meta.env.VITE_INSTAGRAM_URL || "",
   INSTAGRAM_HANDLE: import.meta.env.VITE_INSTAGRAM_HANDLE || "",
   CATALOGO_URL: import.meta.env.VITE_CATALOGO_URL || "",

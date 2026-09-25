@@ -1,6 +1,6 @@
 @echo off
 echo =======================================
-echo   Levantando Despensa Quique (Vite)
+echo   Levantando Almacén Quique (Vite)
 echo =======================================
 
 echo Iniciando servidor de desarrollo...

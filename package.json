@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "private": true,
-  "description": "Catalogo web para Despensa Quique",
+  "description": "Catalogo web para Almacén Quique",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
