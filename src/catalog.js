@@ -387,6 +387,13 @@ function sendWhatsAppOrder() {
 
   const url = `https://wa.me/${s.whatsapp_number}?text=${encodeURIComponent(message)}`;
   window.open(url, '_blank');
+
+  // Opción 1: Cerrar modal, vaciar carrito y confirmar al usuario
+  closeCartModal();
+  cart = {};
+  updateCartUI();
+  renderProducts();
+  showToast('¡Pedido enviado a WhatsApp!');
 }
 
 // WhatsApp Direct Inquiry
@@ -465,6 +472,16 @@ if (clearCartBtn) {
     renderProducts();
     showToast('Carrito vaciado');
   });
+}
+
+// Sync Instagram Link and Handle with Config
+const igBtn = document.getElementById('ig-btn');
+const igHandle = document.getElementById('ig-handle');
+if (igBtn && CONFIG.INSTAGRAM_URL) {
+  igBtn.href = CONFIG.INSTAGRAM_URL;
+}
+if (igHandle && CONFIG.INSTAGRAM_HANDLE) {
+  igHandle.textContent = `Instagram ${CONFIG.INSTAGRAM_HANDLE}`;
 }
 
 // Initialize
