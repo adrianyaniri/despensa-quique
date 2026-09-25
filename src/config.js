@@ -1,12 +1,12 @@
 // Configuración cargada 100% desde variables de entorno (.env)
 export const CONFIG = {
-  WHATSAPP_NUMBER: import.meta.env.VITE_WHATSAPP_NUMBER || "",
-  NEGOCIO: import.meta.env.VITE_NEGOCIO || "Almacén Quique",
-  INSTAGRAM_URL: import.meta.env.VITE_INSTAGRAM_URL || "",
-  INSTAGRAM_HANDLE: import.meta.env.VITE_INSTAGRAM_HANDLE || "",
-  CATALOGO_URL: import.meta.env.VITE_CATALOGO_URL || "",
-  SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL || "",
-  SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY || "",
+  WHATSAPP_NUMBER: import.meta.env?.VITE_WHATSAPP_NUMBER || "",
+  NEGOCIO: import.meta.env?.VITE_NEGOCIO || "Almacén Quique",
+  INSTAGRAM_URL: import.meta.env?.VITE_INSTAGRAM_URL || "",
+  INSTAGRAM_HANDLE: import.meta.env?.VITE_INSTAGRAM_HANDLE || "",
+  CATALOGO_URL: import.meta.env?.VITE_CATALOGO_URL || "",
+  SUPABASE_URL: import.meta.env?.VITE_SUPABASE_URL || "",
+  SUPABASE_ANON_KEY: import.meta.env?.VITE_SUPABASE_ANON_KEY || "",
 
   MENSAJE_CONSULTA: "¡Hola! ¿Cómo están? Quería hacerles una consulta sobre los productos de {negocio}. ¡Muchas gracias!",
   MENSAJE_PEDIDO: {

@@ -28,6 +28,7 @@ export function formatPrice(amount) {
 
 // Load products (Supabase with menu.json fallback)
 export async function loadCatalog() {
+  syncRemoteSettings();
   const listEl = document.getElementById('lista');
   if (listEl) {
     listEl.innerHTML = `
@@ -336,6 +337,36 @@ function closeCartModal() {
   if (modal && modal.open) modal.close();
 }
 
+function getActiveSettings() {
+  const cached = localStorage.getItem('quique_settings');
+  if (cached) {
+    try {
+      const parsed = JSON.parse(cached);
+      return {
+        whatsapp_number: parsed.whatsapp_number || CONFIG.WHATSAPP_NUMBER,
+        mensaje_consulta: parsed.mensaje_consulta || CONFIG.MENSAJE_CONSULTA.replace('{negocio}', CONFIG.NEGOCIO),
+        mensaje_pedido_saludo: parsed.mensaje_pedido_saludo || CONFIG.MENSAJE_PEDIDO.saludo.replace('{negocio}', CONFIG.NEGOCIO),
+        mensaje_pedido_pie: parsed.mensaje_pedido_pie || CONFIG.MENSAJE_PEDIDO.pie,
+      };
+    } catch (e) {}
+  }
+  return {
+    whatsapp_number: CONFIG.WHATSAPP_NUMBER,
+    mensaje_consulta: CONFIG.MENSAJE_CONSULTA.replace('{negocio}', CONFIG.NEGOCIO),
+    mensaje_pedido_saludo: CONFIG.MENSAJE_PEDIDO.saludo.replace('{negocio}', CONFIG.NEGOCIO),
+    mensaje_pedido_pie: CONFIG.MENSAJE_PEDIDO.pie,
+  };
+}
+
+async function syncRemoteSettings() {
+  try {
+    const { data } = await sbClient.from('configuracion').select('*').eq('id', 'general').single();
+    if (data) {
+      localStorage.setItem('quique_settings', JSON.stringify(data));
+    }
+  } catch (e) {}
+}
+
 // WhatsApp Order Checkout
 function sendWhatsAppOrder() {
   const items = Object.values(cart);
@@ -344,23 +375,25 @@ function sendWhatsAppOrder() {
     return;
   }
 
+  const s = getActiveSettings();
   const totalPrice = items.reduce((sum, item) => sum + item.qty * item.product.precio, 0);
   const itemsText = items
     .map(i => `• ${i.qty}x ${i.product.nombre} — ${formatPrice(i.product.precio * i.qty)}`)
     .join('\n');
 
-  const greeting = CONFIG.MENSAJE_PEDIDO.saludo.replace('{negocio}', CONFIG.NEGOCIO);
-  const closing = CONFIG.MENSAJE_PEDIDO.pie;
+  const greeting = s.mensaje_pedido_saludo.replace('{negocio}', CONFIG.NEGOCIO);
+  const closing = s.mensaje_pedido_pie;
   const message = `${greeting}\n\n${itemsText}\n\n*Total estimado: ${formatPrice(totalPrice)}*\n\n${closing}`;
 
-  const url = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  const url = `https://wa.me/${s.whatsapp_number}?text=${encodeURIComponent(message)}`;
   window.open(url, '_blank');
 }
 
 // WhatsApp Direct Inquiry
 function openWhatsAppInquiry() {
-  const greeting = CONFIG.MENSAJE_CONSULTA.replace('{negocio}', CONFIG.NEGOCIO);
-  const url = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(greeting)}`;
+  const s = getActiveSettings();
+  const greeting = s.mensaje_consulta.replace('{negocio}', CONFIG.NEGOCIO);
+  const url = `https://wa.me/${s.whatsapp_number}?text=${encodeURIComponent(greeting)}`;
   window.open(url, '_blank');
 }
 
