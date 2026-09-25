@@ -138,18 +138,20 @@
   </footer>
 
   <!-- ================== BARRA FLOTANTE DEL CARRITO RESPONSIVA ================== -->
-  <div id="cart-bar" class="fixed bottom-4 left-4 right-4 z-40 max-w-xl mx-auto bg-ink text-white rounded-2xl p-3.5 shadow-2xl flex items-center justify-between cursor-pointer transform translate-y-28 opacity-0 pointer-events-none transition-all duration-300">
-    <div class="flex items-center gap-2.5">
-      <span class="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-sm">🛒</span>
-      <div>
-        <p id="cart-badge" class="text-xs font-bold leading-tight">0 productos</p>
-        <p class="text-[10px] text-stone-300">Tocá para revisar tu pedido</p>
+  <div id="cart-bar" class="fixed bottom-4 left-4 right-4 z-40 max-w-xl mx-auto bg-stone-900 text-white rounded-2xl p-3 sm:p-3.5 shadow-2xl flex items-center justify-between cursor-pointer transform translate-y-36 opacity-0 pointer-events-none transition-all duration-300 border border-stone-800">
+    <div class="flex items-center gap-2.5 min-w-0">
+      <span class="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-base shrink-0">🛒</span>
+      <div class="min-w-0">
+        <p id="cart-badge" class="text-xs font-bold leading-tight truncate">0 productos</p>
+        <span id="cart-total" class="font-black text-sm text-emerald-400">$0</span>
       </div>
     </div>
 
-    <div class="flex items-center gap-3">
-      <span id="cart-total" class="font-black text-sm">$0</span>
-      <span class="rounded-xl bg-white text-ink px-3 py-1.5 text-xs font-extrabold shadow-xs">Ver Carrito</span>
+    <div class="flex items-center gap-2 shrink-0">
+      <button type="button" class="rounded-xl bg-wa hover:bg-[#20ba59] active:scale-95 text-white px-3.5 sm:px-4 py-2 text-xs font-black shadow-md flex items-center gap-1.5 cursor-pointer transition-all">
+        <span>Finalizar Pedido</span>
+        <span class="text-sm font-bold">&rarr;</span>
+      </button>
     </div>
   </div>
 
@@ -175,16 +177,20 @@
         <span id="cart-modal-total" class="font-black text-lg text-ink">$0</span>
       </div>
 
-      <!-- Botón Pedir por WhatsApp -->
-      <div class="mt-4 space-y-2">
+      <!-- Botón Pedir por WhatsApp y Vaciar Carrito -->
+      <div class="mt-4 space-y-2.5">
         <button id="checkout-btn" type="button"
           class="w-full rounded-2xl bg-wa hover:bg-[#20ba59] active:scale-95 text-white py-3.5 text-xs font-extrabold flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer">
           <span class="text-base">✆</span>
           <span>Enviar pedido por WhatsApp</span>
         </button>
-        <p class="text-[10px] text-center text-muted">
-          Al tocar el botón, se abrirá WhatsApp con el pedido listo para enviar.
-        </p>
+
+        <div class="flex items-center justify-between pt-1">
+          <button id="clear-cart-btn" type="button" class="text-[11px] text-stone-500 hover:text-rose-600 font-semibold underline cursor-pointer">
+            Vaciar carrito
+          </button>
+          <span class="text-[10px] text-muted">Se abrirá WhatsApp listo para enviar</span>
+        </div>
       </div>
     </div>
   </dialog>
