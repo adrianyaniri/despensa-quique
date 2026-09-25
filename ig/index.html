@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirigiendo a Instagram — Despensa Quique</title>
+  <link rel="icon" type="image/png" href="/logo/logo.png">
+  <script type="module">
+    import { CONFIG } from '/src/config.js';
+    const target = CONFIG.INSTAGRAM_URL || 'https://instagram.com/despensaquique';
+    window.location.replace(target);
+  </script>
+</head>
+<body style="font-family: system-ui, -apple-system, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #FFFEFB; color: #1F1C19; text-align: center; padding: 20px;">
+  <div>
+    <img src="/logo/logo.png" alt="Despensa Quique" style="width: 72px; height: 72px; border-radius: 20px; object-fit: cover; margin-bottom: 16px;">
+    <h1 style="font-size: 18px; margin: 0 0 8px 0;">Redirigiendo a Instagram...</h1>
+    <p style="font-size: 13px; color: #7A736C; margin: 0 0 16px 0;">Despensa Quique</p>
+    <p style="font-size: 12px; color: #7A736C;">
+      Si no te redirige automáticamente, <a id="fallback-link" href="https://instagram.com/despensaquique" style="color: #1F1C19; font-weight: bold;">hacé clic acá</a>.
+    </p>
+  </div>
+  <script type="module">
+    import { CONFIG } from '/src/config.js';
+    const link = document.getElementById('fallback-link');
+    if (link && CONFIG.INSTAGRAM_URL) {
+      link.href = CONFIG.INSTAGRAM_URL;
+    }
+  </script>
+</body>
+</html>

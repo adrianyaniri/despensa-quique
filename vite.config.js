@@ -14,6 +14,8 @@ export default defineConfig({
 
           if (pathname === '/precios' || pathname === '/precios/') {
             req.url = '/precios/index.html' + query;
+          } else if (pathname === '/ig' || pathname === '/ig/') {
+            req.url = '/ig/index.html' + query;
           } else if (pathname === '/admin' || pathname === '/admin/') {
             req.url = '/index.html' + query;
           }
@@ -27,6 +29,7 @@ export default defineConfig({
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
         precios: resolve(import.meta.dirname, 'precios/index.html'),
+        ig: resolve(import.meta.dirname, 'ig/index.html'),
       },
     },
   },

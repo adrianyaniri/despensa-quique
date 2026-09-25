@@ -40,7 +40,7 @@ def generate_qr_with_logo(url, logo_path, out_png, out_svg):
     print(f'Saved {out_png} and {out_svg}')
 
 if __name__ == '__main__':
-    # 1. Precios QR
+    # 1. Precios QR -> apunta al catalogo publico
     generate_qr_with_logo(
         'https://despensa-quique.vercel.app/precios',
         'public/logo/logo.png',
@@ -48,9 +48,9 @@ if __name__ == '__main__':
         'public/qr/qr-precios-vector.svg'
     )
 
-    # 2. Instagram QR
+    # 2. Instagram QR -> apunta a la redireccion dinamica /ig
     generate_qr_with_logo(
-        'https://instagram.com/despensaquique',
+        'https://despensa-quique.vercel.app/ig',
         'public/logo/logo.png',
         'public/qr/qr-instagram-1000px.png',
         'public/qr/qr-instagram-vector.svg'
