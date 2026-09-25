@@ -1,17 +1,23 @@
+// Configuración cargada 100% desde variables de entorno (.env)
 export const CONFIG = {
-  WHATSAPP_NUMBER: import.meta.env?.VITE_WHATSAPP_NUMBER || "5491166168970",
-  NEGOCIO: import.meta.env?.VITE_NEGOCIO || "Despensa Quique",
-  INSTAGRAM_URL: import.meta.env?.VITE_INSTAGRAM_URL || "https://instagram.com/despensaquique",
-  INSTAGRAM_HANDLE: import.meta.env?.VITE_INSTAGRAM_HANDLE || "@despensaquique",
-  CATALOGO_URL: import.meta.env?.VITE_CATALOGO_URL || "https://despensa-quique.vercel.app/precios",
-  SUPABASE_URL: import.meta.env?.VITE_SUPABASE_URL || "https://sdmyxjmdyewpotflprwu.supabase.co",
-  SUPABASE_ANON_KEY: import.meta.env?.VITE_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkbXl4am1keWV3cG90Zmxwcnd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyODA0ODUsImV4cCI6MjEwNTg1NjQ4NX0.gHnXfhFjkpRB9O6zme90lm47jOX5YiLQMd6StY5iP_E",
+  WHATSAPP_NUMBER: import.meta.env.VITE_WHATSAPP_NUMBER || "",
+  NEGOCIO: import.meta.env.VITE_NEGOCIO || "Despensa Quique",
+  INSTAGRAM_URL: import.meta.env.VITE_INSTAGRAM_URL || "",
+  INSTAGRAM_HANDLE: import.meta.env.VITE_INSTAGRAM_HANDLE || "",
+  CATALOGO_URL: import.meta.env.VITE_CATALOGO_URL || "",
+  SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL || "",
+  SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY || "",
+
   MENSAJE_CONSULTA: "¡Hola! ¿Cómo están? Quería hacerles una consulta sobre los productos de {negocio}. ¡Muchas gracias!",
   MENSAJE_PEDIDO: {
     saludo: "¡Hola {negocio}! ¿Cómo están? Les comparto mi pedido:",
     pie: "¡Muchas gracias y que tengan un excelente día!"
   }
 };
+
+if (!CONFIG.SUPABASE_URL || !CONFIG.SUPABASE_ANON_KEY) {
+  console.error("Configuración incompleta: Faltan las variables VITE_SUPABASE_URL y/o VITE_SUPABASE_ANON_KEY en tu entorno.");
+}
 
 if (typeof window !== 'undefined') {
   window.QUIQUE_CONFIG = CONFIG;
