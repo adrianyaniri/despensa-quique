@@ -17,36 +17,29 @@
     <span id="toast-msg">Acción completada</span>
   </div>
 
-  <!-- Header de Marca (Limpio y Destacado) -->
+  <!-- Header de Marca (Grande, Destacado y Espacioso) -->
   <header class="sticky top-0 z-30 bg-base/95 backdrop-blur-md border-b border-line shadow-xs">
-    <div class="max-w-xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-      <!-- Identidad de Marca: Logo y Nombre en Tamaño Grande -->
-      <div class="flex items-center gap-3 min-w-0">
-        <img src="/logo/logo.png" alt="Almacén Quique" class="w-13 h-13 sm:w-15 sm:h-15 rounded-2xl object-cover bg-white border border-line shadow-xs shrink-0" />
+    <div class="max-w-xl mx-auto px-4 py-4 sm:py-5 flex items-center justify-between gap-3">
+      <!-- Identidad de Marca: Gran Formato -->
+      <div class="flex items-center gap-3.5 sm:gap-4 min-w-0">
+        <img src="/logo/logo.png" alt="Almacén Quique" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl object-cover bg-white border border-line shadow-sm shrink-0" />
         <div class="min-w-0">
-          <div class="flex items-center gap-2">
-            <h1 class="font-black text-lg sm:text-xl leading-tight truncate text-ink tracking-tight">Almacén Quique</h1>
-            <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200 shrink-0">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Abierto
+          <div class="flex flex-wrap items-center gap-2">
+            <h1 class="font-black text-2xl sm:text-3xl leading-tight truncate text-ink tracking-tight">Almacén Quique</h1>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-extrabold text-emerald-700 border border-emerald-200 shrink-0">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Abierto
             </span>
           </div>
-          <p class="text-xs text-muted truncate mt-0.5 font-medium">Bebidas frías, picadas y almacén</p>
+          <p class="text-xs sm:text-sm text-muted truncate mt-1 font-medium">Bebidas frías • Picadas • Almacén de barrio</p>
         </div>
       </div>
 
-      <!-- Acciones de Cabecera -->
-      <div class="flex items-center gap-1.5 shrink-0">
-        <a href="https://instagram.com/despensaquique" target="_blank" rel="noopener"
-           class="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 hover:opacity-90 active:scale-95 text-white px-3 py-2 text-xs font-bold shadow-xs transition-all"
-           aria-label="Instagram">
-          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          <span class="hidden sm:inline">Instagram</span>
-        </a>
-
-        <button type="button" class="btn-share-trigger inline-flex items-center gap-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 active:scale-95 text-stone-700 px-3 py-2 text-xs font-bold transition-all border border-stone-200 cursor-pointer"
-                title="Compartir catálogo">
-          <svg class="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
-          <span class="hidden sm:inline">Compartir</span>
+      <!-- Contacto Rápido por WhatsApp en cabecera -->
+      <div class="shrink-0">
+        <button type="button" class="btn-wa-inquiry inline-flex items-center gap-1.5 rounded-2xl bg-wa hover:bg-[#20ba59] active:scale-95 text-white px-3.5 sm:px-4 py-2.5 text-xs font-black shadow-sm transition-all cursor-pointer"
+                aria-label="WhatsApp">
+          <span class="text-sm">✆</span>
+          <span class="hidden sm:inline">WhatsApp</span>
         </button>
       </div>
     </div>
@@ -73,38 +66,44 @@
     <div id="lista" class="space-y-6"></div>
   </main>
 
-  <!-- ================== FOOTER LIMPIO (SIN INFORMACIÓN REPETIDA) ================== -->
+  <!-- ================== FOOTER (INSTAGRAM CON LOGO Y COMPARTIR) ================== -->
   <footer class="bg-white border-t border-line mt-auto">
-    <div class="max-w-xl mx-auto px-4 py-8 space-y-6">
-      <!-- Tarjeta WhatsApp y Consultas Especiales -->
-      <div class="p-5 rounded-3xl bg-stone-50 border border-line flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-        <div>
-          <h4 class="font-extrabold text-sm text-ink">¿Tenés alguna consulta o pedido especial?</h4>
-          <p class="text-xs text-muted mt-0.5">Escribinos directo por WhatsApp y te respondemos al toque.</p>
+    <div class="max-w-xl mx-auto px-4 py-8 space-y-4">
+      <!-- Tarjeta Oficial de Instagram con Logo y Acceso -->
+      <div class="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-purple-50 via-pink-50 to-amber-50 border border-pink-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-2xs">
+        <div class="flex items-center gap-3.5 min-w-0">
+          <!-- Logo Oficial de Instagram con Degradado -->
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600 flex items-center justify-center text-white shadow-sm shrink-0">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </div>
+          <div class="min-w-0">
+            <h4 class="font-black text-sm text-ink truncate">Instagram @despensaquique</h4>
+            <p class="text-xs text-stone-600 truncate">Seguinos para ver novedades y ofertas diarias</p>
+          </div>
         </div>
-        <button type="button" class="btn-wa-inquiry rounded-xl bg-wa hover:bg-[#20ba59] active:scale-95 text-white px-4 py-2.5 text-xs font-bold shadow-xs transition-all inline-flex items-center gap-1.5 shrink-0 cursor-pointer">
-          <span class="text-sm">✆</span>
-          <span>Escribir por WhatsApp</span>
+        <a href="https://instagram.com/despensaquique" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-1.5 rounded-2xl bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 hover:opacity-95 active:scale-95 text-white px-4 py-2.5 text-xs font-black shadow-sm transition-all shrink-0">
+          <span>Abrir Instagram</span>
+          <span class="text-xs font-bold">↗</span>
+        </a>
+      </div>
+
+      <!-- Tarjeta Compartir Catálogo -->
+      <div class="p-4 sm:p-5 rounded-3xl bg-stone-50 border border-line flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+        <div>
+          <h4 class="font-extrabold text-xs sm:text-sm text-ink">¿Armás una juntada o una comida?</h4>
+          <p class="text-xs text-muted mt-0.5">Compartí el catálogo con tus amigos o familia para elegir lo que quieran.</p>
+        </div>
+        <button type="button" class="btn-share-trigger inline-flex items-center gap-1.5 rounded-2xl bg-stone-900 hover:bg-black active:scale-95 text-white px-4 py-2.5 text-xs font-bold shadow-xs transition-all shrink-0 cursor-pointer">
+          <svg class="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
+          <span>Compartir Catálogo</span>
         </button>
       </div>
 
-      <!-- Enlaces Rápidos de Contacto -->
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-600">
-        <div class="flex items-center gap-3">
-          <a href="https://instagram.com/despensaquique" target="_blank" rel="noopener"
-             class="hover:text-pink-600 font-semibold inline-flex items-center gap-1 transition-colors">
-            <span>📷</span> Instagram @despensaquique
-          </a>
-          <span class="text-stone-300">•</span>
-          <button type="button" class="btn-share-trigger hover:text-ink font-semibold inline-flex items-center gap-1 transition-colors cursor-pointer">
-            <span>🔗</span> Compartir catálogo
-          </button>
-        </div>
-        <p class="text-[11px] text-muted">Bebidas frías • Picadas • Almacén</p>
-      </div>
-
       <!-- Derechos Reservados -->
-      <div class="pt-4 border-t border-line text-center text-[11px] text-muted">
+      <div class="pt-3 border-t border-line text-center text-[11px] text-muted">
         <p>© Almacén Quique — Todos los derechos reservados.</p>
       </div>
     </div>
