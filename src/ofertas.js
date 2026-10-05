@@ -339,6 +339,19 @@ function initSocialFooter() {
   }
 }
 
+// WhatsApp Consulta General en Cabecera
+function openWhatsAppInquiry() {
+  const s = getActiveSettings();
+  const greeting = (s.mensaje_consulta || CONFIG.MENSAJE_CONSULTA || '¡Hola! Quería hacerles una consulta.').replace('{negocio}', CONFIG.NEGOCIO);
+  const url = `https://wa.me/${s.whatsapp_number}?text=${encodeURIComponent(greeting)}`;
+  window.open(url, '_blank');
+}
+
+document.querySelectorAll('.btn-wa-inquiry').forEach(btn => {
+  btn.addEventListener('click', openWhatsAppInquiry);
+});
+
 // Inicialización de la página
 loadOfertas();
 initSocialFooter();
+
