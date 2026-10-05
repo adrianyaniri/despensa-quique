@@ -4,6 +4,7 @@ import { CONFIG } from './config.js';
 
 function initCinematicIntro() {
   const curtain = document.getElementById('intro-curtain');
+  const startBtn = document.getElementById('btn-intro-start');
   if (!curtain) return;
 
   let dismissed = false;
@@ -14,20 +15,23 @@ function initCinematicIntro() {
     curtain.classList.add('intro-hidden');
     setTimeout(() => {
       curtain.remove();
-    }, 750);
+    }, 850);
   }
 
-  // Auto-dismiss after 1.9s or immediately upon tap/click
-  const timer = setTimeout(dismissIntro, 1900);
+  // Se inicia exclusivamente cuando el usuario hace clic en el botón o en la pantalla
+  if (startBtn) {
+    startBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dismissIntro();
+    });
+  }
 
-  curtain.addEventListener('click', () => {
-    clearTimeout(timer);
-    dismissIntro();
-  });
+  curtain.addEventListener('click', dismissIntro);
 
-  window.addEventListener('keydown', () => {
-    clearTimeout(timer);
-    dismissIntro();
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      dismissIntro();
+    }
   }, { once: true });
 }
 

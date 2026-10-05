@@ -11,33 +11,42 @@
 </head>
 <body class="font-body text-ink min-h-screen antialiased flex flex-col justify-between bg-base selection:bg-espresso selection:text-white relative">
 
-  <!-- ================== INTRO ANIMADA (EFECTO BUMPER DE MARCA) ================== -->
-  <aside id="intro-curtain" class="intro-curtain fixed inset-0 z-50 bg-[#F8F5EE] flex flex-col items-center justify-center p-6 text-center cursor-pointer select-none">
-    <div class="relative space-y-6 max-w-xs">
-      <div class="absolute inset-0 -m-10 rounded-full bg-tan/20 blur-3xl anim-halo pointer-events-none"></div>
+  <!-- ================== INTRO ANIMADA (PORTADA INTERACTIVA CON INICIO EXPLÍCITO) ================== -->
+  <aside id="intro-curtain" class="intro-curtain fixed inset-0 z-50 bg-[#1A1715] text-[#F8F5EE] flex flex-col items-center justify-between p-7 text-center select-none overflow-hidden cursor-pointer">
+    <!-- Remate superior sutil -->
+    <div class="pt-4">
+      <span class="text-[10px] font-extrabold uppercase tracking-[0.35em] text-tan/60">Comercio de Barrio</span>
+    </div>
 
-      <!-- Emblema de la Marca -->
-      <div class="relative anim-intro-emblem">
-        <img src="/logo/logo.png" alt="Despensa Quique"
-             class="w-36 h-36 sm:w-40 sm:h-40 mx-auto rounded-3xl object-cover bg-white border border-line shadow-2xl p-1.5" />
-      </div>
+    <!-- Centro: SOLO "Despensa Quique" y el año "Desde 2012" con animación respirable -->
+    <div class="relative space-y-4 max-w-xs my-auto">
+      <div class="absolute inset-0 -m-12 rounded-full bg-tan/15 blur-3xl anim-halo pointer-events-none"></div>
 
-      <!-- Tipografía Animada con Barrido de Luz -->
-      <div class="space-y-1 relative">
-        <p class="text-[11px] font-black uppercase tracking-[0.3em] text-tan">Despensa</p>
-        <h1 class="text-3xl sm:text-4xl font-black tracking-tight leading-none shimmer-text">
-          Quique
-        </h1>
-        <p class="anim-intro-sub text-[10px] font-extrabold text-stone-500 uppercase tracking-widest pt-1">
-          — Fiambres • Desde 2021 —
+      <p class="anim-intro-sub text-xs sm:text-sm font-black uppercase text-tan">
+        Despensa
+      </p>
+
+      <h1 class="anim-intro-title text-5xl sm:text-6xl font-black tracking-tight text-white leading-none">
+        Quique
+      </h1>
+
+      <div class="flex items-center justify-center gap-3 pt-3">
+        <span class="w-8 h-px bg-tan/30"></span>
+        <p class="text-xs sm:text-sm font-extrabold text-stone-300 tracking-[0.3em] uppercase">
+          Desde 2012
         </p>
+        <span class="w-8 h-px bg-tan/30"></span>
       </div>
+    </div>
 
-      <div class="pt-4">
-        <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-semibold text-stone-400 bg-stone-200/50">
-          <span>Tocá para ingresar</span>
-        </span>
-      </div>
+    <!-- Botón obligatorio para iniciar: No avanza si no se hace clic -->
+    <div class="pb-6 w-full max-w-xs space-y-2.5">
+      <button id="btn-intro-start" type="button"
+              class="group w-full py-4 px-6 rounded-2xl bg-tan hover:bg-[#D4BCA2] active:scale-98 text-espresso font-black text-sm tracking-wide transition-all shadow-xl shadow-black/50 flex items-center justify-center gap-2 cursor-pointer">
+        <span>Iniciar</span>
+        <span class="text-base group-hover:translate-x-1 transition-transform">&rarr;</span>
+      </button>
+      <p class="text-[10px] text-stone-400 font-medium">Hacé clic para ingresar a la tienda</p>
     </div>
   </aside>
 
@@ -58,9 +67,9 @@
           <span>Abierto • Almacén de Barrio</span>
         </div>
 
-        <h1 class="font-black text-3xl sm:text-4xl text-espresso tracking-tight leading-tight">
+        <h2 class="font-black text-3xl sm:text-4xl text-espresso tracking-tight leading-tight">
           Despensa Quique
-        </h1>
+        </h2>
 
         <p class="text-xs uppercase font-extrabold tracking-[0.2em] text-tan">
           Fiambres • Picadas • Bebidas
@@ -72,7 +81,7 @@
       </div>
     </div>
 
-    <!-- Acciones Secundarias Limpias y Sobrias (Sin Tarjetas Invasivas) -->
+    <!-- Acciones Secundarias Limpias y Sobrias -->
     <div class="w-full max-w-xs space-y-3 pt-2 anim-delay-1">
 
       <!-- Botón Primario: Ofertas del Día -->
@@ -105,7 +114,7 @@
 
   <!-- Pie Discreto y Minimalista -->
   <footer class="py-5 text-center text-[11px] text-muted border-t border-line/60 bg-base">
-    <p>Despensa Quique • Desde 2021</p>
+    <p>Despensa Quique • Desde 2012</p>
   </footer>
 
   <script type="module" src="/src/landing.js"></script>
