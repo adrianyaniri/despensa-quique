@@ -22,14 +22,15 @@ export function buildOrderMessage(items, options = {}) {
     .join('\n');
 
   const greeting = (options.greeting || s.mensaje_pedido_saludo || '¡Hola {negocio}! Les comparto mi pedido:').replace('{negocio}', negocio);
-  const closing = options.closing || s.mensaje_pedido_pie || '¿Tienen disponibilidad para coordinar la entrega o retiro? ¡Muchas gracias!';
-  
-  let savingsText = '';
-  if (options.totalSavings && options.totalSavings > 0) {
-    savingsText = `\n_(Ahorro total estimado: ${formatPrice(options.totalSavings)})_`;
+  const closing = options.closing || s.mensaje_pedido_pie || '¡Muchas gracias!';
+
+  let customerInfo = '';
+  if (options.customerData) {
+    const { name, payment } = options.customerData;
+    customerInfo = `*Datos del Cliente*\n• Nombre: ${name}\n• Entrega: Retiro en local\n• Medio de pago: ${payment === 'efectivo' ? 'Efectivo' : 'Transferencia / Alias'}\n\n`;
   }
 
-  return `${greeting}\n\n${itemsText}\n\n*Total estimado: ${formatPrice(totalPrice)}*${savingsText}\n\n${closing}`;
+  return `${greeting}\n\n${customerInfo}*Pedido*\n${itemsText}\n\n*Total estimado: ${formatPrice(totalPrice)}*\n\n${closing}`;
 }
 
 /**

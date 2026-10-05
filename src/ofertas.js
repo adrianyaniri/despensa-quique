@@ -67,8 +67,12 @@ function renderOfertas() {
             `}
 
             ${o.stock_limite ? `
-              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-stone-100 text-stone-700 border border-stone-200">
-                📦 Quedan ${o.stock_limite} un.
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold ${
+                o.stock_limite < 5 
+                  ? 'bg-rose-100 text-rose-700 border-rose-200 animate-pulse' 
+                  : 'bg-stone-100 text-stone-700 border-stone-200'
+              }">
+                📦 ${o.stock_limite < 5 ? '¡Últimas ' + o.stock_limite + ' un.!' : 'Quedan ' + o.stock_limite + ' un.'}
               </span>
             ` : ''}
           </div>

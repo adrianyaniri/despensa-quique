@@ -79,7 +79,7 @@ function renderProducts() {
 
     listEl.innerHTML = Object.entries(grouped).map(([category, items]) => `
       <section class="space-y-2.5">
-        <div class="flex items-center gap-2 pt-2">
+        <div class="flex items-center gap-2 pt-2 sticky top-[72px] z-10 bg-base py-1">
           <h2 class="text-xs font-extrabold uppercase tracking-wider text-muted">${category}</h2>
           <span class="text-[10px] font-bold text-stone-400 bg-stone-100 rounded-full px-2 py-0.5">${items.length}</span>
         </div>

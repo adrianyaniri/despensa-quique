@@ -51,9 +51,19 @@ function ensureCartDomElements(title = 'Tu Pedido', subtitle = 'Revisá los item
             <span class="text-xs font-bold text-stone-600">Total estimado:</span>
             <span id="cart-modal-total" class="font-black text-lg text-ink">$0</span>
           </div>
-          <div id="cart-modal-savings-box" class="hidden flex items-center justify-between text-[11px] font-bold text-emerald-700">
-            <span>Ahorro total estimado:</span>
-            <span id="cart-modal-savings">$0</span>
+        </div>
+
+        <div class="pt-4 space-y-3">
+          <div>
+            <label class="block text-xs font-bold text-stone-600 mb-1">Nombre y Apellido</label>
+            <input type="text" id="checkout-name" class="w-full rounded-xl border border-line px-3 py-2 text-sm" placeholder="Ej: Juan Pérez">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-stone-600 mb-1">Medio de Pago</label>
+            <select id="checkout-payment" class="w-full rounded-xl border border-line px-3 py-2 text-sm bg-white">
+              <option value="efectivo">Efectivo</option>
+              <option value="transferencia">Transferencia / MercadoPago / Alias</option>
+            </select>
           </div>
         </div>
 
@@ -102,8 +112,6 @@ export function initCartDrawer(options = {}) {
   const cartModal = document.getElementById('cart-modal');
   const modalList = document.getElementById('cart-modal-items');
   const modalTotal = document.getElementById('cart-modal-total');
-  const savingsBox = document.getElementById('cart-modal-savings-box');
-  const savingsEl = document.getElementById('cart-modal-savings');
   const closeBtn = document.getElementById('close-cart-btn');
   const checkoutBtn = document.getElementById('checkout-btn');
   const clearBtn = document.getElementById('clear-cart-btn');
@@ -122,19 +130,10 @@ export function initCartDrawer(options = {}) {
     if (snapshot.isEmpty) {
       modalList.innerHTML = `<p class="text-xs text-muted text-center py-6">Tu carrito de ${itemLabelPlural} está vacío.</p>`;
       if (modalTotal) modalTotal.textContent = '$0';
-      if (savingsBox) savingsBox.classList.add('hidden');
       return;
     }
 
     if (modalTotal) modalTotal.textContent = formatPrice(snapshot.totalPrice);
-    if (savingsBox && savingsEl) {
-      if (snapshot.totalSavings > 0) {
-        savingsBox.classList.remove('hidden');
-        savingsEl.textContent = formatPrice(snapshot.totalSavings);
-      } else {
-        savingsBox.classList.add('hidden');
-      }
-    }
 
     modalList.innerHTML = snapshot.items.map(item => {
       const maxStock = item.maxStock || Infinity;
@@ -215,7 +214,20 @@ export function initCartDrawer(options = {}) {
         showToast('El carrito está vacío', true);
         return;
       }
-      checkoutViaWhatsApp(items, { totalSavings: cartStore.getTotalSavings() });
+
+      const name = document.getElementById('checkout-name')?.value.trim();
+      const payment = document.getElementById('checkout-payment')?.value;
+
+      if (!name) {
+        showToast('Ingresá tu nombre', true);
+        return;
+      }
+
+      const customerData = { name, payment };
+
+      checkoutViaWhatsApp(items, { 
+        customerData
+      });
       closeModal();
       cartStore.clear();
       showToast('¡Pedido enviado a WhatsApp!');

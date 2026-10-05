@@ -18,18 +18,27 @@ function initCinematicIntro() {
     }, 850);
   }
 
+  if (localStorage.getItem('intro_seen')) {
+    dismissIntro();
+  }
+
   // Se inicia exclusivamente cuando el usuario hace clic en el botón o en la pantalla
   if (startBtn) {
     startBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      localStorage.setItem('intro_seen', 'true');
       dismissIntro();
     });
   }
 
-  curtain.addEventListener('click', dismissIntro);
+  curtain.addEventListener('click', () => {
+    localStorage.setItem('intro_seen', 'true');
+    dismissIntro();
+  });
 
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
+      localStorage.setItem('intro_seen', 'true');
       dismissIntro();
     }
   }, { once: true });
