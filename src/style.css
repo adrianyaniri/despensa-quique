@@ -1,11 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-base: #FFFEFB;
-  --color-ink: #1F1C19;
-  --color-muted: #7A736C;
-  --color-line: #EDE7DD;
+  --color-base: #F8F5EE;
+  --color-ink: #211E1B;
+  --color-muted: #7D756C;
+  --color-line: #E8E1D5;
   --color-wa: #25D366;
+  --color-tan: #BFA588;
+  --color-tan-light: #F0E9DF;
+  --color-espresso: #24201D;
   --font-body: 'Inter', system-ui, sans-serif;
 }
 
@@ -16,6 +19,71 @@
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Orchestrated entrance animations */
+@keyframes heroEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes haloPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.6;
+  }
+}
+
+.anim-hero {
+  animation: heroEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.anim-delay-1 {
+  opacity: 0;
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
+}
+
+.anim-delay-2 {
+  opacity: 0;
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards;
+}
+
+.anim-delay-3 {
+  opacity: 0;
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.46s forwards;
+}
+
+.anim-halo {
+  animation: haloPulse 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-hero, .anim-delay-1, .anim-delay-2, .anim-delay-3, .anim-halo {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 @media print {
