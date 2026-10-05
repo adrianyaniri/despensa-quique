@@ -3,38 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Ofertas del Día y Combos — Almacén Quique</title>
+  <title>Ofertas del Día y Combos — Despensa Quique</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/src/style.css">
   <link rel="icon" type="image/png" href="/logo/logo.png">
 </head>
-<body class="font-body text-ink min-h-screen antialiased flex flex-col bg-base selection:bg-ink selection:text-white">
+<body class="font-body text-ink min-h-screen antialiased flex flex-col bg-base selection:bg-espresso selection:text-white">
 
   <!-- Header Dinámico Montado por Componente -->
   <header id="site-header"></header>
 
   <!-- Contenido Principal -->
   <main class="max-w-xl mx-auto px-4 pt-5 pb-36 flex-1 w-full space-y-5">
-    <!-- Banner de Urgencia / Encabezado Promocional -->
-    <div class="p-5 rounded-3xl bg-gradient-to-br from-amber-500 via-amber-600 to-rose-600 text-white shadow-md relative overflow-hidden">
-      <div class="relative z-10 space-y-1.5">
-        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-black tracking-wide uppercase backdrop-blur-xs">
+    <!-- Banner de Promociones con Paleta de la Marca (Espresso + Tan) -->
+    <div class="p-5 sm:p-6 rounded-3xl bg-espresso text-white shadow-lg border border-stone-800 relative overflow-hidden">
+      <div class="relative z-10 space-y-2">
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 text-tan text-[10px] font-black tracking-wide uppercase border border-white/5">
           <span>⚡</span>
           <span>Precios Especiales del Día</span>
         </div>
-        <h2 class="text-xl sm:text-2xl font-black tracking-tight leading-tight">Aprovechá los combos y ofertas activas</h2>
-        <p class="text-xs text-amber-100 font-medium leading-relaxed">
-          Encargá directamente por WhatsApp antes de que termine el plazo o se agote el stock disponible.
+        <h2 class="text-xl sm:text-2xl font-black tracking-tight leading-tight text-white">
+          Combos y Ofertas Activas
+        </h2>
+        <p class="text-xs text-stone-300 font-normal leading-relaxed">
+          Promociones para encargar directamente por WhatsApp antes de que termine el plazo o se agote el stock disponible.
         </p>
       </div>
-      <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+      <div class="absolute -right-6 -bottom-6 w-36 h-36 bg-tan/15 rounded-full blur-2xl pointer-events-none"></div>
     </div>
 
     <!-- Contenedor de Ofertas Dinámicas -->
     <div id="ofertas-container" class="space-y-4">
       <div class="py-12 text-center">
-        <div class="inline-block w-6 h-6 border-2 border-ink border-t-transparent rounded-full animate-spin"></div>
+        <div class="inline-block w-6 h-6 border-2 border-espresso border-t-transparent rounded-full animate-spin"></div>
         <p class="text-xs text-muted mt-2">Cargando ofertas activas...</p>
       </div>
     </div>

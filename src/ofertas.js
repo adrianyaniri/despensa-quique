@@ -31,7 +31,7 @@ function renderOfertas() {
     container.innerHTML = `
       <div class="p-8 text-center bg-white rounded-3xl border border-line space-y-3 shadow-2xs">
         <div class="text-4xl">⏳</div>
-        <h3 class="font-extrabold text-base text-ink">No hay ofertas activas en este momento</h3>
+        <h3 class="font-extrabold text-base text-espresso">No hay ofertas activas en este momento</h3>
         <p class="text-xs text-muted max-w-sm mx-auto leading-relaxed">
           Estamos preparando los próximos combos del día. Escribinos directamente por WhatsApp para consultar las próximas promociones.
         </p>
@@ -57,11 +57,11 @@ function renderOfertas() {
         <div class="flex items-center justify-between gap-2 flex-wrap">
           <div class="flex items-center gap-2">
             ${porcentajeOff ? `
-              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-rose-50 text-rose-600 border border-rose-200 uppercase tracking-tight shadow-2xs">
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-espresso text-tan border border-tan/30 uppercase tracking-tight shadow-2xs">
                 🔥 -${porcentajeOff}% OFF
               </span>
             ` : `
-              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-amber-50 text-amber-700 border border-amber-200 uppercase tracking-tight shadow-2xs">
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-stone-100 text-espresso border border-stone-200 uppercase tracking-tight shadow-2xs">
                 ⭐ Oferta Especial
               </span>
             `}
@@ -75,7 +75,7 @@ function renderOfertas() {
 
           ${vigenciaInfo ? `
             <span class="inline-flex items-center gap-1 text-[11px] font-bold ${
-              vigenciaInfo.urgent ? 'text-rose-600 animate-pulse' : 'text-stone-500'
+              vigenciaInfo.urgent ? 'text-amber-800 font-extrabold' : 'text-stone-500'
             }">
               <span>⏰</span>
               <span>${vigenciaInfo.label}</span>
@@ -84,7 +84,7 @@ function renderOfertas() {
         </div>
 
         <div class="space-y-1.5">
-          <h3 class="font-extrabold text-base sm:text-lg text-ink leading-snug tracking-tight">
+          <h3 class="font-extrabold text-base sm:text-lg text-espresso leading-snug tracking-tight">
             ${o.titulo}
           </h3>
           <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">
@@ -92,10 +92,10 @@ function renderOfertas() {
           </p>
         </div>
 
-        <div class="p-4 rounded-2xl bg-[#F8F6F0] border border-line/70 flex items-baseline justify-between gap-3">
+        <div class="p-4 rounded-2xl bg-[#F4EFE6] border border-line flex items-baseline justify-between gap-3">
           <div>
             <div class="flex items-baseline gap-2">
-              <span class="text-2xl sm:text-3xl font-black text-ink tracking-tight">
+              <span class="text-2xl sm:text-3xl font-black text-espresso tracking-tight">
                 ${formatPrice(o.precio_oferta)}
               </span>
               ${o.precio_regular ? `
@@ -120,8 +120,8 @@ function renderOfertas() {
         <div class="flex items-center gap-2 pt-1">
           ${inCart === 0 ? `
             <button type="button" data-add-oferta="${o.id}"
-              class="flex-1 rounded-2xl bg-wa hover:bg-[#20ba59] active:scale-98 text-white px-4 py-3 text-xs sm:text-sm font-black shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer">
-              <span class="text-base font-bold">+</span>
+              class="flex-1 rounded-2xl bg-espresso hover:bg-stone-900 active:scale-98 text-white px-4 py-3 text-xs sm:text-sm font-black shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer border border-stone-800">
+              <span class="text-tan font-bold">+</span>
               <span>Agregar al pedido</span>
             </button>
           ` : `
@@ -132,7 +132,7 @@ function renderOfertas() {
               </button>
               <div class="text-center px-2">
                 <span class="text-[10px] uppercase font-bold text-muted block leading-none">Agregados</span>
-                <span class="text-sm font-black text-ink leading-tight">${inCart} ${inCart === 1 ? 'combo' : 'combos'}</span>
+                <span class="text-sm font-black text-espresso leading-tight">${inCart} ${inCart === 1 ? 'combo' : 'combos'}</span>
               </div>
               <button type="button" data-inc-oferta="${o.id}" ${inCart >= maxStock ? 'disabled class="w-9 h-9 rounded-xl bg-stone-200 text-stone-400 flex items-center justify-center font-bold text-base cursor-not-allowed"' : 'class="w-9 h-9 rounded-xl bg-white shadow-2xs flex items-center justify-center font-bold text-base text-stone-700 active:scale-90 cursor-pointer"'}>
                 +
@@ -222,15 +222,15 @@ document.addEventListener('click', (e) => {
 
 // Initialize Modular Layout & State
 initHeader({
-  logoHref: '/ofertas',
-  subtitle: 'Bebidas frías • Picadas • Almacén de barrio',
+  logoHref: '/',
+  subtitle: 'Fiambres • Bebidas • Almacén',
   inquiryGreeting: '¡Hola! Quería consultar por las ofertas del día.'
 });
 
 initFooter({
   showShareCard: false,
   instagramNotice: 'Seguinos para enterarte primero de nuevas ofertas',
-  copyrightText: '© Almacén Quique — Promociones y Combos Especiales'
+  copyrightText: '© Despensa Quique — Promociones y Combos Especiales'
 });
 
 initCartDrawer({
@@ -245,8 +245,8 @@ loadOfertas();
 
 syncSettings(() => {
   initHeader({
-    logoHref: '/ofertas',
-    subtitle: 'Bebidas frías • Picadas • Almacén de barrio',
+    logoHref: '/',
+    subtitle: 'Fiambres • Bebidas • Almacén',
     inquiryGreeting: '¡Hola! Quería consultar por las ofertas del día.'
   });
   renderOfertas();

@@ -33,7 +33,7 @@ function renderFilters() {
   filtersEl.innerHTML = categories.map(cat => `
     <button type="button" data-cat="${cat}" class="cat-pill shrink-0 rounded-full px-4 py-1.5 text-xs font-semibold transition-all ${
       cat === activeCategory
-        ? 'bg-ink text-white shadow-xs'
+        ? 'bg-espresso text-white shadow-xs'
         : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
     }">
       ${cat}
@@ -219,7 +219,7 @@ async function shareCatalog() {
 // Initialize Modular Components
 initHeader({
   logoHref: '/',
-  subtitle: 'Bebidas frías • Picadas • Almacén de barrio'
+  subtitle: 'Fiambres • Bebidas • Almacén'
 });
 
 initFooter({
@@ -239,6 +239,6 @@ loadCatalog();
 syncSettings(() => {
   initHeader({
     logoHref: '/',
-    subtitle: 'Bebidas frías • Picadas • Almacén de barrio'
+    subtitle: 'Fiambres • Bebidas • Almacén'
   });
 });

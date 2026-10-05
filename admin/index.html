@@ -21,8 +21,10 @@
   <div id="login-view" class="flex-1 flex items-center justify-center p-4">
     <div class="w-full max-w-sm bg-white rounded-3xl border border-line p-6 sm:p-7 shadow-xl">
       <div class="text-center mb-6">
-        <img src="/logo/logo.png" alt="Almacén Quique" class="w-20 h-20 rounded-3xl mx-auto border border-line shadow-xs object-cover bg-white" />
-        <h1 id="auth-title" class="text-2xl font-black text-ink mt-3 tracking-tight">Almacén Quique</h1>
+        <a href="/" class="inline-block transition-transform hover:scale-105 active:scale-95" title="Volver a la portada">
+          <img src="/logo/logo.png" alt="Despensa Quique" class="w-20 h-20 rounded-3xl mx-auto border border-line shadow-xs object-cover bg-white" />
+          <h1 id="auth-title" class="text-2xl font-black text-espresso mt-3 tracking-tight">Despensa Quique</h1>
+        </a>
         <p id="auth-subtitle" class="text-xs text-muted mt-0.5 font-medium">Panel de Administración — Iniciar Sesión</p>
       </div>
 
@@ -92,20 +94,20 @@
     <!-- Header Admin Responsivo (Compacto, Minimalista y Profesional) -->
     <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-line shadow-2xs">
       <div class="max-w-4xl mx-auto px-4 py-2.5 sm:py-3 flex items-center justify-between gap-3">
-        <!-- Identidad de Marca: Compacta -->
-        <div class="flex items-center gap-2.5 min-w-0">
-          <img src="/logo/logo.png" alt="Almacén Quique" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-line object-cover shrink-0 bg-white shadow-2xs" />
+        <!-- Identidad de Marca: Vinculada a la portada -->
+        <a href="/" class="flex items-center gap-2.5 min-w-0 transition-opacity hover:opacity-85" title="Ir a la portada de inicio">
+          <img src="/logo/logo.png" alt="Despensa Quique" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-line object-cover shrink-0 bg-white shadow-2xs" />
           <div class="min-w-0 flex items-center gap-2">
-            <h1 class="font-black text-sm sm:text-base leading-tight truncate text-ink tracking-tight">Almacén Quique</h1>
-            <span class="rounded-full bg-stone-100 text-stone-600 px-2 py-0.5 text-[10px] font-bold border border-line shrink-0">Panel</span>
+            <h1 class="font-black text-sm sm:text-base leading-tight truncate text-espresso tracking-tight">Despensa Quique</h1>
+            <span class="rounded-full bg-stone-200/60 text-stone-700 px-2 py-0.5 text-[10px] font-bold border border-stone-300/60 shrink-0">Panel</span>
           </div>
-        </div>
+        </a>
 
         <!-- Acciones Limpias: Acceso Directo a Tienda + Menú de Ajustes -->
         <div class="flex items-center gap-2 shrink-0">
-          <a href="/" target="_blank" title="Ver catálogo público en nueva pestaña"
-            class="rounded-xl border border-line bg-white hover:bg-stone-50 active:scale-95 px-3 py-1.5 text-xs font-bold text-stone-700 transition-all inline-flex items-center gap-1 shadow-2xs">
-            <span>Ver tienda</span>
+          <a href="/" target="_blank" title="Ver portada de inicio"
+            class="rounded-xl border border-line bg-white hover:bg-stone-50 active:scale-95 px-3 py-1.5 text-xs font-bold text-espresso transition-all inline-flex items-center gap-1 shadow-2xs">
+            <span>Ver portada</span>
             <span class="text-stone-400">↗</span>
           </a>
 
@@ -124,6 +126,21 @@
               </div>
 
               <div class="py-1">
+                <a href="/" target="_blank"
+                  class="w-full text-left px-3.5 py-2 hover:bg-stone-50 flex items-center gap-2.5 font-medium text-stone-700 transition-colors">
+                  <span class="text-sm">🏠</span>
+                  <span>Portada Principal</span>
+                </a>
+                <a href="/ofertas" target="_blank"
+                  class="w-full text-left px-3.5 py-2 hover:bg-stone-50 flex items-center gap-2.5 font-medium text-stone-700 transition-colors">
+                  <span class="text-sm">🔥</span>
+                  <span>Ver Ofertas Públicas</span>
+                </a>
+                <a href="/precios" target="_blank"
+                  class="w-full text-left px-3.5 py-2 hover:bg-stone-50 flex items-center gap-2.5 font-medium text-stone-700 transition-colors">
+                  <span class="text-sm">🏷️</span>
+                  <span>Catálogo de Precios (VIP)</span>
+                </a>
                 <button id="btn-settings" type="button"
                   class="w-full text-left px-3.5 py-2 hover:bg-stone-50 flex items-center gap-2.5 font-medium text-stone-700 cursor-pointer transition-colors">
                   <span class="text-sm">📱</span>
