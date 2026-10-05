@@ -850,39 +850,6 @@ function initAdminTabs() {
 // ================== MÓDULO DE OFERTAS DEL DÍA Y COMBOS ==================
 let ofertas = [];
 
-const DEFAULT_OFERTAS = [
-  {
-    id: 'combo-picada-amigos',
-    titulo: 'Combo Picada con Amigos',
-    descripcion: '1 Salame Criollo de Campo + 300g Queso Mar del Plata + 1 Paquete de Maní Tostado + 1 Cerveza Quilmes 1L Retornable',
-    precio_regular: 15500,
-    precio_oferta: 11900,
-    vigencia_hasta: new Date(Date.now() + 86400000 * 2).toISOString(),
-    stock_limite: 10,
-    activo: true
-  },
-  {
-    id: 'combo-desayuno-saludable',
-    titulo: 'Combo Desayuno Saludable',
-    descripcion: '500g Granola Artesanal con Frutos Secos + 1 Frasco de Miel Pura 500g + 250g Nueces Mariposa Seleccionadas',
-    precio_regular: 12800,
-    precio_oferta: 9500,
-    vigencia_hasta: new Date(Date.now() + 86400000 * 3).toISOString(),
-    stock_limite: 15,
-    activo: true
-  },
-  {
-    id: 'pack-esenciales-almacen',
-    titulo: 'Pack Almacén Esenciales de la Semana',
-    descripcion: 'Yerba Playadito 1kg + Azúcar Ledesma 1kg + Fideos Matarazzo 500g + Aceite Natura 900ml',
-    precio_regular: 11200,
-    precio_oferta: 8900,
-    vigencia_hasta: new Date(Date.now() + 86400000 * 1).toISOString(),
-    stock_limite: 8,
-    activo: true
-  }
-];
-
 export async function loadOfertas() {
   const table = document.getElementById('ofertas-table');
   if (!table) return;
@@ -893,20 +860,18 @@ export async function loadOfertas() {
       .select('*')
       .order('created_at', { ascending: false });
 
-    if (error || !data || data.length === 0) {
+    if (error) {
+      console.warn('Error al consultar tabla "ofertas" en Supabase:', error);
       const local = localStorage.getItem('quique_ofertas');
-      if (local) {
-        ofertas = JSON.parse(local);
-      } else {
-        ofertas = DEFAULT_OFERTAS;
-        localStorage.setItem('quique_ofertas', JSON.stringify(DEFAULT_OFERTAS));
-      }
+      ofertas = local ? JSON.parse(local) : [];
     } else {
-      ofertas = data;
+      ofertas = data || [];
+      localStorage.setItem('quique_ofertas', JSON.stringify(ofertas));
     }
   } catch (err) {
+    console.warn('Error de red al consultar ofertas:', err);
     const local = localStorage.getItem('quique_ofertas');
-    ofertas = local ? JSON.parse(local) : DEFAULT_OFERTAS;
+    ofertas = local ? JSON.parse(local) : [];
   }
 
   renderOfertasStats();
@@ -1138,8 +1103,14 @@ async function saveOferta(e) {
   let savedRemotely = false;
   try {
     const { error } = await sbClient.from('ofertas').upsert(payload);
-    if (!error) savedRemotely = true;
-  } catch (err) {}
+    if (!error) {
+      savedRemotely = true;
+    } else {
+      console.error('Error al guardar oferta en Supabase:', error);
+    }
+  } catch (err) {
+    console.error('Excepción al conectar con Supabase:', err);
+  }
 
   const existingIndex = ofertas.findIndex(o => o.id === ofertaId);
   if (existingIndex >= 0) {

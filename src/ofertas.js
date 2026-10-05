@@ -1,40 +1,6 @@
 import { sbClient } from './supabase.js';
 import { CONFIG } from './config.js';
 
-// Datos de ofertas y combos por defecto (resiliencia offline y fallback inicial)
-const DEFAULT_OFERTAS = [
-  {
-    id: 'combo-picada-amigos',
-    titulo: 'Combo Picada con Amigos',
-    descripcion: '1 Salame Criollo de Campo + 300g Queso Mar del Plata + 1 Paquete de Maní Tostado + 1 Cerveza Quilmes 1L Retornable',
-    precio_regular: 15500,
-    precio_oferta: 11900,
-    vigencia_hasta: new Date(Date.now() + 86400000 * 2).toISOString(),
-    stock_limite: 10,
-    activo: true
-  },
-  {
-    id: 'combo-desayuno-saludable',
-    titulo: 'Combo Desayuno Saludable',
-    descripcion: '500g Granola Artesanal con Frutos Secos + 1 Frasco de Miel Pura 500g + 250g Nueces Mariposa Seleccionadas',
-    precio_regular: 12800,
-    precio_oferta: 9500,
-    vigencia_hasta: new Date(Date.now() + 86400000 * 3).toISOString(),
-    stock_limite: 15,
-    activo: true
-  },
-  {
-    id: 'pack-esenciales-almacen',
-    titulo: 'Pack Almacén Esenciales de la Semana',
-    descripcion: 'Yerba Playadito 1kg + Azúcar Ledesma 1kg + Fideos Matarazzo 500g + Aceite Natura 900ml',
-    precio_regular: 11200,
-    precio_oferta: 8900,
-    vigencia_hasta: new Date(Date.now() + 86400000 * 1).toISOString(),
-    stock_limite: 8,
-    activo: true
-  }
-];
-
 let ofertas = [];
 
 // Toast Helper
@@ -180,7 +146,7 @@ async function syncRemoteSettings() {
   }
 }
 
-// Cargar ofertas desde Supabase con fallback local resiliente
+// Cargar ofertas desde Supabase (sincronización real con la base de datos)
 export async function loadOfertas() {
   const container = document.getElementById('ofertas-container');
   if (!container) return;
@@ -191,22 +157,18 @@ export async function loadOfertas() {
       .select('*')
       .order('created_at', { ascending: false });
 
-    if (error || !data || data.length === 0) {
-      console.info('Supabase tabla "ofertas" vacía o no configurada. Usando almacenamiento local.');
+    if (error) {
+      console.warn('Error al consultar tabla "ofertas" en Supabase:', error);
       const local = localStorage.getItem('quique_ofertas');
-      if (local) {
-        ofertas = JSON.parse(local);
-      } else {
-        ofertas = DEFAULT_OFERTAS;
-        localStorage.setItem('quique_ofertas', JSON.stringify(DEFAULT_OFERTAS));
-      }
+      ofertas = local ? JSON.parse(local) : [];
     } else {
-      ofertas = data;
+      ofertas = data || [];
+      localStorage.setItem('quique_ofertas', JSON.stringify(ofertas));
     }
   } catch (err) {
-    console.warn('Error al conectar con Supabase. Leyendo respaldo local:', err);
+    console.warn('Error al conectar con Supabase:', err);
     const local = localStorage.getItem('quique_ofertas');
-    ofertas = local ? JSON.parse(local) : DEFAULT_OFERTAS;
+    ofertas = local ? JSON.parse(local) : [];
   }
 
   renderOfertas();
