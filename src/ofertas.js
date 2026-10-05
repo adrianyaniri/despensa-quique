@@ -3,7 +3,7 @@ import { getInquiryUrl } from './services/whatsapp.service.js';
 import { syncSettings } from './services/settings.service.js';
 import { cartStore } from './state/cart.state.js';
 import { formatPrice, formatVigencia, calculateDiscountPercent, calculateSavings } from './utils/formatters.js';
-import { showToast, initCartDrawer, initSocialFooter } from './components/index.js';
+import { showToast, initCartDrawer, initHeader, initFooter } from './components/index.js';
 
 let activeOffers = [];
 
@@ -54,7 +54,6 @@ function renderOfertas() {
 
     return `
       <article class="bg-white rounded-3xl border border-line p-5 sm:p-6 shadow-xs hover:shadow-md transition-all space-y-4 relative overflow-hidden group">
-        <!-- Barra de Destacado / Descuento Superior -->
         <div class="flex items-center justify-between gap-2 flex-wrap">
           <div class="flex items-center gap-2">
             ${porcentajeOff ? `
@@ -84,7 +83,6 @@ function renderOfertas() {
           ` : ''}
         </div>
 
-        <!-- Título y Detalle del Combo -->
         <div class="space-y-1.5">
           <h3 class="font-extrabold text-base sm:text-lg text-ink leading-snug tracking-tight">
             ${o.titulo}
@@ -94,7 +92,6 @@ function renderOfertas() {
           </p>
         </div>
 
-        <!-- Precios y Ahorro -->
         <div class="p-4 rounded-2xl bg-[#F8F6F0] border border-line/70 flex items-baseline justify-between gap-3">
           <div>
             <div class="flex items-baseline gap-2">
@@ -120,7 +117,6 @@ function renderOfertas() {
           </div>
         </div>
 
-        <!-- Acciones: Agregar al Pedido / Stepper y Compartir -->
         <div class="flex items-center gap-2 pt-1">
           ${inCart === 0 ? `
             <button type="button" data-add-oferta="${o.id}"
@@ -177,13 +173,6 @@ async function shareOferta(oferta) {
   }
 }
 
-function updateHeaderWhatsAppLink() {
-  const headerBtn = document.getElementById('btn-wa-header');
-  if (headerBtn) {
-    headerBtn.href = getInquiryUrl('¡Hola! Quería consultar por las ofertas del día.');
-  }
-}
-
 // Card Event Delegation
 document.addEventListener('click', (e) => {
   const addBtn = e.target.closest('[data-add-oferta]');
@@ -231,18 +220,34 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Initialization
+// Initialize Modular Layout & State
+initHeader({
+  logoHref: '/ofertas',
+  subtitle: 'Bebidas frías • Picadas • Almacén de barrio',
+  inquiryGreeting: '¡Hola! Quería consultar por las ofertas del día.'
+});
+
+initFooter({
+  showShareCard: false,
+  instagramNotice: 'Seguinos para enterarte primero de nuevas ofertas',
+  copyrightText: '© Almacén Quique — Promociones y Combos Especiales'
+});
+
 initCartDrawer({
   itemTypeLabel: 'promoción',
   itemTypeLabelPlural: 'promociones',
+  modalTitle: 'Tu Pedido de Ofertas',
+  modalSubtitle: 'Revisá los combos antes de enviar por WhatsApp',
   onCartChange: () => renderOfertas()
 });
 
-updateHeaderWhatsAppLink();
-initSocialFooter();
 loadOfertas();
 
 syncSettings(() => {
-  updateHeaderWhatsAppLink();
+  initHeader({
+    logoHref: '/ofertas',
+    subtitle: 'Bebidas frías • Picadas • Almacén de barrio',
+    inquiryGreeting: '¡Hola! Quería consultar por las ofertas del día.'
+  });
   renderOfertas();
 });

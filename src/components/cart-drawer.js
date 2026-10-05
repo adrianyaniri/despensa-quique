@@ -4,18 +4,97 @@ import { checkoutViaWhatsApp } from '../services/whatsapp.service.js';
 import { showToast } from './toast.js';
 
 /**
+ * Ensures floating cart bar and dialog modal elements exist in the DOM.
+ * If not present, mounts them automatically.
+ */
+function ensureCartDomElements(title = 'Tu Pedido', subtitle = 'Revisá los items antes de enviar') {
+  if (!document.getElementById('cart-bar')) {
+    const bar = document.createElement('div');
+    bar.id = 'cart-bar';
+    bar.className = 'fixed bottom-4 left-4 right-4 z-40 max-w-xl mx-auto bg-stone-900 text-white rounded-2xl p-3 sm:p-3.5 shadow-2xl flex items-center justify-between cursor-pointer transform translate-y-36 opacity-0 pointer-events-none transition-all duration-300 border border-stone-800';
+    bar.innerHTML = `
+      <div class="flex items-center gap-2.5 min-w-0">
+        <span class="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-base shrink-0">🛒</span>
+        <div class="min-w-0">
+          <p id="cart-badge" class="text-xs font-bold leading-tight truncate">0 productos</p>
+          <span id="cart-total" class="font-black text-sm text-emerald-400">$0</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button type="button" class="rounded-xl bg-wa hover:bg-[#20ba59] active:scale-95 text-white px-3.5 sm:px-4 py-2 text-xs font-black shadow-md flex items-center gap-1.5 cursor-pointer transition-all">
+          <span>Finalizar Pedido</span>
+          <span class="text-sm font-bold">&rarr;</span>
+        </button>
+      </div>
+    `;
+    document.body.appendChild(bar);
+  }
+
+  if (!document.getElementById('cart-modal')) {
+    const modal = document.createElement('dialog');
+    modal.id = 'cart-modal';
+    modal.className = 'rounded-3xl border border-line p-0 backdrop:bg-ink/40 shadow-2xl max-w-md w-[92vw] mx-auto';
+    modal.innerHTML = `
+      <div class="p-5 sm:p-6">
+        <div class="flex items-center justify-between pb-3 border-b border-line mb-3">
+          <div>
+            <h3 class="font-extrabold text-base text-ink">${title}</h3>
+            <p class="text-xs text-muted">${subtitle}</p>
+          </div>
+          <button id="close-cart-btn" type="button" class="text-stone-400 hover:text-ink text-lg leading-none font-bold p-1 cursor-pointer">✕</button>
+        </div>
+
+        <div id="cart-modal-items" class="max-h-60 overflow-y-auto no-scrollbar space-y-1 py-1"></div>
+
+        <div class="pt-3 mt-3 border-t border-line space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-stone-600">Total estimado:</span>
+            <span id="cart-modal-total" class="font-black text-lg text-ink">$0</span>
+          </div>
+          <div id="cart-modal-savings-box" class="hidden flex items-center justify-between text-[11px] font-bold text-emerald-700">
+            <span>Ahorro total estimado:</span>
+            <span id="cart-modal-savings">$0</span>
+          </div>
+        </div>
+
+        <div class="mt-4 space-y-2.5">
+          <button id="checkout-btn" type="button"
+            class="w-full rounded-2xl bg-wa hover:bg-[#20ba59] active:scale-95 text-white py-3.5 text-xs font-extrabold flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer">
+            <span class="text-base">✆</span>
+            <span>Enviar pedido por WhatsApp</span>
+          </button>
+
+          <div class="flex items-center justify-between pt-1">
+            <button id="clear-cart-btn" type="button" class="text-[11px] text-stone-500 hover:text-rose-600 font-semibold underline cursor-pointer">
+              Vaciar pedido
+            </button>
+            <span class="text-[10px] text-muted">Se abrirá WhatsApp listo para enviar</span>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+}
+
+/**
  * Initializes the unified Cart Drawer & Floating Bar.
  * Wires DOM events, listens to CartStore changes, and triggers WhatsApp checkout.
+ * Auto-mounts DOM elements into document.body if absent.
  *
  * @param {object} [options]
  * @param {string} [options.itemTypeLabel='producto'] - singular noun for items ('producto', 'promoción')
  * @param {string} [options.itemTypeLabelPlural='productos'] - plural noun for items ('productos', 'promociones')
+ * @param {string} [options.modalTitle='Tu Pedido'] - modal header title
+ * @param {string} [options.modalSubtitle='Revisá los items antes de enviar'] - modal header subtitle
  * @param {Function} [options.onCartChange] - callback to sync page-specific card steppers
  */
 export function initCartDrawer(options = {}) {
   const itemLabelSingular = options.itemTypeLabel || 'producto';
   const itemLabelPlural = options.itemTypeLabelPlural || 'productos';
   const onCartChange = options.onCartChange;
+
+  ensureCartDomElements(options.modalTitle, options.modalSubtitle);
 
   const cartBar = document.getElementById('cart-bar');
   const cartBadge = document.getElementById('cart-badge');

@@ -31,38 +31,3 @@ FOR ALL
 TO authenticated
 USING (true)
 WITH CHECK (true);
-
--- Datos iniciales de ejemplo (Opcional)
-INSERT INTO public.ofertas (id, titulo, descripcion, precio_regular, precio_oferta, vigencia_hasta, stock_limite, activo)
-VALUES 
-  (
-    'combo-picada-amigos',
-    'Combo Picada con Amigos',
-    '1 Salame Criollo de Campo + 300g Queso Mar del Plata + 1 Paquete de Maní Tostado + 1 Cerveza Quilmes 1L Retornable',
-    15500,
-    11900,
-    timezone('utc'::text, now() + interval '2 days'),
-    10,
-    true
-  ),
-  (
-    'combo-desayuno-saludable',
-    'Combo Desayuno Saludable',
-    '500g Granola Artesanal con Frutos Secos + 1 Frasco de Miel Pura 500g + 250g Nueces Mariposa Seleccionadas',
-    12800,
-    9500,
-    timezone('utc'::text, now() + interval '3 days'),
-    15,
-    true
-  ),
-  (
-    'pack-esenciales-almacen',
-    'Pack Almacén Esenciales de la Semana',
-    'Yerba Playadito 1kg + Azúcar Ledesma 1kg + Fideos Matarazzo 500g + Aceite Natura 900ml',
-    11200,
-    8900,
-    timezone('utc'::text, now() + interval '1 day'),
-    8,
-    true
-  )
-ON CONFLICT (id) DO NOTHING;

@@ -3,7 +3,7 @@ import { syncSettings } from './services/settings.service.js';
 import { openInquiryViaWhatsApp } from './services/whatsapp.service.js';
 import { cartStore } from './state/cart.state.js';
 import { formatPrice } from './utils/formatters.js';
-import { showToast, initCartDrawer, initSocialFooter } from './components/index.js';
+import { showToast, initCartDrawer, initHeader, initFooter } from './components/index.js';
 import { CONFIG } from './config.js';
 
 let allProducts = [];
@@ -173,7 +173,7 @@ document.addEventListener('click', (e) => {
   }
 
   const waInquiryBtn = e.target.closest('.btn-wa-inquiry');
-  if (waInquiryBtn) {
+  if (waInquiryBtn && !waInquiryBtn.getAttribute('href')) {
     openInquiryViaWhatsApp();
     return;
   }
@@ -216,13 +216,29 @@ async function shareCatalog() {
   }
 }
 
-// Initialize Cart Drawer & UI
+// Initialize Modular Components
+initHeader({
+  logoHref: '/',
+  subtitle: 'Bebidas frías • Picadas • Almacén de barrio'
+});
+
+initFooter({
+  showShareCard: true,
+  instagramNotice: 'Seguinos para ver novedades y ofertas diarias'
+});
+
 initCartDrawer({
   itemTypeLabel: 'producto',
   itemTypeLabelPlural: 'productos',
+  modalTitle: 'Tu Pedido',
+  modalSubtitle: 'Revisá los productos antes de enviar',
   onCartChange: () => renderProducts()
 });
 
-initSocialFooter();
 loadCatalog();
-syncSettings();
+syncSettings(() => {
+  initHeader({
+    logoHref: '/',
+    subtitle: 'Bebidas frías • Picadas • Almacén de barrio'
+  });
+});
