@@ -15,7 +15,7 @@ export default defineConfig({
           if (pathname === '/admin' || pathname === '/admin/') {
             req.url = '/admin/index.html' + query;
           } else if (pathname === '/precios' || pathname === '/precios/') {
-            req.url = '/precios/index.html' + query;
+            req.url = '/index.html' + query;
           } else if (pathname === '/ofertas' || pathname === '/ofertas/') {
             req.url = '/ofertas/index.html' + query;
           } else if (pathname === '/ig' || pathname === '/ig/') {
@@ -30,7 +30,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
-        precios: resolve(import.meta.dirname, 'precios/index.html'),
         ofertas: resolve(import.meta.dirname, 'ofertas/index.html'),
         admin: resolve(import.meta.dirname, 'admin/index.html'),
         ig: resolve(import.meta.dirname, 'ig/index.html'),
