@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Ofertas del Día y Combos — Almacén Quique</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css">
+  <link rel="icon" type="image/png" href="/logo/logo.png">
+</head>
+<body class="font-body text-ink min-h-screen antialiased flex flex-col bg-base selection:bg-ink selection:text-white">
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed top-4 right-4 left-4 sm:left-auto sm:max-w-xs z-50 transform -translate-y-12 opacity-0 pointer-events-none transition-all duration-300 bg-ink text-white px-4 py-3 rounded-2xl shadow-xl text-xs font-semibold flex items-center gap-2">
+    <span id="toast-icon">✓</span>
+    <span id="toast-msg">Acción completada</span>
+  </div>
+
+  <!-- Header de Marca con Enlace al Catálogo Completo -->
+  <header class="sticky top-0 z-30 bg-base/95 backdrop-blur-md border-b border-line shadow-xs">
+    <div class="max-w-xl mx-auto px-4 py-3.5 sm:py-4 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="/" class="shrink-0">
+          <img src="/logo/logo.png" alt="Almacén Quique" class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl object-cover bg-white border border-line shadow-2xs" />
+        </a>
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5">
+            <h1 class="font-black text-lg sm:text-xl leading-tight truncate text-ink tracking-tight">Almacén Quique</h1>
+            <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-black text-amber-700 border border-amber-200 shrink-0 uppercase">
+              🔥 Ofertas
+            </span>
+          </div>
+          <p class="text-xs text-muted truncate mt-0.5 font-medium">Promociones y combos por tiempo limitado</p>
+        </div>
+      </div>
+
+      <!-- Enlace a Catálogo Completo -->
+      <a href="/" class="rounded-xl border border-line bg-white hover:bg-stone-50 active:scale-95 px-3 py-2 text-xs font-bold text-stone-700 transition-all shadow-2xs shrink-0 flex items-center gap-1">
+        <span>Catálogo</span>
+        <span class="text-sm font-bold">&rarr;</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Contenido Principal -->
+  <main class="max-w-xl mx-auto px-4 pt-5 pb-24 flex-1 w-full space-y-5">
+    <!-- Banner de Urgencia / Encabezado Promocional -->
+    <div class="p-5 rounded-3xl bg-gradient-to-br from-amber-500 via-amber-600 to-rose-600 text-white shadow-md relative overflow-hidden">
+      <div class="relative z-10 space-y-1.5">
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-black tracking-wide uppercase backdrop-blur-xs">
+          <span>⚡</span>
+          <span>Precios Especiales del Día</span>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-black tracking-tight leading-tight">Aprovechá los combos y ofertas activas</h2>
+        <p class="text-xs text-amber-100 font-medium leading-relaxed">
+          Encargá directamente por WhatsApp antes de que termine el plazo o se agote el stock disponible.
+        </p>
+      </div>
+      <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+    </div>
+
+    <!-- Contenedor de Ofertas Dinámicas -->
+    <div id="ofertas-container" class="space-y-4">
+      <div class="py-12 text-center">
+        <div class="inline-block w-6 h-6 border-2 border-ink border-t-transparent rounded-full animate-spin"></div>
+        <p class="text-xs text-muted mt-2">Cargando ofertas activas...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================== FOOTER OFERTAS ================== -->
+  <footer class="bg-white border-t border-line mt-auto">
+    <div class="max-w-xl mx-auto px-4 py-8 space-y-4">
+      <!-- Tarjeta Oficial de Instagram -->
+      <div class="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-purple-50 via-pink-50 to-amber-50 border border-pink-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-2xs">
+        <div class="flex items-center gap-3.5 min-w-0">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600 flex items-center justify-center text-white shadow-sm shrink-0">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </div>
+          <div class="min-w-0">
+            <h4 id="ig-handle" class="font-black text-sm text-ink truncate">Instagram @almacen.quique</h4>
+            <p class="text-xs text-stone-600 truncate">Seguinos para enterarte primero de nuevas ofertas</p>
+          </div>
+        </div>
+        <a id="ig-btn" href="/ig" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-1.5 rounded-2xl bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 hover:opacity-95 active:scale-95 text-white px-4 py-2.5 text-xs font-black shadow-sm transition-all shrink-0">
+          <span>Abrir Instagram</span>
+          <span class="text-xs font-bold">↗</span>
+        </a>
+      </div>
+
+      <!-- Derechos Reservados -->
+      <div class="pt-3 border-t border-line text-center text-[11px] text-muted">
+        <p>© Almacén Quique — Todos los derechos reservados. <a href="/" class="underline hover:text-ink font-semibold ml-1">Ver catálogo completo</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/ofertas.js"></script>
+</body>
+</html>

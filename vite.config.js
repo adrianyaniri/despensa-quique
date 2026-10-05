@@ -16,6 +16,8 @@ export default defineConfig({
             req.url = '/admin/index.html' + query;
           } else if (pathname === '/precios' || pathname === '/precios/') {
             req.url = '/precios/index.html' + query;
+          } else if (pathname === '/ofertas' || pathname === '/ofertas/') {
+            req.url = '/ofertas/index.html' + query;
           } else if (pathname === '/ig' || pathname === '/ig/') {
             req.url = '/ig/index.html' + query;
           }
@@ -29,6 +31,7 @@ export default defineConfig({
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
         precios: resolve(import.meta.dirname, 'precios/index.html'),
+        ofertas: resolve(import.meta.dirname, 'ofertas/index.html'),
         admin: resolve(import.meta.dirname, 'admin/index.html'),
         ig: resolve(import.meta.dirname, 'ig/index.html'),
       },
