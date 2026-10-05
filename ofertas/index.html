@@ -17,11 +17,11 @@
     <span id="toast-msg">Acción completada</span>
   </div>
 
-  <!-- Header de Marca con Enlace al Catálogo Completo -->
+  <!-- Header de Marca -->
   <header class="sticky top-0 z-30 bg-base/95 backdrop-blur-md border-b border-line shadow-xs">
     <div class="max-w-xl mx-auto px-4 py-3.5 sm:py-4 flex items-center justify-between gap-3">
       <div class="flex items-center gap-3 min-w-0">
-        <a href="/" class="shrink-0">
+        <a href="/ofertas" class="shrink-0" aria-label="Inicio Ofertas">
           <img src="/logo/logo.png" alt="Almacén Quique" class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl object-cover bg-white border border-line shadow-2xs" />
         </a>
         <div class="min-w-0">
@@ -37,11 +37,12 @@
 
       <!-- Contacto Directo en Cabecera -->
       <div class="shrink-0">
-        <button type="button" class="btn-wa-inquiry inline-flex items-center gap-1.5 rounded-2xl bg-wa hover:bg-[#20ba59] active:scale-95 text-white px-3.5 sm:px-4 py-2.5 text-xs font-black shadow-sm transition-all cursor-pointer"
-                aria-label="WhatsApp">
+        <a id="btn-wa-header" href="#" target="_blank" rel="noopener"
+           class="btn-wa-inquiry inline-flex items-center gap-1.5 rounded-2xl bg-wa hover:bg-[#20ba59] active:scale-95 text-white px-3.5 sm:px-4 py-2.5 text-xs font-black shadow-sm transition-all cursor-pointer"
+           aria-label="WhatsApp">
           <span class="text-sm">✆</span>
           <span class="hidden sm:inline">WhatsApp</span>
-        </button>
+        </a>
       </div>
     </div>
   </header>

@@ -100,6 +100,16 @@ function formatVigencia(isoDate) {
   }
 }
 
+// Sanitizador de número de WhatsApp para wa.me (sólo dígitos con código de país)
+export function sanitizeWhatsAppNumber(raw) {
+  let num = String(raw || '').replace(/[^0-9]/g, '');
+  if (!num) return '5491170649039';
+  if (num.length === 10 && num.startsWith('11')) {
+    num = '549' + num;
+  }
+  return num;
+}
+
 // Configuración de WhatsApp y negocio
 function getActiveSettings() {
   const cached = localStorage.getItem('quique_settings');
@@ -107,15 +117,67 @@ function getActiveSettings() {
     try {
       const parsed = JSON.parse(cached);
       return {
-        whatsapp_number: parsed.whatsapp_number || CONFIG.WHATSAPP_NUMBER,
+        whatsapp_number: sanitizeWhatsAppNumber(parsed.whatsapp_number || CONFIG.WHATSAPP_NUMBER),
+        mensaje_consulta: parsed.mensaje_consulta || CONFIG.MENSAJE_CONSULTA,
         negocio: CONFIG.NEGOCIO
       };
     } catch (e) {}
   }
   return {
-    whatsapp_number: CONFIG.WHATSAPP_NUMBER,
+    whatsapp_number: sanitizeWhatsAppNumber(CONFIG.WHATSAPP_NUMBER),
+    mensaje_consulta: CONFIG.MENSAJE_CONSULTA,
     negocio: CONFIG.NEGOCIO
   };
+}
+
+// Generador de URL de consulta general
+function getWhatsAppInquiryUrl() {
+  const s = getActiveSettings();
+  const greeting = (s.mensaje_consulta || CONFIG.MENSAJE_CONSULTA || '¡Hola {negocio}! Quería consultar por las ofertas del día.').replace('{negocio}', s.negocio);
+  return `https://wa.me/${s.whatsapp_number}?text=${encodeURIComponent(greeting)}`;
+}
+
+// Generador de URL de encargo de oferta específica
+function formatWhatsAppOrderUrl(oferta) {
+  const s = getActiveSettings();
+  const mensaje = `¡Hola ${s.negocio}! Quiero encargar la oferta del día:\n\n🔥 *${oferta.titulo}* — ${formatPrice(oferta.precio_oferta)}\n_${oferta.descripcion}_\n\n¿Tienen disponibilidad para coordinar la entrega o retiro? ¡Muchas gracias!`;
+  return `https://wa.me/${s.whatsapp_number}?text=${encodeURIComponent(mensaje)}`;
+}
+
+// Redirección segura anti-bloqueo de popups móviles
+function openUrlSafe(url) {
+  try {
+    const win = window.open(url, '_blank', 'noopener,noreferrer');
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      window.location.href = url;
+    }
+  } catch (e) {
+    window.location.href = url;
+  }
+}
+
+// Sincronizar enlaces estáticos con el número y mensaje actual
+function updateWhatsAppLinks() {
+  const url = getWhatsAppInquiryUrl();
+  document.querySelectorAll('.btn-wa-inquiry').forEach(el => {
+    if (el.tagName === 'A') {
+      el.href = url;
+    }
+  });
+}
+
+// Sincronizar configuración remota desde Supabase
+async function syncRemoteSettings() {
+  try {
+    const { data } = await sbClient.from('configuracion').select('*').eq('id', 'general').single();
+    if (data) {
+      localStorage.setItem('quique_settings', JSON.stringify(data));
+      updateWhatsAppLinks();
+      renderOfertas();
+    }
+  } catch (e) {
+    console.warn('No se pudo sincronizar la configuración remota de WhatsApp:', e);
+  }
 }
 
 // Cargar ofertas desde Supabase con fallback local resiliente
@@ -164,6 +226,7 @@ function renderOfertas() {
   });
 
   if (activas.length === 0) {
+    const inquiryUrl = getWhatsAppInquiryUrl();
     container.innerHTML = `
       <div class="p-8 text-center bg-white rounded-3xl border border-line space-y-3 shadow-2xs">
         <div class="text-4xl">⏳</div>
@@ -172,9 +235,9 @@ function renderOfertas() {
           Estamos preparando los próximos combos del día. Escribinos directamente por WhatsApp para consultar las próximas promociones.
         </p>
         <div class="pt-2">
-          <button type="button" class="btn-wa-inquiry inline-flex items-center gap-1.5 rounded-xl bg-wa text-white px-4 py-2.5 text-xs font-bold hover:bg-[#20ba59] transition-all shadow-xs cursor-pointer">
+          <a href="${inquiryUrl}" target="_blank" rel="noopener" class="btn-wa-inquiry inline-flex items-center gap-1.5 rounded-xl bg-wa text-white px-4 py-2.5 text-xs font-bold hover:bg-[#20ba59] transition-all shadow-xs cursor-pointer">
             <span>✆ Consultar por WhatsApp</span>
-          </button>
+          </a>
         </div>
       </div>
     `;
@@ -258,11 +321,11 @@ function renderOfertas() {
 
         <!-- Acciones: Encargar por WhatsApp y Compartir -->
         <div class="flex items-center gap-2 pt-1">
-          <button type="button" data-order-oferta="${o.id}"
+          <a href="${formatWhatsAppOrderUrl(o)}" target="_blank" rel="noopener" data-order-oferta="${o.id}"
             class="flex-1 rounded-2xl bg-wa hover:bg-[#20ba59] active:scale-98 text-white px-4 py-3 text-xs sm:text-sm font-black shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer">
             <span class="text-base">✆</span>
             <span>Encargar por WhatsApp</span>
-          </button>
+          </a>
 
           <button type="button" data-share-oferta="${o.id}" title="Compartir esta oferta"
             class="rounded-2xl border border-line bg-white hover:bg-stone-50 active:scale-95 text-stone-700 p-3 text-xs font-bold transition-all shadow-2xs cursor-pointer flex items-center justify-center">
@@ -272,33 +335,6 @@ function renderOfertas() {
       </article>
     `;
   }).join('');
-
-  // Listeners de encargo directo por WhatsApp
-  container.querySelectorAll('[data-order-oferta]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-order-oferta');
-      const oferta = ofertas.find(item => item.id === id);
-      if (oferta) orderViaWhatsApp(oferta);
-    });
-  });
-
-  // Listeners de compartir oferta individual
-  container.querySelectorAll('[data-share-oferta]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-share-oferta');
-      const oferta = ofertas.find(item => item.id === id);
-      if (oferta) shareOferta(oferta);
-    });
-  });
-}
-
-// Encargar oferta específica vía WhatsApp
-function orderViaWhatsApp(oferta) {
-  const s = getActiveSettings();
-  const mensaje = `¡Hola ${s.negocio}! Quiero encargar la oferta del día:\n\n🔥 *${oferta.titulo}* — ${formatPrice(oferta.precio_oferta)}\n_${oferta.descripcion}_\n\n¿Tienen disponibilidad para coordinar la entrega o retiro? ¡Muchas gracias!`;
-  const url = `https://wa.me/${s.whatsapp_number}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, '_blank');
-  showToast('Abriendo WhatsApp...');
 }
 
 // Compartir oferta individual con Web Share API
@@ -338,19 +374,40 @@ function initSocialFooter() {
   }
 }
 
-// WhatsApp Consulta General en Cabecera
-function openWhatsAppInquiry() {
-  const s = getActiveSettings();
-  const greeting = (s.mensaje_consulta || CONFIG.MENSAJE_CONSULTA || '¡Hola! Quería hacerles una consulta.').replace('{negocio}', CONFIG.NEGOCIO);
-  const url = `https://wa.me/${s.whatsapp_number}?text=${encodeURIComponent(greeting)}`;
-  window.open(url, '_blank');
-}
+// Delegación de eventos global para clicks en WhatsApp y compartir
+document.addEventListener('click', (e) => {
+  const waInquiry = e.target.closest('.btn-wa-inquiry');
+  if (waInquiry) {
+    const url = getWhatsAppInquiryUrl();
+    if (waInquiry.tagName === 'A') {
+      waInquiry.href = url;
+    } else {
+      e.preventDefault();
+      openUrlSafe(url);
+    }
+    showToast('Abriendo WhatsApp...');
+    return;
+  }
 
-document.querySelectorAll('.btn-wa-inquiry').forEach(btn => {
-  btn.addEventListener('click', openWhatsAppInquiry);
+  const orderLink = e.target.closest('[data-order-oferta]');
+  if (orderLink) {
+    showToast('Abriendo WhatsApp...');
+    return;
+  }
+
+  const shareBtn = e.target.closest('[data-share-oferta]');
+  if (shareBtn) {
+    e.preventDefault();
+    const id = shareBtn.getAttribute('data-share-oferta');
+    const oferta = ofertas.find(item => item.id === id);
+    if (oferta) shareOferta(oferta);
+    return;
+  }
 });
 
 // Inicialización de la página
+updateWhatsAppLinks();
+syncRemoteSettings();
 loadOfertas();
 initSocialFooter();
 
