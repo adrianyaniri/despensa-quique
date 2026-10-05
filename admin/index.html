@@ -676,8 +676,8 @@
   </dialog>
 
   <!-- ================== PLANTILLA IMPRIMIBLE (SOLO IMPRESIÓN A4) ================== -->
-  <div class="print-only max-w-lg mx-auto p-12 text-center bg-white">
-    <div class="border-4 border-stone-900 p-8 rounded-3xl">
+  <div class="print-only max-w-xl mx-auto p-4 sm:p-6 text-center bg-white">
+    <div class="border-4 border-stone-900 p-8 sm:p-10 rounded-3xl">
       <img src="/logo/logo.png" alt="Almacén Quique" class="w-24 h-24 mx-auto rounded-3xl object-cover mb-4" />
       <h1 id="print-negocio" class="text-3xl font-black text-stone-900 tracking-tight uppercase">Almacén Quique</h1>
       <p id="print-rubro" class="text-sm font-bold text-stone-600 uppercase tracking-widest mt-1">Bebidas Frías • Picadas • Almacén</p>
@@ -700,9 +700,14 @@
         </p>
       </div>
 
-      <div class="mt-8 pt-6 border-t-2 border-stone-200 flex justify-around text-xs font-bold text-stone-800">
-        <div id="print-wa">✆ WhatsApp: 11 6616-8970</div>
-        <div id="print-ig">📷 Instagram: @almacen.quique</div>
+      <!-- Barra de Contacto Sin Saltos de Línea -->
+      <div class="mt-8 pt-6 border-t-2 border-stone-200 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+        <div class="inline-flex items-center gap-1.5 bg-stone-100 border border-stone-300 rounded-2xl px-4 py-2.5 shadow-2xs whitespace-nowrap">
+          <span id="print-wa" class="text-xs sm:text-sm font-black text-stone-900 whitespace-nowrap">✆ WhatsApp: 11 6616-8970</span>
+        </div>
+        <div class="inline-flex items-center gap-1.5 bg-stone-100 border border-stone-300 rounded-2xl px-4 py-2.5 shadow-2xs whitespace-nowrap">
+          <span id="print-ig" class="text-xs sm:text-sm font-black text-stone-900 whitespace-nowrap">📷 Instagram: @almacen.quique</span>
+        </div>
       </div>
     </div>
   </div>
