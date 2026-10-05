@@ -169,13 +169,12 @@ function renderOfertas() {
         <div class="text-4xl">⏳</div>
         <h3 class="font-extrabold text-base text-ink">No hay ofertas activas en este momento</h3>
         <p class="text-xs text-muted max-w-sm mx-auto leading-relaxed">
-          Estamos preparando los próximos combos del día. Mientras tanto, podés consultar el catálogo completo con todos nuestros productos disponibles.
+          Estamos preparando los próximos combos del día. Escribinos directamente por WhatsApp para consultar las próximas promociones.
         </p>
         <div class="pt-2">
-          <a href="/" class="inline-flex items-center gap-1.5 rounded-xl bg-ink text-white px-4 py-2.5 text-xs font-bold hover:bg-stone-800 transition-all shadow-xs">
-            <span>Ver Catálogo Completo</span>
-            <span class="text-sm">&rarr;</span>
-          </a>
+          <button type="button" class="btn-wa-inquiry inline-flex items-center gap-1.5 rounded-xl bg-wa text-white px-4 py-2.5 text-xs font-bold hover:bg-[#20ba59] transition-all shadow-xs cursor-pointer">
+            <span>✆ Consultar por WhatsApp</span>
+          </button>
         </div>
       </div>
     `;

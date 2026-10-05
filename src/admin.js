@@ -390,7 +390,7 @@ if (settingsForm && settingsModal) {
     saveBtn.textContent = 'Guardar Configuración';
     settingsModal.close();
     showToast('¡Ajustes de WhatsApp guardados!');
-    updatePrintPoster();
+    setupPrintPoster();
   });
 }
 
@@ -744,15 +744,32 @@ if (prodForm) {
 }
 
 // ================== ACTUALIZACIÓN DINÁMICA DEL CARTEL IMPRESO A4 ==================
-async function updatePrintPoster() {
+async function setupPrintPoster(type = 'precios') {
   const s = await getStoredSettings();
   const printNegocio = document.getElementById('print-negocio');
+  const printRubro = document.getElementById('print-rubro');
+  const printQrImg = document.getElementById('print-qr-img');
+  const printTitle = document.getElementById('print-title');
+  const printDesc = document.getElementById('print-desc');
   const printUrl = document.getElementById('print-url');
   const printWa = document.getElementById('print-wa');
   const printIg = document.getElementById('print-ig');
 
   if (printNegocio) printNegocio.textContent = CONFIG.NEGOCIO || 'Almacén Quique';
-  if (printUrl) printUrl.textContent = CONFIG.CATALOGO_URL || (window.location.origin + '/precios');
+
+  if (type === 'ofertas') {
+    if (printRubro) printRubro.textContent = '🔥 OFERTAS DEL DÍA • COMBOS PROMOCIONALES';
+    if (printQrImg) printQrImg.src = '/qr/qr-ofertas-1000px.png';
+    if (printTitle) printTitle.textContent = '¡ESCANEÁ Y APROVECHÁ LAS OFERTAS DE HOY!';
+    if (printDesc) printDesc.textContent = 'Combos por tiempo limitado. Encargá directo por WhatsApp antes de que se agoten.';
+    if (printUrl) printUrl.textContent = window.location.origin + '/ofertas';
+  } else {
+    if (printRubro) printRubro.textContent = 'Bebidas Frías • Picadas • Almacén';
+    if (printQrImg) printQrImg.src = '/qr/qr-precios-1000px.png';
+    if (printTitle) printTitle.textContent = '¡Escaneá el código QR con tu celular!';
+    if (printDesc) printDesc.textContent = 'Mirá todos los precios actualizados y armá tu pedido al instante';
+    if (printUrl) printUrl.textContent = CONFIG.CATALOGO_URL || (window.location.origin + '/precios');
+  }
 
   if (printWa) {
     const rawNumber = String(s.whatsapp_number || CONFIG.WHATSAPP_NUMBER || '').trim();
@@ -772,6 +789,26 @@ async function updatePrintPoster() {
     printIg.textContent = `📷 Instagram: ${handle}`;
   }
 }
+
+// Botones para Imprimir Carteles A4
+const printPreciosBtn = document.getElementById('print-poster-precios-btn');
+const printOfertasBtn = document.getElementById('print-poster-ofertas-btn');
+
+if (printPreciosBtn) {
+  printPreciosBtn.addEventListener('click', async () => {
+    await setupPrintPoster('precios');
+    window.print();
+  });
+}
+
+if (printOfertasBtn) {
+  printOfertasBtn.addEventListener('click', async () => {
+    await setupPrintPoster('ofertas');
+    window.print();
+  });
+}
+
+window.addEventListener('beforeprint', () => setupPrintPoster('precios'));
 
 // ================== GESTIÓN DE PESTAÑAS (TABS) ==================
 function initAdminTabs() {
@@ -1195,4 +1232,4 @@ if (adminMenu) {
 // Inicializar
 initAdminTabs();
 initSession();
-updatePrintPoster();
+setupPrintPoster('precios');

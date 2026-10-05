@@ -55,4 +55,12 @@ if __name__ == '__main__':
         'public/qr/qr-instagram-1000px.png',
         'public/qr/qr-instagram-vector.svg'
     )
+
+    # 3. Ofertas QR -> apunta a ofertas diarias y combos /ofertas
+    generate_qr_with_logo(
+        'https://despensa-quique.vercel.app/ofertas',
+        'public/logo/logo.png',
+        'public/qr/qr-ofertas-1000px.png',
+        'public/qr/qr-ofertas-vector.svg'
+    )
     print('All QRs generated successfully!')
