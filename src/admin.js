@@ -37,6 +37,10 @@ sbClient.auth.onAuthStateChange(async (event, session) => {
     if (loginView) loginView.classList.add('hidden');
     if (dashboardView) dashboardView.classList.remove('hidden');
     if (userEmail) userEmail.textContent = session.user.email;
+    const userEmailShort = document.getElementById('user-email-short');
+    if (userEmailShort && session.user?.email) {
+      userEmailShort.textContent = session.user.email.split('@')[0];
+    }
     loadProducts();
     loadOfertas();
   } else {
@@ -56,6 +60,10 @@ async function initSession() {
     if (loginView) loginView.classList.add('hidden');
     if (dashboardView) dashboardView.classList.remove('hidden');
     if (userEmail) userEmail.textContent = session.user.email;
+    const userEmailShort = document.getElementById('user-email-short');
+    if (userEmailShort && session.user?.email) {
+      userEmailShort.textContent = session.user.email.split('@')[0];
+    }
     loadProducts();
     loadOfertas();
   } else {
@@ -1167,6 +1175,21 @@ if (ofertaForm) {
 if (inputPrecioReg && inputPrecioOf) {
   inputPrecioReg.addEventListener('input', updateOfertaCalcPreview);
   inputPrecioOf.addEventListener('input', updateOfertaCalcPreview);
+}
+
+// Menú Desplegable de Ajustes Admin
+const adminMenu = document.getElementById('admin-menu-dropdown');
+if (adminMenu) {
+  document.addEventListener('click', (e) => {
+    if (adminMenu.open && !adminMenu.contains(e.target)) {
+      adminMenu.removeAttribute('open');
+    }
+  });
+  adminMenu.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      adminMenu.removeAttribute('open');
+    });
+  });
 }
 
 // Inicializar

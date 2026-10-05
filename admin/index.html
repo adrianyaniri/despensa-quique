@@ -89,48 +89,62 @@
 
   <!-- ================== VISTA DE DASHBOARD ================== -->
   <div id="dashboard-view" class="hidden flex-1 flex flex-col no-print">
-    <!-- Header Admin Responsivo (Marca y Acciones Destacadas) -->
-    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-line shadow-xs">
-      <div class="max-w-4xl mx-auto px-4 py-3.5 sm:py-4 flex items-center justify-between gap-3">
-        <!-- Identidad de Marca Admin: Gran Formato -->
-        <div class="flex items-center gap-3.5 min-w-0">
-          <img src="/logo/logo.png" alt="Almacén Quique" class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl border border-line object-cover shrink-0 bg-white shadow-xs" />
-          <div class="min-w-0">
-            <div class="flex items-center gap-2">
-              <h1 class="font-black text-xl sm:text-2xl leading-tight truncate text-ink tracking-tight">Almacén Quique</h1>
-              <span class="rounded-full bg-stone-100 text-stone-700 px-2.5 py-0.5 text-[11px] font-bold border border-line shrink-0">Admin</span>
-            </div>
-            <p id="user-email" class="text-xs text-muted truncate mt-0.5">admin</p>
+    <!-- Header Admin Responsivo (Compacto, Minimalista y Profesional) -->
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-line shadow-2xs">
+      <div class="max-w-4xl mx-auto px-4 py-2.5 sm:py-3 flex items-center justify-between gap-3">
+        <!-- Identidad de Marca: Compacta -->
+        <div class="flex items-center gap-2.5 min-w-0">
+          <img src="/logo/logo.png" alt="Almacén Quique" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-line object-cover shrink-0 bg-white shadow-2xs" />
+          <div class="min-w-0 flex items-center gap-2">
+            <h1 class="font-black text-sm sm:text-base leading-tight truncate text-ink tracking-tight">Almacén Quique</h1>
+            <span class="rounded-full bg-stone-100 text-stone-600 px-2 py-0.5 text-[10px] font-bold border border-line shrink-0">Panel</span>
           </div>
         </div>
 
-        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          <!-- Botón Ajustes del Negocio -->
-          <button id="btn-settings" type="button" title="Configurar mensajes de WhatsApp y contacto"
-            class="rounded-xl border border-line px-2.5 sm:px-3 py-2 text-xs font-bold text-stone-700 hover:bg-stone-50 active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-2xs">
-            <span>⚙️</span>
-            <span class="hidden sm:inline">WhatsApp y Mensajes</span>
-          </button>
-
-          <!-- Botón Cambiar Contraseña -->
-          <button id="btn-change-pwd" type="button" title="Cambiar contraseña de acceso"
-            class="rounded-xl border border-line px-2.5 sm:px-3 py-2 text-xs font-bold text-stone-700 hover:bg-stone-50 active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-2xs">
-            <span>🔑</span>
-            <span class="hidden sm:inline">Clave</span>
-          </button>
-
-          <a href="/ofertas" target="_blank" title="Ver ofertas públicas del día"
-            class="rounded-xl border border-amber-200 bg-amber-50/80 px-2.5 sm:px-3 py-2 text-xs font-bold text-amber-800 hover:bg-amber-100 transition-colors inline-flex items-center gap-1 shadow-2xs">
-            <span>🔥 Ofertas</span> ↗
+        <!-- Acciones Limpias: Acceso Directo a Tienda + Menú de Ajustes -->
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="/" target="_blank" title="Ver catálogo público en nueva pestaña"
+            class="rounded-xl border border-line bg-white hover:bg-stone-50 active:scale-95 px-3 py-1.5 text-xs font-bold text-stone-700 transition-all inline-flex items-center gap-1 shadow-2xs">
+            <span>Ver tienda</span>
+            <span class="text-stone-400">↗</span>
           </a>
 
-          <a href="/" target="_blank" class="rounded-xl border border-line px-2.5 sm:px-3 py-2 text-xs font-bold text-stone-700 hover:bg-stone-50 transition-colors inline-flex items-center gap-1 shadow-2xs">
-            <span>Ver web</span> ↗
-          </a>
+          <!-- Menú Desplegable de Ajustes y Cuenta -->
+          <details id="admin-menu-dropdown" class="relative">
+            <summary class="list-none flex items-center gap-1.5 rounded-xl border border-line bg-white hover:bg-stone-50 px-2.5 sm:px-3 py-1.5 text-xs font-bold text-stone-700 cursor-pointer shadow-2xs transition-all select-none">
+              <span>⚙️</span>
+              <span id="user-email-short" class="hidden sm:inline font-semibold text-stone-600">Ajustes</span>
+              <span class="text-[9px] text-stone-400 ml-0.5">▼</span>
+            </summary>
 
-          <button id="logout-btn" class="rounded-xl bg-stone-100 hover:bg-stone-200 active:scale-95 px-2.5 sm:px-3 py-2 text-xs font-bold text-stone-700 transition-colors cursor-pointer shadow-2xs">
-            Salir
-          </button>
+            <div class="absolute right-0 mt-2 w-56 rounded-2xl bg-white border border-line shadow-xl py-1.5 z-50 text-xs">
+              <div class="px-3.5 py-2 border-b border-line">
+                <p class="text-[10px] uppercase font-bold tracking-wider text-muted">Sesión iniciada</p>
+                <p id="user-email" class="font-bold text-ink truncate mt-0.5">admin</p>
+              </div>
+
+              <div class="py-1">
+                <button id="btn-settings" type="button"
+                  class="w-full text-left px-3.5 py-2 hover:bg-stone-50 flex items-center gap-2.5 font-medium text-stone-700 cursor-pointer transition-colors">
+                  <span class="text-sm">📱</span>
+                  <span>WhatsApp y Mensajes</span>
+                </button>
+                <button id="btn-change-pwd" type="button"
+                  class="w-full text-left px-3.5 py-2 hover:bg-stone-50 flex items-center gap-2.5 font-medium text-stone-700 cursor-pointer transition-colors">
+                  <span class="text-sm">🔑</span>
+                  <span>Cambiar Contraseña</span>
+                </button>
+              </div>
+
+              <div class="pt-1 border-t border-line">
+                <button id="logout-btn" type="button"
+                  class="w-full text-left px-3.5 py-2 hover:bg-rose-50 text-rose-600 flex items-center gap-2.5 font-bold cursor-pointer transition-colors">
+                  <span class="text-sm">🚪</span>
+                  <span>Cerrar Sesión</span>
+                </button>
+              </div>
+            </div>
+          </details>
         </div>
       </div>
     </header>
