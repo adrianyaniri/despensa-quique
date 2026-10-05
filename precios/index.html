@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Almacén Quique — Catálogo de Precios Exclusivo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css">
+  <link rel="icon" type="image/png" href="/logo/logo.png">
+</head>
+<body class="font-body text-ink min-h-screen antialiased flex flex-col bg-base selection:bg-ink selection:text-white">
+
+  <!-- Header Dinámico Montado por Componente -->
+  <header id="site-header"></header>
+
+  <!-- Contenido Principal: Catálogo VIP -->
+  <main class="max-w-xl mx-auto px-4 pt-4 pb-36 flex-1 w-full space-y-4">
+    <!-- Barra de Búsqueda y Filtros de Categorías -->
+    <section class="bg-white rounded-2xl border border-line p-3 sm:p-3.5 shadow-xs space-y-2.5">
+      <!-- Buscador -->
+      <div class="relative">
+        <input id="search" type="search" placeholder="Buscar bebidas, cervezas, picadas..." autocomplete="off"
+          class="w-full rounded-xl bg-stone-50 hover:bg-stone-100/70 pl-9 pr-4 py-2.5 text-xs sm:text-sm outline-none placeholder:text-stone-400 focus:bg-white focus:ring-2 focus:ring-ink/10 transition-all border border-stone-200 focus:border-stone-400" />
+        <span class="absolute left-3 top-2.5 text-stone-400 text-xs select-none">🔍</span>
+      </div>
+
+      <!-- Píldoras de Categorías con Scroll Horizontal Fluido -->
+      <div class="flex gap-2 overflow-x-auto no-scrollbar py-0.5 -mx-0.5 px-0.5" id="filters">
+        <!-- Generado dinámicamente -->
+      </div>
+    </section>
+
+    <!-- Listado de Productos -->
+    <div id="lista" class="space-y-6"></div>
+  </main>
+
+  <!-- Footer Dinámico Montado por Componente -->
+  <footer id="site-footer"></footer>
+
+  <script type="module" src="/src/catalog.js"></script>
+</body>
+</html>

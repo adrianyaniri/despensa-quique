@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Almacén Quique — Catálogo de Precios</title>
+  <title>Almacén Quique — Tu Almacén de Barrio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/src/style.css">
@@ -11,33 +11,137 @@
 </head>
 <body class="font-body text-ink min-h-screen antialiased flex flex-col bg-base selection:bg-ink selection:text-white">
 
-  <!-- Header Dinámico Montado por Componente -->
-  <header id="site-header"></header>
-
-  <!-- Contenido Principal -->
-  <main class="max-w-xl mx-auto px-4 pt-4 pb-36 flex-1 w-full space-y-4">
-    <!-- Barra de Búsqueda y Filtros de Categorías -->
-    <section class="bg-white rounded-2xl border border-line p-3 sm:p-3.5 shadow-xs space-y-2.5">
-      <!-- Buscador -->
-      <div class="relative">
-        <input id="search" type="search" placeholder="Buscar bebidas, cervezas, picadas..." autocomplete="off"
-          class="w-full rounded-xl bg-stone-50 hover:bg-stone-100/70 pl-9 pr-4 py-2.5 text-xs sm:text-sm outline-none placeholder:text-stone-400 focus:bg-white focus:ring-2 focus:ring-ink/10 transition-all border border-stone-200 focus:border-stone-400" />
-        <span class="absolute left-3 top-2.5 text-stone-400 text-xs select-none">🔍</span>
+  <!-- Header de Marca Superior -->
+  <header class="sticky top-0 z-30 bg-base/95 backdrop-blur-md border-b border-line shadow-xs">
+    <div class="max-w-xl mx-auto px-4 py-3.5 sm:py-4 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <img src="/logo/logo.png" alt="Almacén Quique" class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl object-cover bg-white border border-line shadow-2xs shrink-0" />
+        <div class="min-w-0">
+          <h1 class="font-black text-lg sm:text-xl leading-tight truncate text-ink tracking-tight">Almacén Quique</h1>
+          <p class="text-[11px] sm:text-xs text-muted truncate font-medium">Bebidas • Picadas • Almacén</p>
+        </div>
       </div>
 
-      <!-- Píldoras de Categorías con Scroll Horizontal Fluido -->
-      <div class="flex gap-2 overflow-x-auto no-scrollbar py-0.5 -mx-0.5 px-0.5" id="filters">
-        <!-- Generado dinámicamente -->
+      <div class="shrink-0">
+        <a id="btn-wa-landing" href="#" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-1.5 rounded-2xl bg-wa hover:bg-[#20ba59] active:scale-95 text-white px-3.5 py-2 text-xs font-black shadow-sm transition-all cursor-pointer">
+          <span class="text-sm">✆</span>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido de la Landing Page -->
+  <main class="max-w-xl mx-auto px-4 pt-6 pb-20 flex-1 w-full space-y-6">
+
+    <!-- Hero de Bienvenida con Logo -->
+    <section class="text-center space-y-3.5 pt-2 sm:pt-4">
+      <div class="inline-block relative">
+        <img src="/logo/logo.png" alt="Logo Almacén Quique"
+             class="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-3xl object-cover bg-white border-2 border-line shadow-md p-0.5" />
+        <span class="absolute -bottom-2 -right-2 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow-2xs flex items-center gap-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Abierto
+        </span>
+      </div>
+
+      <div class="space-y-1.5 max-w-md mx-auto">
+        <h2 class="font-black text-2xl sm:text-3xl text-ink tracking-tight leading-tight">
+          ¡Bienvenidos a Almacén Quique!
+        </h2>
+        <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
+          Tu comercio de cercanía de confianza. Las bebidas más frías, picadas selectas y todo lo que necesitás para tu día a día.
+        </p>
       </div>
     </section>
 
-    <!-- Listado de Productos -->
-    <div id="lista" class="space-y-6"></div>
+    <!-- Tarjeta Principal Destacada: OFERTAS DEL DÍA Y COMBOS -->
+    <section class="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-amber-500 via-amber-600 to-rose-600 text-white shadow-lg space-y-4 relative overflow-hidden">
+      <div class="relative z-10 space-y-2">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-white text-[11px] font-black uppercase tracking-wide backdrop-blur-xs">
+          <span>🔥</span>
+          <span>Para Todos los Clientes</span>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-black tracking-tight leading-snug">
+          Ofertas del Día y Combos Especiales
+        </h3>
+        <p class="text-xs sm:text-sm text-amber-100 font-medium leading-relaxed">
+          Descubrí promociones exclusivas, combos de picadas y packs con descuento para encargar al instante por WhatsApp.
+        </p>
+      </div>
+
+      <div class="relative z-10 pt-1">
+        <a href="/ofertas"
+           class="inline-flex items-center justify-center gap-2 w-full sm:w-auto rounded-2xl bg-white hover:bg-stone-100 active:scale-98 text-amber-950 font-black px-6 py-3.5 text-xs sm:text-sm shadow-md transition-all cursor-pointer">
+          <span>Explorar Ofertas Activas</span>
+          <span class="text-base font-bold">&rarr;</span>
+        </a>
+      </div>
+
+      <div class="absolute -right-6 -bottom-6 w-36 h-36 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+    </section>
+
+    <!-- Bento Grid de Servicios e Información -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+      <!-- Tarjeta WhatsApp -->
+      <div class="p-4 sm:p-5 rounded-3xl bg-white border border-line shadow-2xs space-y-3 flex flex-col justify-between">
+        <div class="space-y-1">
+          <div class="w-9 h-9 rounded-xl bg-emerald-50 text-wa flex items-center justify-center text-lg font-black border border-emerald-100">
+            ✆
+          </div>
+          <h4 class="font-bold text-sm text-ink pt-1">Atención por WhatsApp</h4>
+          <p class="text-xs text-muted leading-relaxed">
+            Hacé tu consulta o encargá tu pedido directamente con nosotros.
+          </p>
+        </div>
+        <div>
+          <a id="btn-wa-hero" href="#" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-1.5 text-xs font-black text-emerald-700 hover:text-emerald-800 underline decoration-2">
+            <span>Escribir por WhatsApp</span>
+            <span>&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Tarjeta Instagram -->
+      <div class="p-4 sm:p-5 rounded-3xl bg-white border border-line shadow-2xs space-y-3 flex flex-col justify-between">
+        <div class="space-y-1">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600 text-white flex items-center justify-center text-base shadow-2xs">
+            📷
+          </div>
+          <h4 class="font-bold text-sm text-ink pt-1">Instagram Oficial</h4>
+          <p class="text-xs text-muted leading-relaxed">
+            Seguinos en <span id="landing-ig-handle" class="font-semibold text-stone-700">@almacen.quique</span> para novedades diarias.
+          </p>
+        </div>
+        <div>
+          <a id="landing-ig-btn" href="/ig" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-1.5 text-xs font-black text-purple-700 hover:text-purple-800 underline decoration-2">
+            <span>Abrir Instagram</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Información de Atención y Ubicación -->
+    <section class="p-4 sm:p-5 rounded-3xl bg-stone-50 border border-line text-center space-y-1.5">
+      <p class="text-xs font-extrabold text-ink uppercase tracking-wider">Comercio de Barrio</p>
+      <p class="text-xs text-stone-600 leading-relaxed max-w-sm mx-auto">
+        Atendemos en nuestro local con retiro en puerta y coordinación de envíos cercanos por WhatsApp.
+      </p>
+    </section>
+
   </main>
 
-  <!-- Footer Dinámico Montado por Componente -->
-  <footer id="site-footer"></footer>
+  <!-- Footer Simple -->
+  <footer class="bg-white border-t border-line mt-auto py-6">
+    <div class="max-w-xl mx-auto px-4 text-center space-y-1">
+      <p class="text-xs font-bold text-stone-700">Almacén Quique</p>
+      <p class="text-[11px] text-muted">© Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
-  <script type="module" src="/src/catalog.js"></script>
+  <script type="module" src="/src/landing.js"></script>
 </body>
 </html>
