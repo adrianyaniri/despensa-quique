@@ -9,9 +9,41 @@
   <link rel="stylesheet" href="/src/style.css">
   <link rel="icon" type="image/png" href="/logo/logo.png">
 </head>
-<body class="font-body text-ink min-h-screen antialiased flex flex-col bg-base selection:bg-espresso selection:text-white">
+<body class="font-body text-ink min-h-screen antialiased flex flex-col bg-base selection:bg-espresso selection:text-white relative">
 
-  <!-- Barra Superior Sutil -->
+  <!-- ================== INTRO CINEMÁTICA ESTILO VIDEO ================== -->
+  <aside id="intro-curtain" class="intro-curtain fixed inset-0 z-50 bg-[#F8F5EE] flex flex-col items-center justify-center p-6 text-center cursor-pointer select-none">
+    <div class="relative space-y-5 max-w-xs">
+      <!-- Halo de luz cálido de fondo -->
+      <div class="absolute inset-0 -m-8 rounded-full bg-tan/20 blur-3xl anim-halo pointer-events-none"></div>
+
+      <!-- Emblema del logo animado -->
+      <div class="relative anim-intro-emblem">
+        <img src="/logo/logo.png" alt="Despensa Quique"
+             class="w-32 h-32 sm:w-36 sm:h-36 mx-auto rounded-3xl object-cover bg-white border border-line shadow-2xl p-1" />
+      </div>
+
+      <!-- Tipografía de marca con barrido de luz metálico -->
+      <div class="space-y-1 relative">
+        <p class="text-[11px] font-black uppercase tracking-[0.25em] text-tan">Despensa</p>
+        <h1 class="text-3xl sm:text-4xl font-black tracking-tight leading-none shimmer-text">
+          Quique
+        </h1>
+        <p class="anim-intro-sub text-[10px] font-extrabold text-stone-500 uppercase">
+          — Fiambres • Desde 2021 —
+        </p>
+      </div>
+
+      <!-- Indicador sutil de toque -->
+      <div class="pt-5">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold text-stone-400 bg-stone-200/50">
+          <span>Tocá para ingresar</span>
+        </span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Barra Superior Minimalista -->
   <header class="sticky top-0 z-30 bg-base/90 backdrop-blur-md border-b border-line">
     <div class="max-w-md mx-auto px-5 py-3.5 flex items-center justify-between gap-3">
       <div class="flex items-center gap-2.5 min-w-0">
@@ -28,23 +60,21 @@
     </div>
   </header>
 
-  <!-- Contenido Central -->
+  <!-- Contenido Central Minimalista -->
   <main class="max-w-md mx-auto px-5 pt-8 pb-16 flex-1 w-full space-y-7">
 
-    <!-- Hero Centrado con Efecto de Entrada y Paleta del Logo -->
+    <!-- Hero Centrado con Paleta del Logo -->
     <section class="text-center space-y-4 anim-hero">
       <div class="relative inline-block mx-auto">
-        <!-- Halo cálido sutil detrás del logo -->
         <div class="absolute inset-0 -m-3 rounded-full bg-tan/20 blur-xl anim-halo pointer-events-none"></div>
-
         <img src="/logo/logo.png" alt="Logo Despensa Quique"
              class="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-3xl object-cover bg-white border border-line shadow-md p-1" />
       </div>
 
-      <div class="space-y-2">
-        <h1 class="font-black text-2xl sm:text-3xl text-espresso tracking-tight leading-tight">
+      <div class="space-y-1.5">
+        <h2 class="font-black text-2xl sm:text-3xl text-espresso tracking-tight leading-tight">
           Despensa Quique
-        </h1>
+        </h2>
         <p class="text-xs uppercase font-extrabold tracking-widest text-tan">
           Fiambres • Bebidas • Almacén
         </p>
@@ -54,10 +84,9 @@
       </div>
     </section>
 
-    <!-- Tarjeta Principal: Promociones y Ofertas del Día (Paleta Espresso + Tan) -->
+    <!-- Tarjeta Principal: Promociones y Ofertas del Día -->
     <section class="anim-delay-1">
       <div class="rounded-3xl bg-espresso text-white p-5 sm:p-6 shadow-xl border border-stone-800 space-y-4 relative overflow-hidden">
-        <!-- Detalle de fondo cálido -->
         <div class="absolute -right-8 -top-8 w-36 h-36 rounded-full bg-tan/15 blur-2xl pointer-events-none"></div>
 
         <div class="relative space-y-1.5">
@@ -66,9 +95,9 @@
             <span>Promociones del Día</span>
           </div>
 
-          <h2 class="text-lg sm:text-xl font-extrabold tracking-tight text-white leading-snug">
+          <h3 class="text-lg sm:text-xl font-extrabold tracking-tight text-white leading-snug">
             Combos y Ofertas Especiales
-          </h2>
+          </h3>
 
           <p class="text-xs text-stone-300 leading-relaxed font-normal">
             Descubrí los combos armados de picadas, bebidas y esenciales para encargar al instante.
@@ -85,7 +114,7 @@
       </div>
     </section>
 
-    <!-- Bento Grid de Contacto y Redes (Animación Escalonada) -->
+    <!-- Bento Grid de Contacto y Redes -->
     <section class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 anim-delay-2">
       <!-- Tarjeta WhatsApp -->
       <a id="btn-wa-landing" href="#" target="_blank" rel="noopener"
@@ -97,7 +126,7 @@
           <span class="text-xs text-stone-400 group-hover:text-emerald-700 font-bold transition-colors">&rarr;</span>
         </div>
         <div>
-          <h3 class="font-bold text-xs sm:text-sm text-espresso">WhatsApp Directo</h3>
+          <h4 class="font-bold text-xs sm:text-sm text-espresso">WhatsApp Directo</h4>
           <p class="text-[11px] text-muted leading-relaxed mt-0.5">Consultá stock y coordiná tu pedido.</p>
         </div>
       </a>
@@ -112,7 +141,7 @@
           <span class="text-xs text-stone-400 group-hover:text-espresso font-bold transition-colors">↗</span>
         </div>
         <div>
-          <h3 class="font-bold text-xs sm:text-sm text-espresso">Instagram Oficial</h3>
+          <h4 class="font-bold text-xs sm:text-sm text-espresso">Instagram Oficial</h4>
           <p id="landing-ig-handle" class="text-[11px] text-muted leading-relaxed mt-0.5">@almacen.quique</p>
         </div>
       </a>
@@ -128,7 +157,7 @@
 
   </main>
 
-  <!-- Footer Sobrio y Elegante -->
+  <!-- Footer Sobrio y Minimalista -->
   <footer class="border-t border-line mt-auto py-6 bg-base">
     <div class="max-w-md mx-auto px-5 text-center space-y-1">
       <p class="text-xs font-bold text-espresso">Despensa Quique</p>
