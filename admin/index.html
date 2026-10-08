@@ -8,6 +8,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/src/style.css">
   <link rel="icon" type="image/png" href="/logo/logo.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#24201D">
 </head>
 <body class="font-body text-ink min-h-screen antialiased flex flex-col bg-[#F8F6F0]">
 
@@ -195,6 +197,11 @@
           <span>📦 Productos</span>
           <span id="tab-badge-products" class="rounded-full bg-stone-100 text-stone-700 px-2 py-0.5 text-[10px] font-semibold">0</span>
         </button>
+        <button type="button" id="tab-btn-categories"
+          class="tab-nav-btn px-3 sm:px-4 py-2.5 text-xs font-bold border-b-2 border-transparent text-stone-500 hover:text-ink flex items-center gap-1.5 cursor-pointer transition-all">
+          <span>🏷️ Categorías</span>
+          <span id="tab-badge-categories" class="rounded-full bg-stone-100 text-stone-700 px-2 py-0.5 text-[10px] font-semibold">0</span>
+        </button>
         <button type="button" id="tab-btn-ofertas"
           class="tab-nav-btn px-3 sm:px-4 py-2.5 text-xs font-bold border-b-2 border-transparent text-stone-500 hover:text-ink flex items-center gap-1.5 cursor-pointer transition-all">
           <span>🔥 Ofertas y Combos</span>
@@ -208,42 +215,93 @@
 
       <!-- ================== PESTAÑA 1: GESTIÓN DE PRODUCTOS ================== -->
       <div id="section-products" class="space-y-4">
-        <!-- Sección de Catálogo: Búsqueda, Filtros y Nuevo Producto -->
+        <!-- Sección de Catálogo: Búsqueda, Filtros y Acciones -->
         <section class="bg-white p-4 sm:p-5 rounded-2xl border border-line shadow-xs space-y-3.5">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-line pb-3">
             <div>
-              <h2 class="font-extrabold text-sm text-ink">Gestión de Productos</h2>
-              <p class="text-[11px] text-muted">Filtrá por categoría o buscá para editar precios y disponibilidad</p>
+              <h2 class="font-extrabold text-sm text-ink">Inventario Maestro de Productos</h2>
+              <p class="text-[11px] text-muted">Control de stock, precios y visibilidad en la web pública (/precios)</p>
             </div>
-            <button id="add-product-btn"
-              class="w-full sm:w-auto rounded-xl bg-ink text-white px-4 py-2 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs flex items-center justify-center gap-1.5 shrink-0 cursor-pointer">
-              <span class="text-sm font-bold leading-none">+</span>
-              <span>Nuevo Producto</span>
-            </button>
+            <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+              <!-- Exportación: Excel y CSV -->
+              <div class="inline-flex rounded-xl shadow-xs border border-stone-200 overflow-hidden bg-stone-100">
+                <button id="export-products-xlsx-btn" type="button"
+                  class="px-3 py-2 text-xs font-bold text-stone-700 hover:bg-stone-200 transition-colors flex items-center gap-1.5 cursor-pointer"
+                  title="Descargar planilla nativa de Microsoft Excel (.xlsx)">
+                  <span>📊</span>
+                  <span>Excel (.xlsx)</span>
+                </button>
+                <div class="w-px bg-stone-300"></div>
+                <button id="export-products-csv-btn" type="button"
+                  class="px-2.5 py-2 text-xs font-bold text-stone-700 hover:bg-stone-200 transition-colors flex items-center gap-1 cursor-pointer"
+                  title="Descargar archivo CSV compatible">
+                  <span>CSV</span>
+                </button>
+              </div>
+
+              <button id="add-product-btn"
+                class="flex-1 sm:flex-none rounded-xl bg-ink text-white px-4 py-2 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs flex items-center justify-center gap-1.5 shrink-0 cursor-pointer">
+                <span class="text-sm font-bold leading-none">+</span>
+                <span>Nuevo Producto</span>
+              </button>
+            </div>
           </div>
 
           <div class="relative">
-            <input id="admin-search" type="search" placeholder="Buscar por nombre o categoría..."
+            <input id="admin-search" type="search" placeholder="Buscar por nombre o descripción..."
               class="w-full rounded-xl bg-stone-50 border border-line pl-9 pr-3 py-2.5 text-xs outline-none focus:bg-white focus:border-stone-400 transition-all" />
             <span class="absolute left-3 top-2.5 text-stone-400 text-xs">🔍</span>
           </div>
 
-          <!-- Categorías con Scroll Horizontal en Móviles -->
+          <!-- Filtro de Categorías -->
           <div id="admin-categories" class="flex gap-1.5 overflow-x-auto no-scrollbar py-1 -mx-1 px-1">
             <!-- Dinámico -->
           </div>
         </section>
 
-        <!-- Tabla de Productos con Adaptación Móvil -->
+        <!-- Tabla de Productos con Paginación y Diseño Enterprise -->
         <div class="bg-white rounded-2xl border border-line shadow-xs overflow-hidden">
-          <div class="px-4 py-3 border-b border-line bg-stone-50 flex items-center justify-between">
-            <h2 class="text-xs font-bold text-stone-700 uppercase tracking-wider">Listado de Precios y Stock</h2>
-            <span class="text-[10px] sm:text-[11px] text-muted">Edición en tiempo real</span>
+          <div class="px-4 py-3 border-b border-line bg-stone-50/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h3 class="text-xs font-extrabold text-stone-800 uppercase tracking-wider">Listado de Inventario</h3>
+              <p class="text-[11px] text-muted">Edición rápida de precios, stock y visibilidad web</p>
+            </div>
+            <div id="products-count-badge" class="text-[11px] font-semibold text-stone-600 bg-white border border-stone-200 px-2.5 py-1 rounded-lg shrink-0">
+              Cargando...
+            </div>
           </div>
-          <div id="products-table" class="divide-y divide-line">
-            <!-- Dinámico -->
+
+          <!-- Contenedor con Scroll Horizontal Responsivo para la Tabla -->
+          <div id="products-table" class="overflow-x-auto">
+            <!-- Renderizado dinámicamente -->
+          </div>
+
+          <!-- Controles de Paginación -->
+          <div id="products-pagination" class="px-4 py-3 border-t border-line bg-stone-50/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-600">
+            <!-- Renderizado dinámicamente -->
           </div>
         </div>
+      </div>
+
+      <!-- ================== PESTAÑA 2: GESTIÓN DE CATEGORÍAS ================== -->
+      <div id="section-categories" class="hidden space-y-4">
+        <section class="bg-white p-4 sm:p-5 rounded-2xl border border-line shadow-xs space-y-3.5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-line pb-3">
+            <div>
+              <h2 class="font-extrabold text-sm text-ink">Gestión de Categorías</h2>
+              <p class="text-[11px] text-muted">Creá, editá y organizá las categorías para clasificar tus productos</p>
+            </div>
+            <button id="add-category-btn"
+              class="w-full sm:w-auto rounded-xl bg-ink text-white px-4 py-2 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs flex items-center justify-center gap-1.5 shrink-0 cursor-pointer">
+              <span class="text-sm font-bold leading-none">+</span>
+              <span>Nueva Categoría</span>
+            </button>
+          </div>
+
+          <div id="categories-table" class="bg-white rounded-xl border border-line overflow-hidden">
+            <!-- Renderizado dinámicamente -->
+          </div>
+        </section>
       </div>
 
       <!-- ================== PESTAÑA 2: GESTIÓN DE OFERTAS Y COMBOS ================== -->
@@ -410,7 +468,33 @@
     </footer>
   </div>
 
-  <!-- ================== MODAL DE PRODUCTO (CON CATEGORÍAS INTELIGENTES) ================== -->
+  <!-- ================== MODAL DE CATEGORÍA ================== -->
+  <dialog id="category-modal" class="rounded-3xl border border-line p-0 backdrop:bg-ink/40 shadow-2xl max-w-sm w-[90vw] mx-auto">
+    <div class="p-5 sm:p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 id="category-modal-title" class="font-extrabold text-base text-ink">Categoría</h3>
+        <button id="cancel-category-btn" type="button" class="text-stone-400 hover:text-ink text-lg leading-none font-bold p-1 cursor-pointer">✕</button>
+      </div>
+
+      <form id="category-form" class="space-y-3.5">
+        <input type="hidden" id="cat-id" />
+
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Nombre de la categoría</label>
+          <input id="cat-name" type="text" required placeholder="Ej: Bebidas, Cervezas, Vinos..."
+            class="w-full rounded-xl bg-stone-50 border border-line px-3.5 py-2.5 text-xs outline-none focus:bg-white focus:border-stone-400" />
+        </div>
+
+        <div class="pt-2 flex gap-2">
+          <button id="save-cat-btn" type="submit" class="flex-1 rounded-xl bg-ink text-white py-2.5 text-xs font-bold hover:bg-stone-800 transition-colors shadow-xs cursor-pointer">
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- ================== MODAL DE PRODUCTO ================== -->
   <dialog id="product-modal" class="rounded-3xl border border-line p-0 backdrop:bg-ink/40 shadow-2xl max-w-sm w-[90vw] mx-auto">
     <div class="p-5 sm:p-6">
       <div class="flex items-center justify-between mb-4">
@@ -422,47 +506,54 @@
         <input type="hidden" id="prod-id" />
 
         <div>
-          <label class="block text-xs font-semibold text-stone-700 mb-1">Nombre</label>
-          <input id="prod-name" type="text" required placeholder="Ej: Quilmes 1L"
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Nombre del Producto</label>
+          <input id="prod-name" type="text" required placeholder="Ej: Coca Cola 2.25 L"
             class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
         </div>
 
-        <div class="space-y-1.5">
-          <div class="flex items-center justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-1">
             <label class="block text-xs font-semibold text-stone-700">Categoría</label>
-            <span class="text-[10px] text-muted">Elegí o escribí una nueva</span>
+            <button type="button" id="btn-quick-new-cat" class="text-[11px] text-blue-600 hover:underline font-semibold cursor-pointer">
+              + Nueva categoría
+            </button>
           </div>
-          <input id="prod-category" list="category-datalist" type="text" required placeholder="Ej: Bebidas, Picadas..."
-            class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
-          
-          <datalist id="category-datalist">
-            <!-- Rellenado dinámicamente con categorías existentes -->
-          </datalist>
-
-          <!-- Píldoras de selección rápida de categorías existentes -->
-          <div id="quick-category-pills" class="flex flex-wrap gap-1 pt-1">
-            <!-- Dinámico -->
-          </div>
+          <select id="prod-category" required
+            class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2.5 text-xs outline-none focus:bg-white focus:border-stone-400">
+            <!-- Rellenado dinámicamente con categorías registradas -->
+          </select>
         </div>
 
-        <div class="grid grid-cols-1 gap-2">
+        <div class="grid grid-cols-2 gap-2.5">
           <div>
             <label class="block text-xs font-semibold text-stone-700 mb-1">Precio ($)</label>
             <input id="prod-price" type="number" step="50" min="0" required placeholder="2500"
               class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
           </div>
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">Unidad de venta</label>
+            <select id="prod-unit"
+              class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400">
+              <option value="c/u">Por Unidad (c/u)</option>
+              <option value="kg">Por Kilo (kg / Fiambre)</option>
+            </select>
+          </div>
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-stone-700 mb-1">Descripción / Tamaño (opcional)</label>
-          <input id="prod-desc" type="text" placeholder="Ej: Retornable bien fría"
+          <input id="prod-desc" type="text" placeholder="Ej: Botella descartable 2.25 L"
             class="w-full rounded-xl bg-stone-50 border border-line px-3 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
         </div>
 
-        <div class="pt-1">
+        <div class="pt-1 space-y-2">
           <label class="flex items-center gap-2 cursor-pointer select-none">
             <input id="prod-available" type="checkbox" checked class="w-4 h-4 rounded text-ink focus:ring-ink" />
-            <span class="text-xs font-semibold text-stone-700">Disponible para la venta (En stock)</span>
+            <span class="text-xs font-semibold text-stone-700">En stock (Disponible para la venta)</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer select-none">
+            <input id="prod-catalog" type="checkbox" checked class="w-4 h-4 rounded text-ink focus:ring-ink" />
+            <span class="text-xs font-semibold text-stone-700">Visible en catálogo público web (/precios)</span>
           </label>
         </div>
 
@@ -476,8 +567,8 @@
   </dialog>
 
   <!-- ================== MODAL DE OFERTA / COMBO ================== -->
-  <dialog id="oferta-modal" class="rounded-3xl border border-line p-0 backdrop:bg-ink/40 shadow-2xl max-w-md w-[92vw] mx-auto">
-    <div class="p-5 sm:p-6 max-h-[88vh] overflow-y-auto no-scrollbar">
+  <dialog id="oferta-modal" class="rounded-3xl border border-line p-0 backdrop:bg-ink/40 shadow-2xl max-w-xl w-[95vw] mx-auto">
+    <div class="p-4 sm:p-6 max-h-[90vh] overflow-y-auto overflow-x-hidden no-scrollbar">
       <div class="flex items-center justify-between pb-3 border-b border-line mb-4">
         <div>
           <h3 id="oferta-modal-title" class="font-extrabold text-base text-ink">Nueva Oferta / Combo</h3>
@@ -489,9 +580,86 @@
       <form id="oferta-form" class="space-y-3.5">
         <input type="hidden" id="oferta-id" />
 
+        <!-- Armador Inteligente de Combo desde el Inventario -->
+        <div class="p-3 sm:p-3.5 rounded-2xl bg-amber-50/60 border border-amber-200 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-950 flex items-center gap-1.5">
+              <span>📦</span>
+              <span>Armador de Combo desde Inventario</span>
+            </span>
+            <span class="text-[10px] text-amber-800 font-semibold">Suma precios y detalle</span>
+          </div>
+
+          <!-- Buscador Predictivo en Vivo (para catálogos de +1000 productos) -->
+          <div class="relative">
+            <div class="relative">
+              <input id="combo-search-input" type="text" autocomplete="off" placeholder="🔍 Escribí para buscar productos o fiambres..."
+                class="w-full rounded-xl bg-white border border-line px-3.5 py-2.5 text-xs outline-none focus:border-stone-400 pr-8" />
+              <button id="combo-search-clear" type="button" class="hidden absolute right-2.5 top-2.5 text-stone-400 hover:text-stone-700 text-xs font-bold cursor-pointer">✕</button>
+            </div>
+
+            <!-- Dropdown de sugerencias filtradas -->
+            <div id="combo-search-results" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-white border border-stone-200 rounded-2xl shadow-xl max-h-72 overflow-hidden z-50">
+              <!-- Renderizado dinámicamente -->
+            </div>
+          </div>
+
+          <!-- Panel de Producto Seleccionado: Cantidad / Peso dinámico -->
+          <div id="combo-selected-panel" class="hidden p-3 sm:p-3.5 rounded-2xl bg-white border border-amber-300 shadow-2xs space-y-3">
+            <!-- Encabezado del Producto Elegido -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-100 pb-2.5">
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span id="combo-selected-badge" class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-stone-100 text-stone-700 border border-stone-200">c/u</span>
+                  <span id="combo-selected-name" class="text-xs sm:text-sm font-bold text-ink truncate">Nombre del Producto</span>
+                </div>
+                <p id="combo-selected-price" class="text-[11px] text-stone-500 font-semibold mt-0.5">$0</p>
+              </div>
+
+              <!-- Selector interactivo de Modo (Por Unidad vs Por Peso/Gramos) -->
+              <div class="flex items-center gap-2 shrink-0 self-start sm:self-center">
+                <div class="inline-flex rounded-xl bg-stone-100 p-0.5 border border-stone-200">
+                  <button type="button" id="btn-mode-unit"
+                    class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all cursor-pointer bg-white text-stone-800 shadow-2xs">
+                    📦 Por Unidad
+                  </button>
+                  <button type="button" id="btn-mode-weight"
+                    class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all cursor-pointer text-stone-500 hover:text-stone-800">
+                    ⚖️ Por Peso (g)
+                  </button>
+                </div>
+                <button id="combo-deselect-btn" type="button" class="text-stone-400 hover:text-rose-600 text-xs font-bold p-1 cursor-pointer" title="Cambiar producto">✕</button>
+              </div>
+            </div>
+
+            <!-- Contenedor dinámico de cantidad / peso (ancho completo) -->
+            <div id="combo-input-unit-wrapper">
+              <!-- Inyectado dinámicamente según unidad (c/u vs kg) -->
+            </div>
+
+            <!-- Fila dedicada de Subtotal y Botón de Acción -->
+            <div class="flex items-center justify-between gap-3 pt-2.5 border-t border-stone-100">
+              <div class="min-w-0">
+                <span class="text-[10px] uppercase font-bold text-stone-400 block leading-tight">Subtotal ítem:</span>
+                <span id="combo-item-subtotal-preview" class="text-sm sm:text-base font-black text-amber-950">$0</span>
+              </div>
+              <button id="btn-add-combo-item" type="button"
+                class="rounded-xl bg-ink text-white px-4 sm:px-5 py-2.5 text-xs font-bold hover:bg-stone-800 active:scale-95 transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer shrink-0 whitespace-nowrap">
+                <span class="text-sm font-black leading-none">+</span>
+                <span>Sumar al Combo</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Lista de productos sumados al combo -->
+          <div id="combo-items-list" class="space-y-1.5 pt-0.5 empty:hidden">
+            <!-- Dinámico -->
+          </div>
+        </div>
+
         <div>
           <label class="block text-xs font-semibold text-stone-700 mb-1">Título de la Oferta o Combo</label>
-          <input id="oferta-titulo" type="text" required placeholder="Ej: Combo Picada Fin de Semana"
+          <input id="oferta-titulo" type="text" required placeholder="Ej: Combo Fernet Branca + Coca Cola"
             class="w-full rounded-xl bg-stone-50 border border-line px-3.5 py-2 text-xs outline-none focus:bg-white focus:border-stone-400" />
         </div>
 

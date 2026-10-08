@@ -36,18 +36,30 @@ export async function fetchProducts() {
   try {
     const res = await fetch('/menu.json');
     const fallback = await res.json();
-    return fallback.map(x => ({
+    const items = Array.isArray(fallback) ? fallback : (fallback.productos || []);
+    return items.map(x => ({
       id: x.id || x.nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
       nombre: x.nombre,
       categoria: x.categoria,
       precio: x.precio,
       descripcion: x.descripcion || '',
       disponible: x.disponible !== false,
+      mostrar_en_precios: x.mostrar_en_precios !== false,
+      unidad: x.unidad || 'c/u',
     }));
   } catch (e) {
     console.error('Products: all data sources failed:', e);
     return [];
   }
+}
+
+/**
+ * Fetches only products visible to the public in /precios.
+ * @returns {Promise<Array>}
+ */
+export async function fetchPublicProducts() {
+  const all = await fetchProducts();
+  return all.filter(p => p.mostrar_en_precios !== false);
 }
 
 /**
@@ -70,7 +82,7 @@ export async function saveProduct(product) {
 }
 
 /**
- * Toggles the `disponible` field of a product.
+ * Toggles the `disponible` (stock) field of a product.
  * @param {string} id
  * @param {boolean} disponible
  * @returns {Promise<{ success: boolean }>}
@@ -84,6 +96,29 @@ export async function toggleProductAvailability(id, disponible) {
     return { success: !error };
   } catch (e) {
     return { success: false };
+  }
+}
+
+/**
+ * Toggles the `mostrar_en_precios` (visibility in /precios) field of a product.
+ * @param {string} id
+ * @param {boolean} mostrar_en_precios
+ * @returns {Promise<{ success: boolean, error?: object }>}
+ */
+export async function toggleProductCatalogVisibility(id, mostrar_en_precios) {
+  try {
+    const { error } = await sbClient
+      .from('productos')
+      .update({ mostrar_en_precios })
+      .eq('id', id);
+    if (error) {
+      console.error('Products: error toggling catalog visibility:', error);
+      return { success: false, error };
+    }
+    return { success: true };
+  } catch (e) {
+    console.error('Products: exception toggling catalog visibility:', e);
+    return { success: false, error: e };
   }
 }
 

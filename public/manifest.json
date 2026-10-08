@@ -1,0 +1,17 @@
+{
+  "name": "Despensa Quique",
+  "short_name": "Quique",
+  "description": "Fiambres, Bebidas y Almacén",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8F5EE",
+  "theme_color": "#24201D",
+  "icons": [
+    {
+      "src": "/logo/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

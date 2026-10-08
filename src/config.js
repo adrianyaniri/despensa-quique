@@ -21,4 +21,10 @@ if (!CONFIG.SUPABASE_URL || !CONFIG.SUPABASE_ANON_KEY) {
 
 if (typeof window !== 'undefined') {
   window.QUIQUE_CONFIG = CONFIG;
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    });
+  }
 }

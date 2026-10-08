@@ -1,7 +1,14 @@
 {
   "negocio": "Almacén Quique",
   "moneda": "$",
-  "categorias": ["Bebidas", "Cervezas", "Promos", "Picadas", "Snacks"],
+  "categorias": [
+    "Bebidas",
+    "Cervezas",
+    "Promos",
+    "Picadas",
+    "Snacks",
+    "Vinos"
+  ],
   "productos": [
     {
       "id": "coca-ret",
@@ -9,7 +16,9 @@
       "nombre": "Coca Cola retornable",
       "descripcion": "Botella retornable.",
       "precio": 3500,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "fanta-ret",
@@ -17,7 +26,9 @@
       "nombre": "Fanta retornable",
       "descripcion": "Botella retornable.",
       "precio": 3500,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "sprite-ret",
@@ -25,31 +36,39 @@
       "nombre": "Sprite retornable",
       "descripcion": "Botella retornable.",
       "precio": 3500,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "coca-1750",
       "categoria": "Bebidas",
       "nombre": "Coca Cola 1.75 L",
-      "descripcion": "Botella descartable.",
+      "descripcion": "Botella descartable 1.75 L",
       "precio": 4500,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "coca-2250",
       "categoria": "Bebidas",
       "nombre": "Coca Cola 2.25 L",
-      "descripcion": "Botella descartable.",
+      "descripcion": "Botella descartable 2.25 L",
       "precio": 5500,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "aquarius-1500",
       "categoria": "Bebidas",
       "nombre": "Aquarius 1.5 L",
-      "descripcion": "Sabores variados bien fríos.",
+      "descripcion": "Sabores variados bien fríos",
       "precio": 2700,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "aquarius-2250",
@@ -57,7 +76,9 @@
       "nombre": "Aquarius 2.25 L",
       "descripcion": "Ideal para compartir.",
       "precio": 3500,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "seven-up-ret",
@@ -65,63 +86,79 @@
       "nombre": "Seven Up retornable",
       "descripcion": "Botella retornable.",
       "precio": 3800,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "heineken-1000",
       "categoria": "Cervezas",
       "nombre": "Heineken 1 L",
-      "descripcion": "Cerveza rubia bien fría.",
-      "precio": 5700,
-      "unidad": "c/u"
+      "descripcion": "Botella 1 L",
+      "precio": 5900,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "heineken-710",
       "categoria": "Cervezas",
       "nombre": "Heineken 710 ml",
-      "descripcion": "Botella 710 ml helada.",
-      "precio": 4900,
-      "unidad": "c/u"
+      "descripcion": "Botella 710 ml",
+      "precio": 4800,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "stella-1000",
       "categoria": "Cervezas",
       "nombre": "Stella Artois 1 L",
-      "descripcion": "Rubia premium bien fría.",
+      "descripcion": "Cerveza rubia 1 L",
       "precio": 5900,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "stella-710",
       "categoria": "Cervezas",
       "nombre": "Stella Artois 710 ml",
-      "descripcion": "Botella 710 ml helada.",
-      "precio": 5300,
-      "unidad": "c/u"
+      "descripcion": "Botella 710 ml",
+      "precio": 5200,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "brahma-1000",
       "categoria": "Cervezas",
       "nombre": "Brahma 1 L",
-      "descripcion": "Clásica rubia refrescante.",
+      "descripcion": "Cerveza rubia 1 L",
       "precio": 3900,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "andes-473",
       "categoria": "Cervezas",
       "nombre": "Andes 473 ml (Lata)",
-      "descripcion": "Consultar variedades (Rubia / Roja).",
+      "descripcion": "Lata 473 ml",
       "precio": 2900,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "andes-1000",
       "categoria": "Cervezas",
-      "nombre": "Andes 1 L (Rubia / Roja)",
-      "descripcion": "Botella 1 L bien helada.",
-      "precio": 4900,
-      "unidad": "c/u"
+      "nombre": "Andes 1 L",
+      "descripcion": "Cerveza rubia 1 L",
+      "precio": 4500,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "promo-fernet-coca",
@@ -129,7 +166,9 @@
       "nombre": "Fernet Branca 750 ml + Coca Cola 1.75 L",
       "descripcion": "El combo clásico listo para disfrutar.",
       "precio": 25000,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "picada-4-5",
@@ -137,7 +176,9 @@
       "nombre": "Picada para 4 a 5 personas",
       "descripcion": "Variedad de fiambres, quesos y snacks.",
       "precio": 4000,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "papas-55g",
@@ -145,7 +186,9 @@
       "nombre": "Papas Americanas tradicionales 55 g",
       "descripcion": "Crocantes y saladas.",
       "precio": 1800,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "papas-420g",
@@ -153,7 +196,9 @@
       "nombre": "Papas tradicionales americanas 420 g",
       "descripcion": "Bolsa grande para compartir.",
       "precio": 1300,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "chizitos-60g",
@@ -161,7 +206,9 @@
       "nombre": "Chizitos 60 g",
       "descripcion": "Snack horneado con queso.",
       "precio": 1400,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "bastoncitos-60g",
@@ -169,7 +216,9 @@
       "nombre": "Bastoncitos 60 g",
       "descripcion": "Snack salado crocante.",
       "precio": 1400,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "chizitos-240g",
@@ -177,7 +226,9 @@
       "nombre": "Chizitos 240 g",
       "descripcion": "Bolsa familiar para compartir.",
       "precio": 6000,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     },
     {
       "id": "bastoncitos-240g",
@@ -185,7 +236,589 @@
       "nombre": "Bastoncitos 240 g",
       "descripcion": "Bolsa familiar para compartir.",
       "precio": 6000,
-      "unidad": "c/u"
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "7up-pepsi-500",
+      "categoria": "Bebidas",
+      "nombre": "7Up / Pepsi 500 ml",
+      "descripcion": "Botella descartable 500 ml",
+      "precio": 1400,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "coca-2reto",
+      "categoria": "Bebidas",
+      "nombre": "Coca Cola 2 L Retornable",
+      "descripcion": "Botella retornable 2 L",
+      "precio": 3500,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "coca-600",
+      "categoria": "Bebidas",
+      "nombre": "Coca Cola 600 ml",
+      "descripcion": "Botella personal 600 ml",
+      "precio": 1700,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "coca-1000",
+      "categoria": "Bebidas",
+      "nombre": "Coca Cola 1 L",
+      "descripcion": "Botella de 1 L",
+      "precio": 3100,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "coca-2reto-zero",
+      "categoria": "Bebidas",
+      "nombre": "Coca Cola Zero 2 L Retornable",
+      "descripcion": "Botella retornable sin azúcar",
+      "precio": 2800,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "coca-2250-zero",
+      "categoria": "Bebidas",
+      "nombre": "Coca Cola Zero 2.25 L",
+      "descripcion": "Botella descartable sin azúcar",
+      "precio": 2500,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "fanta-2reto",
+      "categoria": "Bebidas",
+      "nombre": "Fanta 2 L Retornable",
+      "descripcion": "Botella retornable 2 L",
+      "precio": 2800,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "fanta-2250",
+      "categoria": "Bebidas",
+      "nombre": "Fanta 2.25 L",
+      "descripcion": "Botella descartable 2.25 L",
+      "precio": 2500,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "fanta-1750",
+      "categoria": "Bebidas",
+      "nombre": "Fanta 1.75 L",
+      "descripcion": "Botella descartable 1.75 L",
+      "precio": 3100,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "sprite-2reto",
+      "categoria": "Bebidas",
+      "nombre": "Sprite 2 L Retornable",
+      "descripcion": "Botella retornable 2 L",
+      "precio": 2800,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "sprite-1750",
+      "categoria": "Bebidas",
+      "nombre": "Sprite 1.75 L",
+      "descripcion": "Botella descartable 1.75 L",
+      "precio": 3100,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "sprite-2250",
+      "categoria": "Bebidas",
+      "nombre": "Sprite 2.25 L",
+      "descripcion": "Botella descartable 2.25 L",
+      "precio": 2200,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "crush",
+      "categoria": "Bebidas",
+      "nombre": "Crush",
+      "descripcion": "Gaseosa Crush",
+      "precio": 1800,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "coca-lata",
+      "categoria": "Bebidas",
+      "nombre": "Coca Cola Lata",
+      "descripcion": "Lata 354 ml",
+      "precio": 190,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "pepsi-2reto",
+      "categoria": "Bebidas",
+      "nombre": "Pepsi 2 L Retornable",
+      "descripcion": "Botella retornable 2 L",
+      "precio": 3900,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "pepsi-2250",
+      "categoria": "Bebidas",
+      "nombre": "Pepsi 2.25 L",
+      "descripcion": "Botella descartable 2.25 L",
+      "precio": 1100,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "pdt-1500-pomelo",
+      "categoria": "Bebidas",
+      "nombre": "Paso de los Toros 1.5 L Pomelo",
+      "descripcion": "Gaseosa pomelo 1.5 L",
+      "precio": 3400,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "7up-pdt-2450",
+      "categoria": "Bebidas",
+      "nombre": "7Up / Paso de los Toros 2.45 L",
+      "descripcion": "Botella descartable",
+      "precio": 1100,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "7up-lata",
+      "categoria": "Bebidas",
+      "nombre": "7Up Lata",
+      "descripcion": "Lata 354 ml",
+      "precio": 270,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "pepsi-2000-descar",
+      "categoria": "Bebidas",
+      "nombre": "Pepsi 2 L Descartable",
+      "descripcion": "Botella descartable 2 L",
+      "precio": 1100,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "7up-2450",
+      "categoria": "Bebidas",
+      "nombre": "7Up 2.45 L",
+      "descripcion": "Botella descartable 2.45 L",
+      "precio": 2500,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "schweppes-1500",
+      "categoria": "Bebidas",
+      "nombre": "Schweppes 1.5 L",
+      "descripcion": "Tónica / Pomelo 1.5 L",
+      "precio": 1150,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "monster-energy",
+      "categoria": "Bebidas",
+      "nombre": "Monster Energy",
+      "descripcion": "Bebida energizante 473 ml",
+      "precio": 2800,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "mirinda-2250",
+      "categoria": "Bebidas",
+      "nombre": "Mirinda 2.25 L",
+      "descripcion": "Gaseosa sabor naranja 2.25 L",
+      "precio": 530,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "aime-malbec",
+      "categoria": "Vinos",
+      "nombre": "Aimé Malbec",
+      "descripcion": "Vino tinto 750 ml",
+      "precio": 650,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "nieto-malbec",
+      "categoria": "Vinos",
+      "nombre": "Nieto Senetiner Malbec",
+      "descripcion": "Vino tinto 750 ml",
+      "precio": 1800,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "terma-1350",
+      "categoria": "Bebidas",
+      "nombre": "Terma 1.35 L",
+      "descripcion": "Bebida a base de hierbas",
+      "precio": 2700,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "finca-las-moras",
+      "categoria": "Vinos",
+      "nombre": "Finca Las Moras Malbec",
+      "descripcion": "Vino tinto 750 ml",
+      "precio": 5500,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "los-arboles-malbec",
+      "categoria": "Vinos",
+      "nombre": "Los Árboles Malbec",
+      "descripcion": "Vino tinto 750 ml",
+      "precio": 6800,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "alma-mora-malbec",
+      "categoria": "Vinos",
+      "nombre": "Alma Mora Malbec",
+      "descripcion": "Vino tinto 750 ml",
+      "precio": 8500,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "alaris-malbec",
+      "categoria": "Vinos",
+      "nombre": "Alaris Malbec Trapiche",
+      "descripcion": "Vino tinto 750 ml",
+      "precio": 6000,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "quilmes-1000",
+      "categoria": "Cervezas",
+      "nombre": "Quilmes 1 L",
+      "descripcion": "Cerveza rubia 1 L",
+      "precio": 3600,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "heineken-330",
+      "categoria": "Cervezas",
+      "nombre": "Heineken 330 ml",
+      "descripcion": "Porrón / Botella 330 ml",
+      "precio": 290,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "miller-1000",
+      "categoria": "Cervezas",
+      "nombre": "Miller 1 L",
+      "descripcion": "Cerveza rubia 1 L",
+      "precio": 5500,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "quilmes-ipa-473",
+      "categoria": "Cervezas",
+      "nombre": "Quilmes IPA 473 ml (Lata)",
+      "descripcion": "Lata 473 ml",
+      "precio": 2800,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "budweiser-710",
+      "categoria": "Cervezas",
+      "nombre": "Budweiser 710 ml",
+      "descripcion": "Botella 710 ml",
+      "precio": 3200,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "stella-330",
+      "categoria": "Cervezas",
+      "nombre": "Stella Artois 330 ml",
+      "descripcion": "Porrón 330 ml",
+      "precio": 3500,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "amstel-1000",
+      "categoria": "Cervezas",
+      "nombre": "Amstel Lager 1 L",
+      "descripcion": "Cerveza rubia 1 L",
+      "precio": 3800,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "stella-473",
+      "categoria": "Cervezas",
+      "nombre": "Stella Artois 473 ml (Lata)",
+      "descripcion": "Lata 473 ml",
+      "precio": 3200,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "schneider-710",
+      "categoria": "Cervezas",
+      "nombre": "Schneider 710 ml",
+      "descripcion": "Botella 710 ml",
+      "precio": 2900,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "brahma-473",
+      "categoria": "Cervezas",
+      "nombre": "Brahma 473 ml (Lata)",
+      "descripcion": "Lata 473 ml",
+      "precio": 2300,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "schneider-473",
+      "categoria": "Cervezas",
+      "nombre": "Schneider 473 ml (Lata)",
+      "descripcion": "Lata 473 ml",
+      "precio": 2000,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "patagonia-730",
+      "categoria": "Cervezas",
+      "nombre": "Patagonia 730 ml",
+      "descripcion": "Botella 730 ml",
+      "precio": 4500,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "corona-710",
+      "categoria": "Cervezas",
+      "nombre": "Corona 710 ml",
+      "descripcion": "Botella 710 ml",
+      "precio": 5300,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "heineken-473",
+      "categoria": "Cervezas",
+      "nombre": "Heineken 473 ml (Lata)",
+      "descripcion": "Lata 473 ml",
+      "precio": 3300,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "budweiser-710t",
+      "categoria": "Cervezas",
+      "nombre": "Budweiser 710 ml T",
+      "descripcion": "Botella 710 ml",
+      "precio": 3400,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "imperial-473",
+      "categoria": "Cervezas",
+      "nombre": "Imperial 473 ml (Lata)",
+      "descripcion": "Lata 473 ml",
+      "precio": 2300,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "patagonia-4100",
+      "categoria": "Cervezas",
+      "nombre": "Patagonia 410 ml",
+      "descripcion": "Lata 410 ml",
+      "precio": 340,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "corona-410",
+      "categoria": "Cervezas",
+      "nombre": "Corona 410 ml (Lata)",
+      "descripcion": "Lata 410 ml",
+      "precio": 3200,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "patagonia-retor",
+      "categoria": "Cervezas",
+      "nombre": "Patagonia Retornable",
+      "descripcion": "Botella retornable",
+      "precio": 3700,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "corona-330",
+      "categoria": "Cervezas",
+      "nombre": "Corona 330 ml",
+      "descripcion": "Porrón 330 ml",
+      "precio": 3200,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "andes-ipa-1000",
+      "categoria": "Cervezas",
+      "nombre": "Andes IPA 1 L",
+      "descripcion": "Botella 1 L",
+      "precio": 4500,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "miller-473",
+      "categoria": "Cervezas",
+      "nombre": "Miller 473 ml (Lata)",
+      "descripcion": "Lata 473 ml",
+      "precio": 1000,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "stella-gold-330",
+      "categoria": "Cervezas",
+      "nombre": "Stella Artois Gold 330 ml",
+      "descripcion": "Porrón 330 ml",
+      "precio": 3700,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "salta-cautiva-473",
+      "categoria": "Cervezas",
+      "nombre": "Salta Cautiva 473 ml (Lata)",
+      "descripcion": "Lata 473 ml",
+      "precio": 1100,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "imperial-golden",
+      "categoria": "Cervezas",
+      "nombre": "Imperial Golden 1 L",
+      "descripcion": "Botella 1 L",
+      "precio": 3500,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "andes-710",
+      "categoria": "Cervezas",
+      "nombre": "Andes 710 ml",
+      "descripcion": "Botella 710 ml",
+      "precio": 3600,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
+    },
+    {
+      "id": "brahma-710",
+      "categoria": "Cervezas",
+      "nombre": "Brahma 710 ml",
+      "descripcion": "Botella 710 ml",
+      "precio": 3100,
+      "unidad": "c/u",
+      "disponible": true,
+      "mostrar_en_precios": true
     }
   ]
 }

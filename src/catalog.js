@@ -1,4 +1,4 @@
-import { fetchProducts } from './services/products.service.js';
+import { fetchPublicProducts } from './services/products.service.js';
 import { syncSettings } from './services/settings.service.js';
 import { openInquiryViaWhatsApp } from './services/whatsapp.service.js';
 import { cartStore } from './state/cart.state.js';
@@ -20,7 +20,7 @@ export async function loadCatalog() {
       </div>`;
   }
 
-  allProducts = await fetchProducts();
+  allProducts = await fetchPublicProducts();
   renderFilters();
   renderProducts();
 }
@@ -110,7 +110,7 @@ function renderProductCard(p) {
           ${!isAvailable ? '<span class="px-1.5 py-0.5 rounded bg-stone-200 text-stone-600 text-[10px] font-bold">Sin stock</span>' : ''}
         </div>
         ${p.descripcion ? `<p class="text-xs text-muted mt-0.5 leading-relaxed line-clamp-2">${p.descripcion}</p>` : ''}
-        <p class="text-sm font-black text-ink mt-1.5">${formatPrice(p.precio)}</p>
+        <p class="text-sm font-black text-ink mt-1.5">${formatPrice(p.precio)}${p.unidad === 'kg' ? '<span class="text-xs font-semibold text-stone-500"> /kg</span>' : ''}</p>
       </div>
 
       <div class="shrink-0 flex items-center">
